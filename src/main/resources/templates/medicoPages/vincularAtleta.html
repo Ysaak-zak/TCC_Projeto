@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vincular Atleta | Módulo Médico</title>
+    <th:block th:replace="~{fragments/layout :: head-resources}"></th:block>
+</head>
+<body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
+    <div class="min-h-screen md:flex">
+
+        <aside th:replace="~{fragments/medicoLayout :: sidebar(active='vincular')}"></aside>
+
+        <!-- ===== Conteúdo principal ===== -->
+        <main class="medico-content min-w-0 flex-1">
+            <div class="px-5 py-6 sm:px-8 lg:px-10">
+            <div class="mx-auto max-w-6xl">
+
+                <!-- Cards de resumo (componente padrão fragments/uiComponents :: stat-card) -->
+                <div class="grid grid-cols-1 gap-5">
+                    <div th:replace="~{fragments/uiComponents :: stat-card(label='Atletas Novos', valor=${atleta_sem_Vinculacao}, tone='medico')}"></div>
+                </div>
+
+                <!-- Título da seção -->
+                <div class="mt-8 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 text-medico-600"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 8v6M22 11h-6"/></svg>
+                    <h1 class="font-display text-xl font-bold text-medico-700 sm:text-2xl">Adicionar Novos Atletas</h1>
+                </div>
+
+                <!-- Busca (componente padrão fragments/uiComponents :: search-input) -->
+                <div class="mt-4">
+                    <label th:replace="~{fragments/uiComponents :: search-input(id='search', placeholder='Buscar por nome ou CPF...', tone='medico')}"></label>
+                </div>
+
+                <!-- Tabela -->
+                <div class="mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
+                    <div class="overflow-x-auto">
+                        <table class="w-full min-w-[760px] text-left text-sm">
+                            <thead th:replace="~{fragments/uiComponents :: table-head(colunas=${ {'ID','Nomes','CPF','Sexo','E-mail','Localização','Ação'} }, tone='medico')}"></thead>
+                            <tbody id="tbody" class="divide-y divide-slate-100 bg-white">
+                                <tr class="athlete-row hover:bg-medico-50/40"
+                                    th:each="atleta : ${listaAtletas}"
+                                    th:data-name="${atleta.per_nome}"
+                                    th:data-cpf="${atleta.cpf}">
+                                    <td class="px-4 py-3 font-bold text-slate-700" th:text="${atleta.id}">71</td>
+                                    <td class="px-4 py-3 font-semibold text-slate-800" th:text="${atleta.per_nome}">Atleta 0</td>
+                                    <td class="px-4 py-3 text-slate-600" th:text="${atleta.cpf}">99988777666666</td>
+                                    <td class="px-4 py-3 text-slate-600" th:text="${atleta.sexo}">M</td>
+                                    <td class="px-4 py-3 text-slate-600" th:text="${atleta.email}">atleta0@exemplo.com</td>
+                                    <td class="px-4 py-3 text-slate-600" th:text="${atleta.cidade}">Recife - PE</td>
+                                    <td class="px-4 py-3 text-right">
+                                        <form th:action="@{/medico/{mId}/vincular-atleta/{aId}(mId=${medico.id}, aId=${atleta.id})}" method="POST">
+                                            <button th:replace="~{fragments/uiComponents :: action-button(texto='Vincular', tone='medico')}"></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Estado vazio quando não há atletas novos -->
+                <div th:if="${#lists.isEmpty(listaAtletas)}" class="mt-4">
+                    <div th:replace="~{fragments/uiComponents :: empty-state(
+                             titulo='Nenhum atleta novo por aqui',
+                             descricao='Assim que um novo atleta se cadastrar no sistema, ele aparecerá aqui para vínculo.',
+                             tone='medico')}"></div>
+                </div>
+                <p id="empty" class="hidden mt-3 text-center text-sm text-slate-400">Nenhum atleta encontrado para essa busca.</p>
+
+            </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Filtro de busca por nome/CPF (client-side, sobre os dados já renderizados pelo Thymeleaf)
+        const search = document.getElementById('search');
+        const empty = document.getElementById('empty');
+        function rows() { return [...document.querySelectorAll('.athlete-row')]; }
+        search && search.addEventListener('input', () => {
+            const term = search.value.toLowerCase().trim();
+            let visible = 0;
+            rows().forEach(row => {
+                const match = `${row.dataset.name} ${row.dataset.cpf}`.toLowerCase().includes(term);
+                row.classList.toggle('hidden', !match);
+                if (match) visible++;
+            });
+            empty.classList.toggle('hidden', visible !== 0 || rows().length === 0);
+        });
+    </script>
+</body>
+</html>

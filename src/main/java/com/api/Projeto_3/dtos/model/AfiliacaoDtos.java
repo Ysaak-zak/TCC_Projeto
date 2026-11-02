@@ -25,27 +25,27 @@ public class AfiliacaoDtos implements Serializable {
 
     private  Long id;
     
-  //  @NotBlank(message = "O nome da mãe não poder ser vazio")
-  //  @Size(min = 5 , message = "O nome da mãe dever ser maior que 5 cacachteres")
+   // @NotBlank(message = "O nome da mãe não poder ser vazio")
+    //@Size(min = 5 , message = "O nome da mãe dever ser maior que 5 cacachteres")
     private  String maeNome;
     
-   // @NotBlank(message = "O telefone não pode ser vazio")
+    //@NotBlank(message = "O telefone não pode ser vazio")
     private  String maeTelefone;
 
-   // @Email(message = "Email da mãe , não poder  invalido")
-   // @NotBlank(message = "Email da mãe não pode ser vazio")
+    //@Email(message = "Email da mãe , não poder  invalido")
+    //@NotBlank(message = "Email da mãe não pode ser vazio")
     private  String maeEmail;
 
-   // @NotBlank(message = "O nome do pai não poder ser vazio")
-   // @Size(min = 5 , message = "O nome da pai dever ser maior que 5 cacachteres")
+    //@NotBlank(message = "O nome do pai não poder ser vazio")
+    //@Size(min = 5 , message = "O nome da pai dever ser maior que 5 cacachteres")
     private  String paiName;
 
     //@NotBlank(message = "O telefone não pode ser vazio")
     private  String paiTelefone;
     
     
-   // @Email(message = "Email da pai , não poder  invalido")
-   // @NotBlank(message = "Email do pai  não pode ser vazio")
+    //@Email(message = "Email da pai , não poder  invalido")
+    //@NotBlank(message = "Email do pai  não pode ser vazio")
     private  String paiEmail;
     private PerfisModelo perfis;
 

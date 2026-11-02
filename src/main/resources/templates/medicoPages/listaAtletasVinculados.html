@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+    <title>Atletas vinculados | Módulo Médico</title>
+    <th:block th:replace="~{fragments/layout :: head-resources}"></th:block>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { medical: { 50: '#eef6ff', 100: '#dceeff', 500: '#2698ef', 600: '#1877e8', 700: '#155dde' } },
+                    fontFamily: { sans: ['DM Sans', 'sans-serif'], display: ['Playfair Display', 'serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen bg-[#f8f8fc] font-sans text-slate-700">
+    <div class="min-h-screen md:flex">
+        <aside th:replace="~{fragments/medicoLayout :: sidebar(active='atletas')}"></aside>
+
+        <main class="medico-content min-w-0 flex-1 bg-[#f5f8fd]">
+            <header class="flex items-center justify-between bg-white px-5 py-4 shadow-sm sm:px-8 lg:px-10">
+                <p class="font-bold uppercase tracking-wide text-medical-700">♥&nbsp; Gerenciamento de atleta</p>
+                <nav class="hidden items-center gap-7 text-sm font-semibold text-slate-600 sm:flex">
+                    <a th:href="@{/home}" class="hover:text-medical-600">Home</a>
+                    <span class="text-medical-600">Meu perfil</span>
+                    <a th:href="@{/home}" class="hover:text-rose-600">Sair</a>
+                </nav>
+            </header>
+            <section class="bg-gradient-to-r from-[#2862ee] to-[#2499f2] px-5 py-10 text-center text-white sm:px-8 sm:py-12 lg:px-10">
+                <h1 class="text-2xl font-bold uppercase tracking-wide sm:text-3xl">Gerenciamento de atletas</h1>
+                <p class="mt-2 text-sm text-blue-50 sm:text-base">Área restrita de monitoramento e controle clínico para a equipe médica</p>
+            </section>
+            <div class="px-5 py-8 sm:px-8 lg:px-10">
+                <div class="mx-auto max-w-6xl">
+                    <div class="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                        <div>
+                            <div class="flex items-center gap-2 text-medical-700"><span class="rounded-md bg-medical-100 px-2 py-1 text-sm">☷</span><h2 class="font-display text-2xl tracking-wide sm:text-3xl">ATLETAS VINCULADOS</h2></div>
+                            <p class="mt-2 text-sm text-slate-500">Gestão e consulta dos atletas sob acompanhamento médico.</p>
+                        </div>
+                        <div class="rounded-xl border-l-4 border-medical-500 bg-white px-5 py-2.5 shadow-sm ring-1 ring-slate-200">
+                            <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Total vinculados</p>
+                            <p class="text-lg font-bold text-medical-700"><span id="total" th:text="${#lists.size(atletas)}">0</span> atletas</p>
+                        </div>
+                    </div>
+
+                    <section class="mb-6 rounded-xl bg-white p-4 shadow-sm ring-1 ring-slate-200 sm:flex sm:items-center sm:gap-5">
+                        <label class="relative block flex-1"><span class="pointer-events-none absolute left-3 top-2.5 text-slate-400">⌕</span><input id="search" type="search" placeholder="Buscar atleta por nome ou CPF..." class="w-full rounded-lg border border-slate-200 bg-slate-50 py-2 pl-9 pr-3 text-sm outline-none transition focus:border-medical-500 focus:ring-2 focus:ring-medical-100"></label>
+
+                    </section>
+
+                    <p id="empty" class="hidden rounded-xl border border-dashed border-slate-300 bg-white px-5 py-12 text-center text-sm text-slate-500">Nenhum atleta encontrado com esses filtros.</p>
+                    <section id="plano-alimentar" class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        <article th:each="atleta : ${atletas}" th:attr="data-name=${atleta.name},data-cpf=${atleta.cpf}" class="athlete rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+                            <div class="flex items-start gap-3"><span class="avatar" th:text="${#strings.substring(atleta.name,0,1)}">A</span><div class="min-w-0 flex-1"><h2 class="truncate font-bold text-slate-800" th:text="${atleta.name}">Atleta</h2><p class="text-xs text-slate-400" th:text="${'ID: #' + atleta.id}"></p></div></div>
+                            <dl class="details"><div><dt>CPF:</dt><dd th:text="${atleta.cpf}"></dd></div><div><dt>SEXO:</dt><dd th:text="${atleta.sexo}"></dd></div><div><dt>CONTATO:</dt><dd th:text="${atleta.email}"></dd></div></dl>
+                            <a th:href="@{/medico/alimentacao/{id}(id=${atleta.id})}" class="mt-5 block rounded-lg bg-emerald-100 p-3 text-center text-sm font-bold text-emerald-700">Plano alimentar</a>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+    <style>
+        .avatar { display:flex; width:2.45rem; height:2.45rem; flex:0 0 auto; align-items:center; justify-content:center; border-radius:999px; background:#2490ef; color:white; font-size:.72rem; font-weight:700; }
+        .badge { border-radius:999px; padding:.23rem .48rem; font-size:.64rem; font-weight:700; white-space:nowrap; }
+        .details { margin-top:1.2rem; border-top:1px solid #f1f5f9; padding-top:.75rem; font-size:.76rem; }
+        .details div { display:flex; justify-content:space-between; gap:1rem; padding:.29rem 0; }
+        .details dt { color:#94a3b8; font-weight:700; }
+        .details dd { overflow:hidden; text-align:right; text-overflow:ellipsis; white-space:nowrap; color:#475569; }
+        .unlink { margin-top:1.25rem; width:100%; border-radius:.5rem; background:#fff1f2; padding:.55rem; color:#e11d48; font-size:.77rem; font-weight:700; transition:.15s; }
+        .unlink:hover { background:#ffe4e6; }
+    </style>
+    <script>
+        const search = document.getElementById('search');
+        const cards = [...document.querySelectorAll('.athlete')];
+        document.getElementById('total').textContent = cards.length;
+        function updateList() {
+            const term = search.value.toLowerCase().trim();
+            let visible = 0;
+            cards.forEach(card => {
+                const show = (`${card.dataset.name} ${card.dataset.cpf}`).toLowerCase().includes(term);
+                card.classList.toggle('hidden', !show);
+                if (show) visible++;
+            });
+            document.getElementById('empty').classList.toggle('hidden', visible !== 0);
+        }
+        search.addEventListener('input', updateList);
+        updateList();
+    </script>
+</body>
+</html>

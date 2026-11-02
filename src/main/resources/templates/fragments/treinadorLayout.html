@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+<aside th:fragment="sidebar(active, treinador)" class="treinador-menu">
+    <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
+    <nav aria-label="Menu do treinador">
+        <a th:href="@{/treinador}" th:classappend="${active == 'dashboard' ? 'selecionado' : ''}">
+            <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
+        </a>
+        <a th:href="@{/treinador/perfil}" th:classappend="${active == 'perfil' ? 'selecionado' : ''}">
+            <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
+        </a>
+        <a th:href="@{/treinador/treinos}" th:classappend="${active == 'treinos' ? 'selecionado' : ''}">
+            <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
+        </a>
+    </nav>
+    <form th:action="@{/logout}" method="post" class="treinador-sair">
+        <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+        <button type="submit">Sair</button>
+    </form>
+</aside>
+</body>
+</html>

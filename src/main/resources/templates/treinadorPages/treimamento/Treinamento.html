@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Treinamentos & Saúde - Treinamento</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/icon/iconFun.png}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        medOrange: {
+                            50: '#fffbeb', 100: '#fef3c7', 500: '#f59e0b', 
+                            600: '#d97706', 700: '#b45309', 800: '#92400e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
+    <link rel="stylesheet" th:href="@{/css/treino.css}">
+</head>
+
+<body class="treinador-layout bg-black treino-layout">
+    
+    <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='treinos', treinador=${treinador})}"></aside>
+
+    <div class="treinamento-area">
+        <nav class="treinamento-abas" aria-label="Etapas do treinamento">
+            <a th:href="@{/treinador/treinos/semanas}"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span>Semana</span></a>
+            <a th:href="@{/treinador/treinos}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span>Treino</span></a>
+            <a th:href="@{/treinador/treinos/exercicios}"><img class="navegacao-icone" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true"><span>Exercício</span></a>
+        </nav>
+        <main class="treino-pagina">
+            <header class="treino-cabecalho">
+                <div><span class="treino-sobrelinha">PLANEJAMENTO SEMANAL</span><h1>Organize o próximo treino</h1>
+                    <p>Escolha o atleta, marque o dia e prepare a sessão.</p></div>
+                <a class="treino-link" th:href="@{/treinador/treinos/semanas}">+ Criar semana</a>
+            </header>
+            <p th:if="${sucesso}" th:text="${sucesso}" role="status" class="treino-aviso treino-sucesso"></p>
+            <div th:if="${#lists.isEmpty(semanas)}" class="treino-aviso">
+                <strong>Comece criando uma semana</strong>
+                <p>Vincule um atleta à semana para liberar o cadastro de treinos.</p>
+                <a class="treino-link" th:href="@{/treinador/treinos/semanas}">Criar a primeira semana →</a>
+            </div>
+            <form th:action="@{/treinador/treinos}" th:object="${treinoForm}" method="post" class="treino-formulario">
+                <div th:if="${#fields.hasErrors('*')}" role="alert" class="treino-aviso treino-erros">
+                    <strong>Revise os campos antes de salvar</strong>
+                    <p th:each="erro : ${#fields.errors('*')}" th:text="${erro}"></p>
+                </div>
+                <fieldset class="treino-conteudo" th:disabled="${#lists.isEmpty(semanas)}">
+                    <section class="treino-cartao">
+                        <div class="treino-titulo"><span>01</span><div><h2>Semana e dia</h2><p>Defina onde este treino entra no planejamento.</p></div></div>
+                        <label for="semanaId">Semana do atleta <span aria-hidden="true">*</span></label>
+                        <select th:field="*{semanaId}" required>
+                            <option value="">Selecione a semana e o atleta</option>
+                            <option th:each="s : ${semanas}" th:value="${s.id}" th:text="${s.nome + ' — ' + s.atleta_fk.name}"></option>
+                        </select>
+                        <fieldset class="treino-dias-campo">
+                            <legend>Dia da semana <span aria-hidden="true">*</span></legend>
+                            <p class="treino-ajuda">Escolha um dia para esta sessão.</p>
+                            <div class="treino-dias">
+                                <label th:each="dia : ${diasSemana}" class="treino-dia">
+                                    <input type="radio" th:field="*{dia}" th:value="${dia}" th:aria-label="${dia.rotulo}" required>
+                                    <span><strong th:text="${dia.abreviacao}"></strong><small th:text="${dia.rotulo}"></small></span>
+                                </label>
+                            </div>
+                        </fieldset>
+                    </section>
+                    <section class="treino-cartao">
+                        <div class="treino-titulo"><span>02</span><div><h2>Detalhes da sessão</h2><p>Dê um nome e descreva o objetivo do treino.</p></div></div>
+                        <div class="treino-grade">
+                            <div><label for="nome">Nome do treino *</label><input th:field="*{nome}" required maxlength="255" placeholder="Ex.: Preparação física"></div>
+                            <div><label for="categoria">Categoria *</label><input th:field="*{categoria}" required maxlength="255" placeholder="Ex.: Futebol, força, corrida"></div>
+                        </div>
+                        <label for="descricao">Descrição <small>(opcional)</small></label>
+                        <textarea th:field="*{descricao}" rows="3" maxlength="255" placeholder="Objetivos, intensidade e orientações para o atleta..."></textarea>
+                    </section>
+                    <section class="treino-cartao">
+                        <div class="treino-titulo"><span>03</span><div><h2>Horário do treino</h2><p>Defina o início e o fim da sessão, entre 06:00 e 22:00.</p></div></div>
+                        <div class="treino-grade treino-grade-horarios">
+                            <div><label for="horarioInicio">Horário de início *</label><input type="time" th:field="*{horarioInicio}" min="06:00" max="22:00" required></div>
+                            <div><label for="horarioFim">Horário de fim *</label><input type="time" th:field="*{horarioFim}" min="06:00" max="22:00" required></div>
+                        </div>
+                    </section>
+                    <footer class="treino-acoes"><p>O treino será vinculado ao dia e à semana selecionados.</p><button type="submit">Salvar treino <span aria-hidden="true">→</span></button></footer>
+                </fieldset>
+            </form>
+            <section class="treino-planejados" th:unless="${#lists.isEmpty(semanas)}">
+                <h2>Treinos por semana</h2>
+                <details th:each="s : ${semanas}" class="treino-cartao">
+                    <summary th:text="${s.nome + ' — ' + s.atleta_fk.name}"></summary>
+                    <p class="treino-ajuda" th:if="${#lists.isEmpty(s.dias)}">Nenhum treino cadastrado nesta semana.</p>
+                    <div th:each="d : ${s.dias}">
+                        <div th:each="t : ${d.treinamentos}" class="treino-sessao">
+                            <strong th:text="${d.nome.rotulo}"></strong>
+                            <span th:text="${t.nome}"></span>
+                            <span th:if="${t.horarioInicio != null and t.horarioFim != null}" th:text="${t.horarioInicio + ' – ' + t.horarioFim}"></span>
+                        </div>
+                    </div>
+                </details>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

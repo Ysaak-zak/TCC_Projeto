@@ -169,13 +169,36 @@ public class PerfilService implements UserDetailsService {
 @Override
 public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
     PerfisModelo usuario = perfilJpa.findByCpf(cpf)
+            .or(() -> perfilJpa.findByCpfSemPontuacao(cpf))
             .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com CPF: " + cpf));
+
+    String authority = normalizarAuthority(usuario.getRole().getAuthority());
 
     return User.builder()
             .username(usuario.getCpf())
             .password(usuario.getSenha())
-            .authorities(new SimpleGrantedAuthority(usuario.getRole().getAuthority()))
+            .authorities(new SimpleGrantedAuthority(authority))
             .build();
+}
+
+private String normalizarAuthority(String authority) {
+    String role = authority == null ? "" : authority.trim().toUpperCase();
+    String roleSemSimbolos = role.replaceAll("[^A-Z]", "");
+
+    if (roleSemSimbolos.contains("ATLETA")) {
+        return "ROLE_ATLETA";
+    }
+    if (roleSemSimbolos.contains("MEDICO")) {
+        return "ROLE_MEDICO";
+    }
+    if (roleSemSimbolos.contains("TREINADOR")) {
+        return "ROLE_TREINADOR";
+    }
+
+    if (role.startsWith("ROLE_")) {
+        return role;
+    }
+    return "ROLE_" + role;
 }
 
 }

@@ -1,0 +1,55 @@
+body.treinador-layout, .treinador-painel {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    min-height: 100vh;
+    margin: 0;
+}
+.treinador-menu {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f59e0b;
+    color: #171717;
+    border-right: 1px solid #d97706;
+    overflow-y: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.5;
+}
+.treinador-marca { padding: 23px 14px; font-size: 13px; font-weight: 700; background: #202020; color: white; }
+.treinador-menu nav { display: flex; flex-direction: column; padding: 16px 0; }
+.treinador-menu nav a { padding: 12px 14px; font-size: 15px; font-weight: 700; }
+.treinador-menu nav a:hover, .treinador-menu nav a.selecionado { background: #d97706; }
+.treinador-menu a { text-decoration: none; }
+.treinador-sair { margin-top: auto; padding: 12px 14px; background: #dc2626; color: white; font-size: 15px; font-weight: 700; }
+.treinador-layout > main, .treinamento-area { min-width: 0; }
+.treinamento-area { background: #f8fafc; color: #1e293b; }
+.treinamento-abas { display: flex; background: white; border-bottom: 1px solid #e2e8f0; padding: 0 24px; gap: 24px; }
+.treinamento-abas a { padding: 24px 16px 20px; border-bottom: 4px solid transparent; font-size: 22px; font-weight: 700; text-decoration: none; color: #475569; }
+.treinamento-abas a:hover { color: #b45309; background: #fffbeb; }
+.treinamento-abas a.selecionado { color: #b45309; border-bottom-color: #f59e0b; }
+.treinador-layout a:focus-visible { outline: 3px solid #2563eb; outline-offset: -3px; }
+#lista-atletas { scroll-margin-top: 20px; }
+@media (max-width: 640px) {
+    body.treinador-layout, .treinador-painel { grid-template-columns: 125px minmax(0, 1fr); }
+    .treinador-marca { padding: 20px 12px; font-size: 14px; }
+    .treinador-menu nav a { padding: 16px 12px; font-size: 14px; }
+    .treinamento-abas { padding: 0 6px; gap: 0; }
+    .treinamento-abas a { flex: 1; padding: 18px 4px 14px; font-size: 14px; text-align: center; }
+    .treinamento-area > main { padding: 16px 10px; }
+}
+
+.treinador-menu nav a, .treinador-sair, .treinamento-abas a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.navegacao-icone { width: 22px; height: 22px; flex-shrink: 0; object-fit: contain; }
+@media (max-width: 640px) {
+    .treinador-menu nav a, .treinador-sair { gap: 6px; padding-left: 8px; padding-right: 8px; }
+    .navegacao-icone { width: 18px; height: 18px; }
+    .treinamento-abas a { flex-direction: column; justify-content: center; gap: 6px; }
+}
+
+.treinador-menu .navegacao-icone { width: 16px; height: 16px; }

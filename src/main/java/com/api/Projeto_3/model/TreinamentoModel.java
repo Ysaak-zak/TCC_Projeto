@@ -11,10 +11,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,24 +23,43 @@ import lombok.ToString;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Table(name = "TREINAMENTO")
 @Entity
 public class TreinamentoModel implements Serializable {
+    private Integer satisfacao;
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
+    private String categoria;
+    private String descricao;
+    private java.time.LocalDate dataInicio;
+    private java.time.LocalDate dataFim;
+    private java.time.LocalTime horarioInicio;
+    private java.time.LocalTime horarioFim;
 
-    @OneToMany(mappedBy = "semana_fk" ,cascade = CascadeType.ALL)
-    private List<SemanaModel> semanas = new ArrayList<>();
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "dia_fk", nullable = false)
+    @ToString.Exclude
+    private DiaModel dia_fk;
+
+    @OneToMany(mappedBy = "treinamento_fk", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<ExercicioModel> exercicios = new ArrayList<>();
 
     @OneToMany(mappedBy = "treimanento_fk" , cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<TreinadorModel> listTreinador = new ArrayList<>();
 
-    @OneToOne
-    @JoinColumn(name = "atleta_fk")
-    private AtletaModelo atleta_fk;
 
+    public Integer getSatisfacao() {
+        return satisfacao;
+    }
+
+    public void setSatisfacao(Integer satisfacao) {
+        this.satisfacao = satisfacao;
+    }
 }

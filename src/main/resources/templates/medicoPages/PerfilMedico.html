@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil Médico | Módulo Médico</title>
+    <th:block th:replace="~{fragments/layout :: head-resources}"></th:block>
+</head>
+<body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
+    <div class="min-h-screen md:flex">
+        <aside th:replace="~{fragments/medicoLayout :: sidebar(active='perfil')}"></aside>
+        <main class="medico-content min-w-0 flex-1 px-5 py-6 sm:px-8 lg:px-10">
+            <div class="mx-auto max-w-6xl">
+                <header class="mb-6 rounded-2xl border-t-4 border-medico-600 bg-white p-6 shadow-sm">
+                    <p class="text-sm font-semibold uppercase tracking-wide text-medico-600">Perfil Médico</p>
+                    <h1 class="mt-2 font-display text-2xl font-bold text-medico-700 sm:text-3xl" th:text="${perfil.name}">Nome do médico</h1>
+                </header>
+                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                        <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Dados pessoais</h2>
+                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Nome</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.name ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">CPF</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.cpf ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">RG</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.rg ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Data de nascimento</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.dataNascimento ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Sexo</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.sexo ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Tipo sanguíneo</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.sangue ?: ''}"></dd>
+                            </div>
+                        </dl>
+                    </section>
+                    <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                        <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Contato</h2>
+                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">E-mail</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.email ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Telefone fixo</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.telefoneFixo ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">WhatsApp</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.telefoneZap ?: ''}"></dd>
+                            </div>
+                        </dl>
+                    </section>
+                    <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                        <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Endereço</h2>
+                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">CEP</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.moradia_fk?.cep ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Rua / Avenida</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.moradia_fk?.avenida ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Número</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.moradia_fk?.sn ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Bairro</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.moradia_fk?.bairro ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Cidade</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.moradia_fk?.cidade ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">UF</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.uf ?: ''}"></dd>
+                            </div>
+                        </dl>
+                    </section>
+                    <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
+                        <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Filiação</h2>
+                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Nome da mãe</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.maeNome ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Telefone da mãe</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.maeTelefone ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">E-mail da mãe</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.maeEmail ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Nome do pai</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.paiName ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Telefone do pai</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.paiTelefone ?: ''}"></dd>
+                            </div>
+                            <div class="min-w-0">
+                                <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">E-mail do pai</dt>
+                                <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.paiEmail ?: ''}"></dd>
+                            </div>
+                        </dl>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -14,6 +14,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "EXERCICIO")
@@ -26,7 +27,8 @@ public class ExercicioModel implements Serializable {
     private double duracacao = 0;
     private String descricao;
     
-    @ManyToOne()
-    @JoinColumn(name = "exercicio_fk")
-    private SemanaModel exercicio_fk;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "treinamento_fk", nullable = false)
+    @ToString.Exclude
+    private TreinamentoModel treinamento_fk;
 }

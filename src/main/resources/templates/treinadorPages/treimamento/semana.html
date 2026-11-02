@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Treinamentos & Saúde - Semanas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" th:href="@{/icon/iconFun.png}">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        medOrange: {
+                            50: '#fffbeb', 100: '#fef3c7', 500: '#f59e0b', 
+                            600: '#d97706', 700: '#b45309', 800: '#92400e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
+</head>
+
+<body class="treinador-layout bg-black font-serif">
+    
+    <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='treinos', treinador=${treinador})}"></aside>
+
+    <div class="treinamento-area">
+        <nav class="treinamento-abas" aria-label="Etapas do treinamento">
+            <a th:href="@{/treinador/treinos/semanas}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span>Semana</span></a>
+            <a th:href="@{/treinador/treinos}"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span>Treino</span></a>
+            <a th:href="@{/treinador/treinos/exercicios}"><img class="navegacao-icone" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true"><span>Exercício</span></a>
+        </nav>
+        <main class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
+            <!-- Conteúdo da Página -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                <div class="pb-3 border-b border-slate-100 flex items-center justify-between">
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-base">1. Criar Semana & Atleta</h3>
+                        <p class="text-xs text-slate-500">Defina o nome da semana e selecione o atleta correspondente.</p>
+                    </div>
+                    <span class="px-3 py-1 bg-medOrange-50 text-medOrange-700 text-xs font-bold rounded-full">Passo 1</span>
+                </div>
+
+                <form th:action="@{/treinador/treinos/semanas}" th:object="${semanaForm}" method="post" class="space-y-4">
+                    <div th:if="${#fields.hasErrors('*')}" role="alert" class="text-red-700">
+                        <p th:each="erro : ${#fields.errors('*')}" th:text="${erro}"></p>
+                    </div>
+                    <p th:if="${#lists.isEmpty(atletas)}" class="text-amber-700">
+                        Nenhum atleta vinculado ao seu perfil de treinador.
+                        <a th:href="@{/treinador#lista-atletas}" class="underline">Vincular atleta no dashboard</a>.
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="nome" class="block text-xs font-bold uppercase text-slate-500 mb-1">Nome da Semana</label>
+                            <input type="text" th:field="*{nome}" maxlength="255" required placeholder="Ex: Semana 1 - Base" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
+                        </div>
+                        <div>
+                            <label for="atletaId" class="block text-xs font-bold uppercase text-slate-500 mb-1">Selecione um atleta vinculado a você</label>
+                            <select th:field="*{atletaId}" required class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
+                                <option value="">Selecione um atleta</option>
+                                <option th:each="atleta : ${atletas}" th:value="${atleta.id}" th:text="${atleta.name}"></option>
+                            </select>
+                            <p class="text-xs text-slate-500 mt-1" th:unless="${#lists.isEmpty(atletas)}"
+                               th:text="|Atletas vinculados disponíveis: ${#lists.size(atletas)}|"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <label for="descricao" class="block text-xs font-bold uppercase text-slate-500 mb-1">Descrição (opcional)</label>
+                        <input type="text" th:field="*{descricao}" maxlength="255" placeholder="Foco em ganho aeróbico" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
+                    </div>
+                    <div class="flex justify-end pt-2">
+                        <button type="submit" th:disabled="${#lists.isEmpty(atletas)}" class="px-5 py-2.5 bg-medOrange-600 hover:bg-medOrange-700 text-white font-semibold rounded-xl text-sm transition shadow-sm flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-plus"></i> Cadastrar semana
+                        </button>
+                    </div>
+                </form>
+
+                <div class="pt-4 border-t border-slate-100">
+                    <h4 class="font-bold text-slate-800 text-sm mb-3">Semanas Disponíveis</h4>
+                    <div class="space-y-2">
+                        <div th:each="s : ${semanas}" class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex items-center justify-between text-xs">
+                            <div>
+                                <span class="font-bold text-slate-900"><i class="fa-solid fa-calendar-week text-medOrange-600 mr-1"></i> <span th:text="${s.nome}"></span></span>
+                                <p class="text-slate-600 mt-0.5"><span th:text="${s.descricao}"></span> • <strong class="text-medOrange-700">Atleta: <span th:text="${s.atleta_fk.name}"></span></strong></p>
+                            </div>
+                            <span class="px-2.5 py-1 bg-medOrange-100 text-medOrange-800 font-bold rounded-full">Pronta</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -1,70 +1,17 @@
 <!DOCTYPE html>
-<html lang="pt-Br">
-
-<head>
-    <meta charset="UTF-8">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="icon" th:href="@{/icon/iconFun.png}">
-</head>
-
-<!DOCTYPE html>
-<html lang="pt-Br">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" th:href="@{/icon/iconFun.png}">
+    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
 </head>
 
-<body class="flex flex-col xl:flex-row bg-black font-serif w-full min-h-screen">
+<body class="treinador-layout bg-black font-serif">
    
-    <header class="w-full h-14 bg-amber-500 xl:h-screen xl:w-1/5 sticky top-0 z-50">
-        <ul class="flex justify-around items-center xl:flex-col mt-4 xl:mt-0 px-3.5 xl:px-0 gap-3.5 xl:gap-0 mt-auto  xl:h-full">
-
-            <li class="w-full flex xl:h-28 xl:text-2xl xl:bg-black">
-                <a href="#" class="flex items-center xl:px-3.5 gap-5">
-                    <img th:src="@{img/user.svg}" class="w-12 hidden xl:flex">
-                    <p class="text-white duration-500 font-extrabold" th:text="${nomeTreinador.name}"></p>
-                </a>
-            </li>
-
-            <li class="w-full flex xl:justify-start items-center xl:hover:bg-black/30 xl:h-11 xl:text-2xl xl:px-4">
-                <a th:href="@{/treinador}" class="flex items-center gap-2">
-                    <img th:src="@{/img/dash.svg}" class="hidden xl:flex w-6">
-                    <p class="xl:hover:text-black hover:text-amber-50 duration-500 font-extrabold">DASHBOARD</p>
-                </a>
-            </li>
-
-            <li class="w-full flex xl:justify-start items-center xl:hover:bg-black/30 xl:h-11 xl:text-2xl xl:px-4">
-                <a th:href="@{/treinador/planilha}" class="flex items-center gap-2">
-                    <img th:src="@{/img/trofeu.svg}" class="hidden xl:flex w-6">
-                    <p class="xl:hover:text-black hover:text-amber-50 duration-500 font-extrabold">PLANILHA</p>
-                </a>
-            </li>
-
-            <li class="w-full flex xl:justify-start items-center bg-amber-600 xl:h-11 xl:text-2xl xl:px-4">
-                <a th:href="@{/treinador/perfil}" class="flex items-center gap-2">
-                    <img th:src="@{/img/user_id.svg}" class="hidden xl:flex w-6">
-                    <p class="xl:hover:text-black hover:text-amber-50 duration-500 font-extrabold">PERFIL</p>
-                </a>
-            </li>
-
-            <li class="w-full flex xl:justify-start items-center xl:hover:bg-black/30 xl:h-11 xl:text-2xl xl:px-4">
-                <a href="#" class="flex items-center gap-2">
-                    <img th:src="@{/img/calen.svg}" class="hidden xl:flex w-6">
-                    <p class="xl:hover:text-black hover:text-amber-50 duration-500 font-extrabold">TREINOS</p>
-                </a>
-            </li>
-
-            <li class="w-full flex xl:justify-start items-center xl:bg-red-600 xl:h-11 xl:text-2xl xl:px-4 xl:mt-auto">
-                <a th:href="@{/home}" class="flex items-center gap-2">
-                    <img th:src="@{/img/sair.svg}" class="hidden xl:flex w-6">
-                    <p class="xl:hover:text-black hover:text-red-700 duration-500 font-extrabold">SAIR</p>
-                </a>
-            </li>
-        </ul>
-    </header>
+    <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='perfil', treinador=${treinador})}"></aside>
 
     <main class="w-full flex flex-col gap-14">
         <div class="flex bg-amber-50 py-4 text-2xl font-black px-2 justify-center xl:justify-start">

@@ -31,48 +31,48 @@ import lombok.ToString;
 public class PerfilsDtos {
    private Long id;  
 
-  // @NotBlank(message = "O campo de nome não pode vazio !!!")
-  // @Size(min = 5  , max = 50 , message = "O nome de ser maior que 5 letreas")
+   //@NotBlank(message = "O campo de nome não pode vazio !!!")
+   //@Size(min = 5  , max = 50 , message = "O nome de ser maior que 5 letreas")
     private String name;
     
     private MultipartFile fotoImg;
 
-  //  @NotNull(message = "A data de nascimento é obrigatória")
-   // @PastOrPresent(message = "A data não pode estar no futuro")
-  //  @DateTimeFormat(pattern = "yyyy-MM-dd")
+    //@NotNull(message = "A data de nascimento é obrigatória")
+    //@PastOrPresent(message = "A data não pode estar no futuro")
+    //@DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
-   // @CPF(message = "CPF inválido")
+    //@CPF(message = "CPF inválido")
     private String cpf;
 
  
-   //@NotBlank(message = "O campo não pode estar vazio")
+    //@NotBlank(message = "O campo não pode estar vazio")
     private String rg;
 
-   // @Email(message = "Deve ser um email valido !!")
-  //  @NotBlank(message = "O emial não ser vazio")
+    //@Email(message = "Deve ser um email valido !!")
+    //@NotBlank(message = "O emial não ser vazio")
     private String email;
 
-   // @Size(min = 5 , message = "Senha ter mas de  5 cacteres")
+    //@Size(min = 5 , message = "Senha ter mas de  5 cacteres")
     private String senha;
     
-   // @NotBlank(message = "O campo não pode estar vazio")
+    //@NotBlank(message = "O campo não pode estar vazio")
     private String telefoneFixo;
     
-  //  @NotBlank(message = "O campo não pode estar vazio")
+    //@NotBlank(message = "O campo não pode estar vazio")
     private String telefoneZap;
     
-   // @NotBlank(message = "O campo não pode estar vazio")
+    //@NotBlank(message = "O campo não pode estar vazio")
     private String pesoMigrama;
 
-   // @NotBlank(message = "O campo não pode estar vazio")
+    //@NotBlank(message = "O campo não pode estar vazio")
     private String alturaCetimentro;  
 
     
-   // @Valid
+    //@Valid
     private AfiliacaoDtos pais_fk;  
 
-   // @Valid
+    //@Valid
     private MoradiaDto moradia_fk;
     
     private EnumUf ufDtos;

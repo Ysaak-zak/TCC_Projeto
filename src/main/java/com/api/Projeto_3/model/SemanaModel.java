@@ -19,6 +19,7 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Table(name = "SEMANA")
 @Entity
@@ -31,11 +32,23 @@ public class SemanaModel implements Serializable {
     private String descricao;
 
  
-    @ManyToOne
-    @JoinColumn(name = "semana_fk")
-    private TreinamentoModel semana_fk;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "atleta_fk", nullable = false)
+    private AtletaModelo atleta_fk;
 
-    @OneToMany(mappedBy = "exercicio_fk" , cascade=CascadeType.ALL)
-    private List<ExercicioModel> exercicio_fk = new ArrayList<>();
+    @OneToMany(mappedBy = "semana_fk", cascade = CascadeType.ALL)
+    private List<DiaModel> dias = new ArrayList<>();
+
+
+     public void adicionarDia(DiaModel dia) {
+
+        if (dias.size() >= 7) {
+            throw new IllegalStateException(
+                "Uma semana não pode possuir mais de 7 dias."
+            );
+        }
+
+        dias.add(dia);
+    }
 
 }

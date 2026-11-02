@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="stat-card(label, valor, tone)" class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+    <p class="text-sm text-slate-500" th:text="${label}"></p>
+    <p class="mt-2 text-3xl font-bold" th:classappend="${'text-' + tone + '-700'}" th:text="${valor}"></p>
+</div>
+<label th:fragment="search-input(id, placeholder, tone)" class="block" th:for="${id}">
+    <span class="sr-only" th:text="${placeholder}"></span>
+    <input type="search" th:id="${id}" th:placeholder="${placeholder}"
+           class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none"
+           th:classappend="${'focus:border-' + tone + '-500'}">
+</label>
+<table>
+    <thead th:fragment="table-head(colunas, tone)" th:classappend="${'bg-' + tone + '-50 text-' + tone + '-700'}">
+        <tr><th th:each="coluna : ${colunas}" th:text="${coluna}" class="px-4 py-3 font-bold"></th></tr>
+    </thead>
+</table>
+<button th:fragment="action-button(texto, tone)" type="submit" class="rounded-lg px-4 py-2 font-bold text-white"
+        th:classappend="${'bg-' + tone + '-600 hover:bg-' + tone + '-700'}" th:text="${texto}"></button>
+<div th:fragment="empty-state(titulo, descricao, tone)" class="rounded-xl border border-slate-100 bg-white p-8 text-center">
+    <h2 class="font-bold" th:classappend="${'text-' + tone + '-700'}" th:text="${titulo}"></h2>
+    <p class="mt-2 text-sm text-slate-500" th:text="${descricao}"></p>
+</div>
+</body>
+</html>

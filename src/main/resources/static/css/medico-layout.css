@@ -1,0 +1,48 @@
+.medico-sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 28px 18px 20px;
+    color: #d3f3e3;
+    background: linear-gradient(165deg, #103f30, #092c23);
+}
+.medico-brand { display: flex; align-items: center; gap: 12px; padding: 0 8px 28px; text-decoration: none; }
+.medico-brand-icon { display: grid; place-items: center; width: 42px; height: 42px; border: 1px solid #ffffff26; border-radius: 14px; background: #ffffff0d; color: #9be5be; }
+.medico-sidebar svg { width: 21px; height: 21px; flex-shrink: 0; }
+.medico-brand strong { display: block; color: #fff; font-size: 17px; letter-spacing: -.3px; }
+.medico-brand small { display: block; margin-top: 3px; font-size: 11px; color: #a5c6b8; }
+.medico-nav-caption { margin: 10px 12px 12px; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; color: #a5c6b8; }
+.medico-nav { display: flex; flex-direction: column; gap: 8px; }
+.medico-nav-link { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border: 1px solid transparent; border-radius: 12px; font-size: 13px; font-weight: 500; color: #d3e5dc; text-decoration: none; transition: background .18s, color .18s; }
+.medico-nav-link:hover { background: #ffffff0d; color: #fff; }
+.medico-nav-link.is-active { background: #e5f7ed; border-color: #c2ebd4; color: #104b32; font-weight: 700; box-shadow: 0 4px 12px #00000014; }
+.medico-nav-link.is-active::after { content: ''; width: 6px; height: 6px; margin-left: auto; border-radius: 50%; background: #178050; flex-shrink: 0; }
+.medico-sidebar-footer { margin-top: auto; padding-top: 28px; }
+.medico-sidebar-footer > p { border-top: 1px solid #ffffff1a; padding: 20px 12px 12px; font-size: 11px; color: #a5c6b8; }
+.medico-logout { display: flex; align-items: center; gap: 12px; width: 100%; padding: 12px 14px; border: 0; border-radius: 12px; color: #d3e5dc; background: transparent; font: inherit; font-size: 13px; cursor: pointer; }
+.medico-logout:hover { background: #ffffff0d; color: #fff; }
+.medico-sidebar a:focus-visible, .medico-logout:focus-visible { outline: 2px solid #9be5be; outline-offset: 4px; }
+@media (min-width: 768px) {
+    .medico-sidebar { position: sticky; top: 0; width: 256px; height: 100dvh; overflow-y: auto; }
+}
+@media (max-width: 767px) {
+    .medico-sidebar { position: relative; padding: 18px 16px 14px; }
+    .medico-brand { padding: 0 100px 18px 0; }
+    .medico-nav-caption, .medico-sidebar-footer > p { display: none; }
+    .medico-nav { flex-direction: row; overflow-x: auto; gap: 6px; padding: 5px; margin: -5px; }
+    .medico-nav-link { flex-shrink: 0; padding: 11px 12px; gap: 8px; }
+    .medico-nav-link.is-active::after { display: none; }
+    .medico-sidebar-footer { position: absolute; top: 23px; right: 16px; padding: 0; }
+    .medico-logout { width: auto; gap: 6px; padding: 8px; font-size: 11px; }
+    .medico-logout svg { width: 16px; height: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .medico-nav-link { transition: none; }
+}
+
+/* Tipografia do conteúdo médico, sem afetar o menu lateral. */
+main.medico-content,
+main.medico-content * {
+    font-size: 20px;
+    line-height: 1.5;
+}

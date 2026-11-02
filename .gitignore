@@ -1,36 +1,129 @@
-### Spring Boot & Maven ###
-HELP.md
-target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### Tailwind CSS & Frontend ###
-# Ignora o binário de 114MB que causou o erro no Git
-tailwind
-# Ignora as dependências do Node caso você use npm no futuro
+# ==========================================
+# PROJETO TCC - SPRING BOOT + MAVEN
+# ==========================================
+
+# 1. JAVA / SPRING BOOT / MAVEN
+target/
+**/target/
+HELP.md
+
+*.class
+*.war
+*.ear
+
+# Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# ==========================================
+# 2. NODE.JS / NPM
+# ==========================================
+
+# Ignorar todas as dependências Node
 node_modules/
+**/node_modules/
+
+# Ignorar arquivos de configuração Node
+package.json
 package-lock.json
-# Ignora o arquivo de saída gerado (ele será recriado pelo script de build)
+npm-shrinkwrap.json
+
+# Cache e logs npm
+.npm/
+.npx/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==========================================
+# 3. TAILWIND CSS
+# ==========================================
+
+# Executável Tailwind (arquivo grande)
+/tailwind
+/tailwindcss
+/tailwindcss-*
+
+# CSS compilado
 src/main/resources/static/css/output.css
 
-### IDEs (IntelliJ, VS Code, STS) ###
-.idea/
-*.iws
-*.iml
-*.ipr
+# Cache de build
+.cache/
+.parcel-cache/
+.turbo/
+
+# ==========================================
+# 4. VISUAL STUDIO CODE / IDE
+# ==========================================
+
 .vscode/
+.idea/
+*.iml
+*.iws
+*.ipr
+
 .classpath
 .project
 .settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 
-##NODE
-touch .gitignore
+# ==========================================
+# 5. SISTEMA OPERACIONAL - LINUX
+# ==========================================
 
-### Sistema Operacional (Arch Linux) ###
-.DS_Store
-Thumbs.db
+.directory
+.Trash-*
 *.swp
+*.swo
 *~
+
+# Windows / macOS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ==========================================
+# 6. LOGS / ARQUIVOS TEMPORÁRIOS
+# ==========================================
+
+*.log
+logs/
+*.tmp
+*.temp
+*.bak
+
+# ==========================================
+# 7. SEGURANÇA
+# ==========================================
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.p12
+*.pfx
+
+# ==========================================
+# 8. ARQUIVOS LOCAIS
+# ==========================================
+
+application-local.properties
+application-local.yml
+application-local.yaml
+
+# ==========================================
+# 9. ARQUIVOS QUE CONTINUAM NO GIT
+# ==========================================
+
+# src/
+# docs/
+# scripts/
+# pom.xml
+# mvnw
+# mvnw.cmd
+# .mvn/wrapper/
+# tailwind.config.js
+# .gitattributes

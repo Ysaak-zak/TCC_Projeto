@@ -1,0 +1,48 @@
+.treino-layout { font-family: Inter, system-ui, sans-serif; }
+.treino-pagina { width: 100%; max-width: 1120px; margin: auto; padding: 36px; box-sizing: border-box; }
+.treino-cabecalho { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+.treino-sobrelinha { color: #92400e; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.treino-cabecalho h1 { font-size: clamp(24px, 3vw, 32px); font-weight: 750; letter-spacing: -.035em; margin: 8px 0; color: #0f172a; }
+.treino-cabecalho p, .treino-titulo p, .treino-ajuda, .treino-acoes p { color: #64748b; font-size: 13px; line-height: 1.6; }
+.treino-link { color: #92400e; font-size: 13px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.treino-conteudo { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 20px; }
+.treino-cartao { border: 1px solid #e2e8f0; border-radius: 18px; background: #fff; padding: 26px; box-shadow: 0 4px 16px #0f172a04; min-width: 0; }
+.treino-titulo { display: flex; gap: 12px; align-items: flex-start; padding-bottom: 20px; }
+.treino-titulo > span { display: grid; place-items: center; background: #fff7ed; color: #9a3412; border: 1px solid #ffedd5; border-radius: 12px; width: 38px; height: 38px; font-size: 12px; font-weight: 800; flex-shrink: 0; }
+.treino-titulo h2, .treino-planejados h2 { margin: 0; font-size: 17px; font-weight: 750; color: #0f172a; }
+.treino-titulo p { margin: 4px 0 0; }
+.treino-formulario label, .treino-formulario legend { display: block; color: #334155; font-size: 13px; font-weight: 650; margin-bottom: 8px; }
+.treino-formulario label small { color: #64748b; font-weight: 400; }
+.treino-formulario input:not([type=radio]), .treino-formulario select, .treino-formulario textarea { box-sizing: border-box; width: 100%; min-width: 0; border: 1px solid #cbd5e1; border-radius: 10px; padding: 12px; background: #f8fafc; font: inherit; font-size: 14px; color: #0f172a; }
+.treino-formulario textarea { resize: vertical; }
+.treino-formulario input:focus-visible, .treino-formulario select:focus-visible, .treino-formulario textarea:focus-visible, .treino-acoes button:focus-visible, .treino-planejados summary:focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }
+.treino-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-bottom: 20px; }
+.treino-grade-horarios { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 0; }
+.treino-dias-campo { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
+.treino-ajuda { margin: 0 0 12px; }
+.treino-dias { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; }
+.treino-dia { position: relative; cursor: pointer; margin: 0 !important; }
+.treino-dia input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.treino-dia > span { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 80px; gap: 6px; border: 1px solid #cbd5e1; border-radius: 12px; background: #f8fafc; }
+.treino-dia strong { font-size: 17px; }
+.treino-dia small { font-size: 10px; }
+.treino-dia:hover > span { border-color: #d97706; }
+.treino-dia input:checked + span { background: #fffbeb; border: 2px solid #b45309; color: #92400e; box-shadow: 0 2px 8px #d9770615; }
+.treino-dia input:checked + span small { color: #92400e; }
+.treino-dia input:focus-visible + span { outline: 3px solid #2563eb; outline-offset: 3px; }
+.treino-conteudo:disabled { opacity: .55; }
+.treino-conteudo:disabled .treino-dia, .treino-conteudo:disabled button { cursor: not-allowed; }
+.treino-acoes { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.treino-acoes button { background: #b45309; color: white; border: 0; border-radius: 12px; padding: 14px 24px; font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.treino-acoes button:hover { background: #92400e; }
+.treino-acoes button span { margin-left: 16px; }
+.treino-aviso { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 12px; padding: 16px; margin-bottom: 20px; font-size: 14px; color: #92400e; }
+.treino-sucesso { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
+.treino-erros { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+.treino-planejados { margin-top: 36px; display: grid; gap: 12px; }
+.treino-planejados summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.treino-sessao { display: flex; flex-wrap: wrap; gap: 12px; padding: 14px 0; border-top: 1px solid #e2e8f0; font-size: 13px; margin-top: 12px; }
+.treino-sessao strong { color: #92400e; }
+@media (max-width: 1100px) { .treino-dia small { display: none; } .treino-grade-horarios { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .treino-cabecalho, .treino-acoes { align-items: flex-start; flex-direction: column; } .treino-pagina { padding: 24px 16px; } .treino-cartao { padding: 18px; } .treino-dias { grid-template-columns: repeat(4, minmax(0, 1fr)); } .treino-grade { grid-template-columns: 1fr; } .treino-acoes button { width: 100%; } }
+@media (max-width: 640px) { body.treino-layout { grid-template-columns: 1fr; } .treino-layout .treinador-menu { position: static; height: auto; } .treino-layout .treinador-marca { padding: 14px 16px; } .treino-layout .treinador-menu nav { flex-direction: row; flex-wrap: wrap; padding: 0; } .treino-layout .treinador-menu nav a { flex: 1; font-size: 12px; padding: 12px; } .treino-layout .treinador-sair { padding: 10px 16px; font-size: 12px; } }

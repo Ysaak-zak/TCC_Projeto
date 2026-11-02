@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.api.Projeto_3.dtos.enumDtos.EnumDtos;
-import com.api.Projeto_3.dtos.enumDtos.EnumGenero;
 import com.api.Projeto_3.dtos.interfaceCustomer.CustomerNome;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
 import com.api.Projeto_3.dtos.interfaceCustomer.TreinadorCustomer;
 import com.api.Projeto_3.dtos.model.PerfilsDtos;
 import com.api.Projeto_3.dtos.model.RoleDtos;
+import com.api.Projeto_3.model.enums.EnumGenero;
 import com.api.Projeto_3.model.enums.EnumSague;
 import com.api.Projeto_3.model.enums.EnumUf;
 import com.api.Projeto_3.service.AtletaService;
@@ -44,29 +41,22 @@ public class TreinadorController {
     @Autowired AtletaService atl_servic;
 
 
+    private String id_username = null;
+
+
         @GetMapping("/cadastro/treinador/{id}")
         public String getCadastroTreinador(@PathVariable("id") Long id, PerfilsDtos treinadorDtos, Model model) {
-        model.addAttribute("listaUfs", EnumDtos.values());
-        model.addAttribute("listSague", EnumSague.values());
-        model.addAttribute("listEnumGenero", EnumGenero.values());
-    
-        var role = service.infoRoles(id);
-    
-        model.addAttribute("roleId", role);
+        carregarDadosCadastro(id, model);
         model.addAttribute("treinadorDtos", treinadorDtos);
         return "publicPlages/cadastroTreinador";
     }
 
-@PostMapping("cadastro/treinador/save/{id}")
+@PostMapping("/cadastro/treinador/save/{id}")
 public String postTreinadorInsert(@PathVariable("id")   Long id , @ModelAttribute("treinadorDtos") @Valid PerfilsDtos treinadorDtos , BindingResult result,  Model model) {
     
     if(result.hasErrors()){
-        model.addAttribute("listSague", EnumSague.values());
-        model.addAttribute("listEnumGenero", EnumGenero.values());
-        model.addAttribute("listaUfs", EnumUf.values());
-        model.addAttribute("id", id); 
-        model.addAttribute("roleNome", service.buscarNomeRoles(id));   
-        return "redirect:/home"; 
+        carregarDadosCadastro(id, model);
+        return "publicPlages/cadastroTreinador"; 
     }  
     
      if(treinadorDtos.getRoles() == null){
@@ -76,7 +66,7 @@ public String postTreinadorInsert(@PathVariable("id")   Long id , @ModelAttribut
     treinadorDtos.getRoles().setId(id);
 
      service.insertTreinador(treinadorDtos);
-    return "redirect:/home";
+    return "redirect:/login";
 }
 
  @GetMapping("/treinador")
@@ -85,6 +75,8 @@ public String getTreinador(@AuthenticationPrincipal UserDetails userLogado, Mode
    
     TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
     List<ListDasAtleta> listDas = serviceTre.listTab();
+
+    this.id_username = userLogado.getUsername();
 
     model.addAttribute("treinador", treinador);
     model.addAttribute("listaAtletas", listDas);
@@ -102,17 +94,10 @@ public String getTreinador(@AuthenticationPrincipal UserDetails userLogado, Mode
     return "treinadorPages/dash.html";
 }
 
- @GetMapping("/treinador/planilha")
-public String getTreinadorPlanilhas(@AuthenticationPrincipal UserDetails userLogado, Model model) {
+ 
     
-   
-       TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
 
-
-    model.addAttribute("treinador", treinador);
-
-    return "treinadorPages/Planinhas.html";
-}
+ 
 
  @GetMapping("/treinador/perfil")
 public String getTreinadorPerfil(@AuthenticationPrincipal UserDetails userLogado, Model model) {
@@ -131,6 +116,15 @@ public String vincularAtleta(@PathVariable("treinadorId") Long treinadorId, @Pat
    atl_servic.insertFkATreinador(atletaId, treinadorId);
 
     return "redirect:/treinador";
+}
+
+private void carregarDadosCadastro(Long id, Model model) {
+    model.addAttribute("id", id);
+    model.addAttribute("listaUfs", EnumUf.values());
+    model.addAttribute("listSague", EnumSague.values());
+    model.addAttribute("listEnumGenero", EnumGenero.values());
+    model.addAttribute("roleId", service.infoRoles(id));
+    model.addAttribute("roleNome", service.buscarNomeRoles(id));
 }
 
 }

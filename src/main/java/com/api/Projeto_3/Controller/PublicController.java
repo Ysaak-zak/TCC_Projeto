@@ -15,6 +15,10 @@ public class PublicController {
     @Autowired
     PerfilService service;
 
+    @GetMapping("/")
+    public String getIndex() {
+         return "redirect:/home";
+    }
 
     @GetMapping("/home")
     public String getHome() {
@@ -30,6 +34,5 @@ public class PublicController {
 
 
 }
-
 
 
