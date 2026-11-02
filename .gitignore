@@ -1,53 +1,71 @@
 
+
 # ==========================================
-# PROJETO TCC - SPRING BOOT + MAVEN
+# 1. JAVA / SPRING BOOT / MAVEN
 # ==========================================
 
-# 1. JAVA / SPRING BOOT / MAVEN
+# Diretórios de compilação
 target/
 **/target/
-HELP.md
+build/
+out/
 
+# Arquivos compilados
 *.class
 *.war
 *.ear
 
-# Maven Wrapper
+# Arquivos JAR gerados
+*.jar
+
+# Preservar Maven Wrapper
 !.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos auxiliares
+HELP.md
+
+# Relatórios de compilação
+dependency-reduced-pom.xml
 
 # ==========================================
 # 2. NODE.JS / NPM
 # ==========================================
 
-# Ignorar todas as dependências Node
+# Dependências Node.js
 node_modules/
 **/node_modules/
 
-# Ignorar arquivos de configuração Node
+# Arquivos de configuração Node.js
 package.json
 package-lock.json
 npm-shrinkwrap.json
 
-# Cache e logs npm
+# Cache e arquivos temporários
 .npm/
 .npx/
+.yarn/
+.pnpm-store/
+
+# Logs npm, yarn e pnpm
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # ==========================================
-# 3. TAILWIND CSS
+# 3. TAILWIND CSS / FRONTEND
 # ==========================================
 
-# Executável Tailwind (arquivo grande)
+# Executáveis Tailwind de grande tamanho
 /tailwind
 /tailwindcss
 /tailwindcss-*
 
-# CSS compilado
+# Arquivos CSS compilados
 src/main/resources/static/css/output.css
 
-# Cache de build
+# Diretórios de build frontend
+dist/
 .cache/
 .parcel-cache/
 .turbo/
@@ -56,74 +74,300 @@ src/main/resources/static/css/output.css
 # 4. VISUAL STUDIO CODE / IDE
 # ==========================================
 
+# Visual Studio Code
 .vscode/
+
+# IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
 
+# Eclipse / Spring Tool Suite
 .classpath
 .project
 .settings/
 .springBeans
 .sts4-cache/
+.factorypath
 
 # ==========================================
-# 5. SISTEMA OPERACIONAL - LINUX
+# 5. SISTEMA OPERACIONAL
 # ==========================================
 
+# Arch Linux / Linux
 .directory
 .Trash-*
 *.swp
 *.swo
 *~
 
-# Windows / macOS
+# Windows
 Thumbs.db
 Desktop.ini
+ehthumbs.db
+
+# macOS
 .DS_Store
+.AppleDouble
+.LSOverride
 
 # ==========================================
 # 6. LOGS / ARQUIVOS TEMPORÁRIOS
 # ==========================================
 
+# Logs da aplicação
 *.log
 logs/
+log/
+
+# Arquivos temporários
 *.tmp
 *.temp
 *.bak
+*.old
+*.orig
+*.rej
+
+# Arquivos de execução
+*.pid
+*.pid.lock
 
 # ==========================================
-# 7. SEGURANÇA
+# 7. SEGURANÇA / CREDENCIAIS
 # ==========================================
 
+# Variáveis de ambiente
 .env
 .env.*
 !.env.example
 
+# Chaves privadas e certificados
 *.pem
 *.key
 *.p12
 *.pfx
+*.jks
+*.keystore
 
-# ==========================================
-# 8. ARQUIVOS LOCAIS
-# ==========================================
-
+# Configurações sensíveis locais
 application-local.properties
 application-local.yml
 application-local.yaml
 
+application-secret.properties
+application-secret.yml
+application-secret.yaml
+
 # ==========================================
-# 9. ARQUIVOS QUE CONTINUAM NO GIT
+# 8. POSTGRESQL / BANCO DE DADOS
 # ==========================================
 
-# src/
-# docs/
-# scripts/
-# pom.xml
-# mvnw
-# mvnw.cmd
-# .mvn/wrapper/
-# tailwind.config.js
-# .gitattributes
+# Backups e dumps
+*.dump
+*.backup
+*.sql.gz
+
+# Arquivos temporários do banco
+*.db-journal
+
+# Manter migrations Flyway no Git
+# src/main/resources/db/migration/
+
+# ==========================================
+# 9. TESTES / RELATÓRIOS
+# ==========================================
+
+# Relatórios de testes
+coverage/
+test-results/
+htmlcov/
+
+# Arquivos de cobertura
+*.exec
+*.ec
+
+
+# Diretórios de compilação
+target/
+**/target/
+build/
+out/
+
+# Arquivos compilados
+*.class
+*.war
+*.ear
+
+# Arquivos JAR gerados
+*.jar
+
+# Preservar Maven Wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# Arquivos auxiliares
+HELP.md
+
+# Relatórios de compilação
+dependency-reduced-pom.xml
+
+# ==========================================
+# 2. NODE.JS / NPM
+# ==========================================
+
+# Dependências Node.js
+node_modules/
+**/node_modules/
+
+# Arquivos de configuração Node.js
+package.json
+package-lock.json
+npm-shrinkwrap.json
+
+# Cache e arquivos temporários
+.npm/
+.npx/
+.yarn/
+.pnpm-store/
+
+# Logs npm, yarn e pnpm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ==========================================
+# 3. TAILWIND CSS / FRONTEND
+# ==========================================
+
+# Executáveis Tailwind de grande tamanho
+/tailwind
+/tailwindcss
+/tailwindcss-*
+
+# Arquivos CSS compilados
+src/main/resources/static/css/output.css
+
+# Diretórios de build frontend
+dist/
+.cache/
+.parcel-cache/
+.turbo/
+
+# ==========================================
+# 4. VISUAL STUDIO CODE / IDE
+# ==========================================
+
+# Visual Studio Code
+.vscode/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse / Spring Tool Suite
+.classpath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+.factorypath
+
+# ==========================================
+# 5. SISTEMA OPERACIONAL
+# ==========================================
+
+# Arch Linux / Linux
+.directory
+.Trash-*
+*.swp
+*.swo
+*~
+
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ==========================================
+# 6. LOGS / ARQUIVOS TEMPORÁRIOS
+# ==========================================
+
+# Logs da aplicação
+*.log
+logs/
+log/
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.old
+*.orig
+*.rej
+
+# Arquivos de execução
+*.pid
+*.pid.lock
+
+# ==========================================
+# 7. SEGURANÇA / CREDENCIAIS
+# ==========================================
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Chaves privadas e certificados
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Configurações sensíveis locais
+application-local.properties
+application-local.yml
+application-local.yaml
+
+application-secret.properties
+application-secret.yml
+application-secret.yaml
+
+# ==========================================
+# 8. POSTGRESQL / BANCO DE DADOS
+# ==========================================
+
+# Backups e dumps
+*.dump
+*.backup
+*.sql.gz
+
+# Arquivos temporários do banco
+*.db-journal
+
+# Manter migrations Flyway no Git
+# src/main/resources/db/migration/
+
+# ==========================================
+# 9. TESTES / RELATÓRIOS
+# ==========================================
+
+# Relatórios de testes
+coverage/
+test-results/
+htmlcov/
+
+# Arquivos de cobertura
+*.exec
+*.ec
+
