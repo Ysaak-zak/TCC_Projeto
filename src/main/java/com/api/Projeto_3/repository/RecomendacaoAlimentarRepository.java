@@ -8,4 +8,5 @@ import com.api.Projeto_3.model.RecomendacaoAlimentar;
 
 public interface RecomendacaoAlimentarRepository extends JpaRepository<RecomendacaoAlimentar, Long> {
     List<RecomendacaoAlimentar> findByAtletaIdAndMedicoIdOrderByDataInicioDesc(Long atletaId, Long medicoId);
+    List<RecomendacaoAlimentar> findByAtletaIdOrderByDataInicioDesc(Long atletaId);
 }

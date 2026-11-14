@@ -70,6 +70,16 @@ public class AtletaController {
             return "atletaPages/PerfilAtleta";
         }
 
+        @GetMapping("/atleta/alimentacao")
+        public String getAlimentacao(@AuthenticationPrincipal UserDetails userLogado, Model model) {
+            var atleta = atletaService.buscarAtletaPorCpf(userLogado.getUsername());
+            if (atleta == null) {
+                return "redirect:/login?error";
+            }
+            model.addAttribute("recomendacoes", atletaService.buscarRecomendacoesAlimentares(atleta.getId()));
+            return "atletaPages/alimentacao";
+        }
+
         private void carregarDadosCadastro(Long id, Model model) {
             model.addAttribute("id", id);
             model.addAttribute("listaUfs", EnumUf.values());
