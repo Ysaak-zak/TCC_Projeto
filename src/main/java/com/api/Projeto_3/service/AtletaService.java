@@ -1,10 +1,14 @@
 package com.api.Projeto_3.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.Projeto_3.repository.AtletaRespository;
 import com.api.Projeto_3.model.AtletaModelo;
+import com.api.Projeto_3.model.RecomendacaoAlimentar;
+import com.api.Projeto_3.repository.AtletaRespository;
+import com.api.Projeto_3.repository.RecomendacaoAlimentarRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -13,8 +17,15 @@ public class AtletaService {
     @Autowired
     AtletaRespository jpa;
 
+    @Autowired
+    RecomendacaoAlimentarRepository recomendacaoRepository;
+
     public AtletaModelo buscarAtletaPorCpf(String cpf) {
         return jpa.findByCpf(cpf).stream().findFirst().orElse(null);
+    }
+
+    public List<RecomendacaoAlimentar> buscarRecomendacoesAlimentares(Long atletaId) {
+        return recomendacaoRepository.findByAtletaIdOrderByDataInicioDesc(atletaId);
     }
 
 

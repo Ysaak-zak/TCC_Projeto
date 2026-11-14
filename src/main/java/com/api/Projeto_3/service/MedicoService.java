@@ -71,7 +71,7 @@ public class MedicoService {
 
     @Transactional
     public boolean recomendarAlimentacao(Long medicoId, Long atletaId, RecomendacaoAlimentarDto dados) {
-        if (dados.getDataInicio() == null) {
+        if (dados == null || dados.getDataInicio() == null) {
             return false;
         }
         MedicoModelo medico = jpaMedico.findById(medicoId).orElse(null);
@@ -94,4 +94,5 @@ public class MedicoService {
         recomendacaoRepository.save(recomendacao);
         return true;
     }
+
 }
