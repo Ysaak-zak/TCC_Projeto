@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.CustomerNome;
 import com.api.Projeto_3.dtos.interfaceCustomer.TreinadorCustomer;
-import com.api.Projeto_3.dtos.model.PerfilsDtos;
 import com.api.Projeto_3.model.TreinadorModel;
 
 @Repository

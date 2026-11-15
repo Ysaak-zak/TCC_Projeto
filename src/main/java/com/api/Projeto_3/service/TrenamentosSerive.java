@@ -3,9 +3,9 @@ package com.api.Projeto_3.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.Projeto_3.dtos.model.CriarTreinoDto;
-import com.api.Projeto_3.dtos.model.CriarExercicioDto;
 import com.api.Projeto_3.model.ExercicioModel;
+import com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto;
+import com.api.Projeto_3.dtos.DtosModelos.CriarTreinoDto;
 import com.api.Projeto_3.model.DiaModel;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.TreinamentoModel;
@@ -24,6 +24,17 @@ public class TrenamentosSerive {
         SemanaModel semana = buscarSemana(forma.getSemanaId(), cpf);
         DiaModel dia = buscarOuCriarDia(semana, forma.getDia());
         TreinamentoModel treino = montarTreino(forma, dia);
+
+        if (forma.getExercicios() != null) {
+            for (var item : forma.getExercicios()) {
+                ExercicioModel exercicio = new ExercicioModel();
+                exercicio.setNome(item.getNome().trim());
+                exercicio.setDescricao(item.getDescricao());
+                exercicio.setDuracacao(item.getDuracao());
+                exercicio.setTreinamento_fk(treino);
+                treino.getExercicios().add(exercicio);
+            }
+        }
 
         dia.getTreinamentos().add(treino);
         snJpa.save(semana);

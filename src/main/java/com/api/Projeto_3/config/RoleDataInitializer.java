@@ -20,7 +20,6 @@ public class RoleDataInitializer implements CommandLineRunner {
         atualizarOuCriar(1L, "ROLE_ATLETA");
         atualizarOuCriar(2L, "ROLE_MEDICO");
         atualizarOuCriar(3L, "ROLE_TREINADOR");
-        atualizarOuCriar(4L, "ROLE_ADMIN");
     }
 
     private void atualizarOuCriar(Long id, String authority) {

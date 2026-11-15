@@ -1,10 +1,10 @@
 package com.api.Projeto_3.Controller;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
+import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.CustomerNome;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
 import com.api.Projeto_3.dtos.interfaceCustomer.TreinadorCustomer;
-import com.api.Projeto_3.dtos.model.PerfilsDtos;
-import com.api.Projeto_3.dtos.model.RoleDtos;
 import com.api.Projeto_3.model.enums.EnumGenero;
 import com.api.Projeto_3.model.enums.EnumSague;
 import com.api.Projeto_3.model.enums.EnumUf;
@@ -38,93 +39,111 @@ public class TreinadorController {
     @Autowired
     TreinadorService serviceTre;
 
-    @Autowired AtletaService atl_servic;
-
+    @Autowired
+    AtletaService atl_servic;
 
     private String id_username = null;
 
-
-        @GetMapping("/cadastro/treinador/{id}")
-        public String getCadastroTreinador(@PathVariable("id") Long id, PerfilsDtos treinadorDtos, Model model) {
+    @GetMapping("/cadastro/treinador/{id}")
+    public String getCadastroTreinador(@PathVariable("id") Long id, PerfilsDtos treinadorDtos, Model model) {
         carregarDadosCadastro(id, model);
         model.addAttribute("treinadorDtos", treinadorDtos);
         return "publicPlages/cadastroTreinador";
     }
 
-@PostMapping("/cadastro/treinador/save/{id}")
-public String postTreinadorInsert(@PathVariable("id")   Long id , @ModelAttribute("treinadorDtos") @Valid PerfilsDtos treinadorDtos , BindingResult result,  Model model) {
-    
-    if(result.hasErrors()){
-        carregarDadosCadastro(id, model);
-        return "publicPlages/cadastroTreinador"; 
-    }  
-    
-     if(treinadorDtos.getRoles() == null){
-        treinadorDtos.setRoles(new RoleDtos());
+    @PostMapping("/cadastro/treinador/save/{id}")
+    public String postTreinadorInsert(@PathVariable("id") Long id,
+            @ModelAttribute("treinadorDtos") @Valid PerfilsDtos treinadorDtos, BindingResult result, Model model) {
+
+        if (result.hasErrors()) {
+            carregarDadosCadastro(id, model);
+            return "publicPlages/cadastroTreinador";
+        }
+
+        if (treinadorDtos.getRoles() == null) {
+            treinadorDtos.setRoles(new RoleDtos());
+        }
+
+        treinadorDtos.getRoles().setId(id);
+
+        service.insertTreinador(treinadorDtos);
+        return "redirect:/login";
     }
 
-    treinadorDtos.getRoles().setId(id);
+    @GetMapping("/treinador")
+    public String getTreinador(@AuthenticationPrincipal UserDetails userLogado, Model model) {
 
-     service.insertTreinador(treinadorDtos);
-    return "redirect:/login";
-}
+        TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
+        List<ListDasAtleta> listDas = serviceTre.listTab();
 
- @GetMapping("/treinador")
-public String getTreinador(@AuthenticationPrincipal UserDetails userLogado, Model model) {
-    
-   
-    TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
-    List<ListDasAtleta> listDas = serviceTre.listTab();
+        this.id_username = userLogado.getUsername();
 
-    this.id_username = userLogado.getUsername();
+        model.addAttribute("treinador", treinador);
+        model.addAttribute("listaAtletas", listDas);
+        model.addAttribute("treinador_id_Vincule", treinador.getId());
 
-    model.addAttribute("treinador", treinador);
-    model.addAttribute("listaAtletas", listDas);
+        final int v = atl_servic.quntAtletaVinculadosTreinador(treinador.getId());
+        model.addAttribute("vinculados_count", v);
 
-    model.addAttribute("treinador_id_Vincule",treinador.getId());
+        final int vSem = atl_servic.quntAtletaSemVinculadosTreinador();
+        model.addAttribute("atleta_sem_Vinculacao", vSem);
 
-    final int v = atl_servic.quntAtletaVinculadosTreinador(treinador.getId());
-    model.addAttribute("vinculados_count",v);
+        return "treinadorPages/dash.html";
+    }
 
-    final int vSem = atl_servic.quntAtletaSemVinculadosTreinador();
-    model.addAttribute("atleta_sem_Vinculacao",vSem);
+    @GetMapping("/treinador/perfil")
+    public String getTreinadorPerfil(@AuthenticationPrincipal UserDetails userLogado, Model model) {
 
+        TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
+        CustomerNome treinadorNome = serviceTre.buscarNomes(userLogado.getUsername());
 
+        model.addAttribute("treinador", treinador);
+        model.addAttribute("nomeTreinador", treinadorNome);
 
-    return "treinadorPages/dash.html";
-}
+        return "treinadorPages/Perfil.html";
+    }
 
- 
-    
+    @GetMapping("/treinador/atletas-vinculados")
+    public String getTreinadorAtletasVinculados(@AuthenticationPrincipal UserDetails userLogado, Model model) {
 
- 
+        TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
+        List<ListDasAtleta> atletasVinculados = serviceTre.listarAtletasVinculados(treinador.getId());
 
- @GetMapping("/treinador/perfil")
-public String getTreinadorPerfil(@AuthenticationPrincipal UserDetails userLogado, Model model) {
-    
-    TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
-    CustomerNome treinadorNome =  serviceTre.buscarNomes(userLogado.getUsername());
+        model.addAttribute("treinador", treinador);
+        model.addAttribute("atletasVinculados", atletasVinculados);
+        model.addAttribute("vinculados_count", atletasVinculados.size());
 
-    model.addAttribute("treinador", treinador);
-    model.addAttribute("nomeTreinador", treinadorNome);
+        return "treinadorPages/listaAtletasVinculados";
+    }
 
-    return "treinadorPages/Perfil.html";
-}
+    @PostMapping("/treinador/{treinadorId}/vincular-atleta/{atletaId}")
+    public String vincularAtleta(@PathVariable("treinadorId") Long treinadorId,
+            @PathVariable("atletaId") Long atletaId) {
+        atl_servic.insertFkATreinador(atletaId, treinadorId);
+        return "redirect:/treinador";
+    }
+    @PostMapping("/treinador/atletas/{atletaId}/desvincular")
+    public String desvincularAtleta(@AuthenticationPrincipal UserDetails userLogado,
+                                   @PathVariable("atletaId") Long atletaId) {
+        if (userLogado == null) {
+            return "redirect:/login";
+        }
 
-@PostMapping("/treinador/{treinadorId}/vincular-atleta/{atletaId}")
-public String vincularAtleta(@PathVariable("treinadorId") Long treinadorId, @PathVariable("atletaId") Long atletaId) {
-   atl_servic.insertFkATreinador(atletaId, treinadorId);
+        TreinadorCustomer treinador = serviceTre.buscarTreinadorPorId(userLogado.getUsername());
+        if (!serviceTre.desvincularAtleta(treinador.getId(), atletaId)) {
+            return "redirect:/treinador/atletas-vinculados?atletaIndisponivel";
+        }
 
-    return "redirect:/treinador";
-}
+        return "redirect:/treinador/atletas-vinculados?desvinculado";
+    }
 
-private void carregarDadosCadastro(Long id, Model model) {
-    model.addAttribute("id", id);
-    model.addAttribute("listaUfs", EnumUf.values());
-    model.addAttribute("listSague", EnumSague.values());
-    model.addAttribute("listEnumGenero", EnumGenero.values());
-    model.addAttribute("roleId", service.infoRoles(id));
-    model.addAttribute("roleNome", service.buscarNomeRoles(id));
-}
+    private void carregarDadosCadastro(Long id, Model model) {
+        model.addAttribute("id", id);
+        model.addAttribute("listaUfs", EnumUf.values());
+        model.addAttribute("listSague", EnumSague.values());
+        model.addAttribute("listEnumGenero", EnumGenero.values());
+        model.addAttribute("roleId", service.infoRoles(id));
+        model.addAttribute("roleNome", service.buscarNomeRoles(id));
+    }
 
 }

@@ -4,13 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Treinador</title>
-    <th:block th:replace="~{fragments/layout :: head-resources}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+        <link rel="icon" th:href="@{/img/iconFun.png}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/tailwind-theme.js}"></script>
     <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
 </head>
 <body class="min-h-screen bg-[#f9f8f6] font-sans text-slate-700">
     <div class="min-h-screen treinador-painel">
 
-        <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='dashboard', treinador=${treinador})}"></aside>
+        <aside class="treinador-menu">
+            <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
+            <nav aria-label="Menu do treinador">
+                <a th:href="@{/treinador}" class="selecionado">
+                    <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
+                </a>
+                <a th:href="@{/treinador/atletas-vinculados}">
+                    <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
+                </a>
+                <a th:href="@{/treinador/perfil}">
+                    <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
+                </a>
+                <a th:href="@{/treinador/treinos/semanas}">
+                    <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
+                </a>
+            </nav>
+            <form th:action="@{/logout}" method="post" class="treinador-sair">
+                <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit">Sair</button>
+            </form>
+        </aside>
 
         <!-- ===== Conteúdo principal (mesmo esqueleto de medicoPages/vincularAtleta.html) ===== -->
         <main class="min-w-0 flex-1">
@@ -21,8 +44,14 @@
 
                 <!-- Cards de resumo -->
                 <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
-                    <div th:replace="~{fragments/uiComponents :: stat-card(label='Atletas Vinculados', valor=${vinculados_count}, tone='treinador')}"></div>
-                    <div th:replace="~{fragments/uiComponents :: stat-card(label='Atletas Novos', valor=${atleta_sem_Vinculacao}, tone='treinador')}"></div>
+                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+                        <p class="text-sm text-slate-500">Atletas Vinculados</p>
+                        <p class="mt-2 text-3xl font-bold text-treinador-700" th:text="${vinculados_count}"></p>
+                    </div>
+                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+                        <p class="text-sm text-slate-500">Atletas Novos</p>
+                        <p class="mt-2 text-3xl font-bold text-treinador-700" th:text="${atleta_sem_Vinculacao}"></p>
+                    </div>
                 </div>
 
                 <!-- Título da seção -->
@@ -33,14 +62,20 @@
 
                 <!-- Busca -->
                 <div class="mt-4">
-                    <label th:replace="~{fragments/uiComponents :: search-input(id='search', placeholder='Buscar por nome ou CPF...', tone='treinador')}"></label>
+                    <label class="block" for="search">
+                        <span class="sr-only">Buscar por nome ou CPF...</span>
+                        <input type="search" id="search" placeholder="Buscar por nome ou CPF..."
+                               class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-treinador-500">
+                    </label>
                 </div>
 
                 <!-- Tabela -->
                 <div id="lista-atletas" class="mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-[760px] text-left text-sm">
-                            <thead th:replace="~{fragments/uiComponents :: table-head(colunas=${ {'ID','Nomes','CPF','Sexo','E-mail','Localização','Ação'} }, tone='treinador')}"></thead>
+                            <thead class="bg-treinador-50 text-treinador-700">
+                                    <tr><th th:each="coluna : ${ {'ID','Nomes','CPF','Sexo','E-mail','Localização','Ação'} }" th:text="${coluna}" class="px-4 py-3 font-bold"></th></tr>
+                                </thead>
                             <tbody id="tbody" class="divide-y divide-slate-100 bg-white">
                                 <tr class="athlete-row hover:bg-treinador-50/40"
                                     th:each="atleta : ${listaAtletas}"
@@ -54,7 +89,7 @@
                                     <td class="px-4 py-3 text-slate-600" th:text="${atleta.cidade}">Recife - PE</td>
                                     <td class="px-4 py-3 text-right">
                                         <form th:action="@{/treinador/{tId}/vincular-atleta/{aId}(tId=${treinador.id}, aId=${atleta.id})}" method="POST">
-                                            <button th:replace="~{fragments/uiComponents :: action-button(texto='Vincular', tone='treinador')}"></button>
+                                            <button type="submit" class="rounded-lg px-4 py-2 font-bold text-white bg-treinador-600 hover:bg-treinador-700">Vincular</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -65,10 +100,10 @@
 
                 <!-- Estado vazio -->
                 <div th:if="${#lists.isEmpty(listaAtletas)}" class="mt-4">
-                    <div th:replace="~{fragments/uiComponents :: empty-state(
-                             titulo='Nenhum atleta novo por aqui',
-                             descricao='Assim que um novo atleta se cadastrar no sistema, ele aparecerá aqui para vínculo.',
-                             tone='treinador')}"></div>
+                    <div class="rounded-xl border border-slate-100 bg-white p-8 text-center">
+                        <h2 class="font-bold text-treinador-700">Nenhum atleta novo por aqui</h2>
+                        <p class="mt-2 text-sm text-slate-500">Assim que um novo atleta se cadastrar no sistema, ele aparecerá aqui para vínculo.</p>
+                    </div>
                 </div>
                 <p id="empty" class="hidden mt-3 text-center text-sm text-slate-400">Nenhum atleta encontrado para essa busca.</p>
 

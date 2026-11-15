@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
-import com.api.Projeto_3.dtos.model.CriarSemanaDto;
-import com.api.Projeto_3.dtos.model.CriarExercicioDto;
+
 import org.springframework.web.bind.annotation.RequestParam;
-import com.api.Projeto_3.dtos.model.CriarTreinoDto;
+
 import com.api.Projeto_3.model.enums.DiasEnum;
+import com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto;
+import com.api.Projeto_3.dtos.DtosModelos.CriarSemanaDto;
+import com.api.Projeto_3.dtos.DtosModelos.CriarTreinoDto;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.repository.AtletaRespository;
 import com.api.Projeto_3.repository.SemanaResponitory;
@@ -108,11 +110,7 @@ public class TreinamentoController {
     @GetMapping("/exercicios")
     public String getExercicios(@RequestParam(required = false) Long semanaId,
             @AuthenticationPrincipal UserDetails usuario, Model model) {
-        CriarExercicioDto form = new CriarExercicioDto();
-        form.setSemanaId(semanaId);
-        model.addAttribute("exercicioForm", form);
-        carregarExercicios(form, usuario, model);
-        return "treinadorPages/treimamento/Exercicio";
+        return "redirect:/treinador/treinos#exercicios";
     }
 
     private void carregarExercicios(CriarExercicioDto form, UserDetails usuario, Model model) {
@@ -134,12 +132,12 @@ public class TreinamentoController {
                 service.criarExercicio(form, usuario.getUsername());
                 redirect.addFlashAttribute("sucesso", "Exercício adicionado ao treinamento com sucesso!");
                 redirect.addAttribute("semanaId", form.getSemanaId());
-                return "redirect:/treinador/treinos/exercicios";
+                return "redirect:/treinador/treinos#exercicios";
             } catch (IllegalArgumentException e) {
                 result.rejectValue("treinamentoId", "treinamento.invalido", e.getMessage());
             }
         }
         carregarExercicios(form, usuario, model);
-        return "treinadorPages/treimamento/Exercicio";
+        return "redirect:/treinador/treinos#exercicios";
     }
 }

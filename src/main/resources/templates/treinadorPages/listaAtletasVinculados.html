@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atletas Vinculados | Treinador</title>
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+        <link rel="icon" th:href="@{/img/iconFun.png}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/tailwind-theme.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="min-h-screen bg-[#f9f8f6] font-sans text-slate-700">
+    <div class="min-h-screen treinador-painel">
+
+        <aside class="treinador-menu">
+            <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
+            <nav aria-label="Menu do treinador">
+                <a th:href="@{/treinador}">
+                    <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
+                </a>
+                <a th:href="@{/treinador/atletas-vinculados}" class="selecionado">
+                    <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
+                </a>
+                <a th:href="@{/treinador/perfil}">
+                    <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
+                </a>
+                <a th:href="@{/treinador/treinos/semanas}">
+                    <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
+                </a>
+            </nav>
+            <form th:action="@{/logout}" method="post" class="treinador-sair">
+                <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit">Sair</button>
+            </form>
+        </aside>
+
+        <!-- ===== Conteúdo principal (mesmo esqueleto de treinadorPages/dash.html) ===== -->
+        <main class="min-w-0 flex-1 bg-treinador-50/40">
+            <section class="bg-gradient-to-r from-treinador-800 to-treinador-500 px-5 py-10 text-center text-white sm:px-8 sm:py-12 lg:px-10">
+                <h1 class="text-2xl font-bold uppercase tracking-wide sm:text-3xl">Gerenciamento de atletas</h1>
+                <p class="mt-2 text-sm text-treinador-50 sm:text-base">Acompanhamento e gestão dos atletas da sua equipe</p>
+            </section>
+            <div class="px-5 py-8 sm:px-8 lg:px-10">
+                <div class="mx-auto max-w-6xl">
+                    <div class="mb-7 flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
+                        <div>
+                            <div class="flex items-center gap-2 text-treinador-700"><span class="rounded-md bg-treinador-100 px-2 py-1 text-sm">☷</span><h2 class="font-display text-2xl tracking-wide sm:text-3xl">ATLETAS VINCULADOS</h2></div>
+                            <p class="mt-2 text-sm text-slate-500">Gestão e consulta dos atletas sob acompanhamento do treinador.</p>
+                        </div>
+                        <div class="rounded-xl border-l-4 border-treinador-500 bg-white px-5 py-2.5 shadow-sm ring-1 ring-slate-200">
+                            <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Total vinculados</p>
+                            <p class="text-lg font-bold text-treinador-700"><span id="total" th:text="${#lists.size(atletasVinculados)}">0</span> atletas</p>
+                        </div>
+                    </div>
+
+                    <p th:if="${#lists.isEmpty(atletasVinculados)}" class="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-12 text-center text-sm text-slate-500">Nenhum atleta vinculado.</p>
+                    <p th:if="${param.desvinculado != null}" role="status" class="mb-4 rounded-xl bg-treinador-50 px-4 py-3 text-sm text-treinador-800">Atleta desvinculado com sucesso.</p>
+                    <p th:if="${param.atletaIndisponivel != null}" role="alert" class="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">Atleta não encontrado ou sem vínculo com você.</p>
+                    <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center">
+                        <a th:href="@{/treinador#lista-atletas}" class="rounded-xl border border-treinador-200 bg-treinador-50 px-4 py-3 text-center text-sm font-semibold text-treinador-700 hover:bg-treinador-100">+ Vincular novos atletas</a>
+                    </div>
+                    <section id="atletas-vinculados" class="flex flex-wrap gap-5">
+                        <article th:each="atleta : ${atletasVinculados}" th:data-name="${atleta.per_nome}" th:data-cpf="${atleta.cpf}" class="athlete-row group flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm md:w-[calc((100%_-_1.25rem)/2)] xl:w-[calc((100%_-_2.5rem)/3)]">
+                            <div class="h-1.5 bg-gradient-to-r from-treinador-600 via-treinador-500 to-treinador-300"></div>
+                            <div class="flex items-center gap-4 bg-gradient-to-br from-treinador-50/80 to-white p-6">
+                                <span class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-gradient-to-br from-treinador-600 to-treinador-400 text-xl font-bold uppercase text-white shadow-md shadow-treinador-500/20 ring-4 ring-white" data-avatar="atleta" th:text="${#strings.isEmpty(atleta.per_nome) ? 'A' : #strings.substring(atleta.per_nome,0,1)}">A</span>
+                                <div class="min-w-0 flex-1">
+                                    <p class="mb-1 text-[10px] font-bold uppercase tracking-[.16em] text-treinador-600">Atleta vinculado</p>
+                                    <h2 class="truncate text-lg font-bold tracking-tight text-slate-800" th:text="${#strings.isEmpty(atleta.per_nome) ? 'Atleta sem nome' : atleta.per_nome}">Nome do atleta</h2>
+                                    <p class="mt-1 text-xs text-slate-400" th:text="${'ID: #' + atleta.id}"></p>
+                                </div>
+                            </div>
+                            <div class="flex flex-1 flex-col px-6 pb-6">
+                                <dl class="mb-6 divide-y divide-slate-100 border-t border-slate-100 text-sm">
+                                    <div class="flex items-center justify-between gap-4 py-3.5">
+                                        <dt class="text-slate-400">CPF</dt>
+                                        <dd class="truncate text-right font-medium tabular-nums text-slate-700" th:text="${atleta.cpf}"></dd>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-4 py-3.5">
+                                        <dt class="text-slate-400">Sexo</dt>
+                                        <dd class="truncate text-right font-medium text-slate-700" th:text="${atleta.sexo}"></dd>
+                                    </div>
+                                    <div class="flex items-center justify-between gap-4 py-3.5">
+                                        <dt class="text-slate-400">Contato</dt>
+                                        <dd class="min-w-0 truncate text-right font-medium text-slate-700" th:text="${atleta.email}" th:title="${atleta.email}"></dd>
+                                    </div>
+                                </dl>
+                                <form th:action="@{/treinador/atletas/{id}/desvincular(id=${atleta.id})}" method="post" class="mt-auto">
+                                    <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                                        Desvincular atleta
+                                    </button>
+                                </form>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

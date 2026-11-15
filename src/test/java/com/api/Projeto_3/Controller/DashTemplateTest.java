@@ -12,7 +12,8 @@ import org.springframework.web.context.support.StaticWebApplicationContext;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import com.api.Projeto_3.dtos.model.CriarTreinoDto;
+
+import com.api.Projeto_3.dtos.DtosModelos.CriarTreinoDto;
 import com.api.Projeto_3.model.*;
 import com.api.Projeto_3.model.enums.DiasEnum;
 
@@ -35,7 +36,7 @@ class DashTemplateTest {
             resolver.setApplicationContext(context);
             resolver.setCharacterEncoding("UTF-8");
             var view = resolver.resolveViewName("atletaPages/dashAtleta", Locale.forLanguageTag("pt-BR"));
-            var dash = new com.api.Projeto_3.dtos.model.DashDto();
+            var dash = new com.api.Projeto_3.dtos.DtosModelos.DashDto();
             dash.setNomeAtleta("Ana");
             var model = new HashMap<String, Object>();
             model.put("dash", dash);
@@ -50,11 +51,11 @@ class DashTemplateTest {
             semana.setNome("Semana 1");
             dash.setSemanas(List.of(semana));
             dash.setSemanaId(1L);
-            var treino = new com.api.Projeto_3.dtos.model.DashTreinoDto();
+            var treino = new com.api.Projeto_3.dtos.DtosModelos.DashTreinoDto();
             treino.setNome("Corrida");
             treino.setDuracao(45L);
             dash.setTreinos(List.of(treino));
-            var ponto = new com.api.Projeto_3.dtos.model.DashPontoDto();
+            var ponto = new com.api.Projeto_3.dtos.DtosModelos.DashPontoDto();
             ponto.setX("Seg");
             ponto.setY(45);
             dash.setAtividadeSemanal(List.of(ponto));

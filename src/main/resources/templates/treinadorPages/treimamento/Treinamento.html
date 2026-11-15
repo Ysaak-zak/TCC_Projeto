@@ -26,22 +26,42 @@
     </script>
     <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
     <link rel="stylesheet" th:href="@{/css/treino.css}">
+    <link rel="stylesheet" th:href="@{/css/treinamento-etapas.css}">
 </head>
 
-<body class="treinador-layout bg-black treino-layout">
+<body class="treinador-layout bg-slate-50 treino-layout">
     
-    <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='treinos', treinador=${treinador})}"></aside>
+    <aside class="treinador-menu">
+        <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
+        <nav aria-label="Menu do treinador">
+            <a th:href="@{/treinador}">
+                <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
+            </a>
+            <a th:href="@{/treinador/atletas-vinculados}">
+                <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
+            </a>
+            <a th:href="@{/treinador/perfil}">
+                <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
+            </a>
+            <a th:href="@{/treinador/treinos/semanas}" class="selecionado">
+                <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
+            </a>
+        </nav>
+        <form th:action="@{/logout}" method="post" class="treinador-sair">
+            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit">Sair</button>
+        </form>
+    </aside>
 
     <div class="treinamento-area">
         <nav class="treinamento-abas" aria-label="Etapas do treinamento">
-            <a th:href="@{/treinador/treinos/semanas}"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span>Semana</span></a>
-            <a th:href="@{/treinador/treinos}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span>Treino</span></a>
-            <a th:href="@{/treinador/treinos/exercicios}"><img class="navegacao-icone" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true"><span>Exercício</span></a>
+            <a th:href="@{/treinador/treinos/semanas}"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span><small>PASSO 1</small>Criar semana</span></a>
+            <a th:href="@{/treinador/treinos}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span><small>PASSO 2</small>Criar treino e exercícios</span></a>
         </nav>
         <main class="treino-pagina">
             <header class="treino-cabecalho">
-                <div><span class="treino-sobrelinha">PLANEJAMENTO SEMANAL</span><h1>Organize o próximo treino</h1>
-                    <p>Escolha o atleta, marque o dia e prepare a sessão.</p></div>
+                <div><span class="treino-sobrelinha">PLANEJAMENTO DO ATLETA · PASSO 2 DE 2</span><h1>Organize o próximo treino</h1>
+                    <p>Escolha a semana, prepare a sessão e inclua os exercícios antes de salvar.</p></div>
                 <a class="treino-link" th:href="@{/treinador/treinos/semanas}">+ Criar semana</a>
             </header>
             <p th:if="${sucesso}" th:text="${sucesso}" role="status" class="treino-aviso treino-sucesso"></p>
@@ -55,8 +75,8 @@
                     <strong>Revise os campos antes de salvar</strong>
                     <p th:each="erro : ${#fields.errors('*')}" th:text="${erro}"></p>
                 </div>
-                <fieldset class="treino-conteudo" th:disabled="${#lists.isEmpty(semanas)}">
-                    <section class="treino-cartao">
+                <fieldset class="treino-conteudo treino-cartao treino-card-unico" th:disabled="${#lists.isEmpty(semanas)}">
+                    <section class="treino-secao">
                         <div class="treino-titulo"><span>01</span><div><h2>Semana e dia</h2><p>Defina onde este treino entra no planejamento.</p></div></div>
                         <label for="semanaId">Semana do atleta <span aria-hidden="true">*</span></label>
                         <select th:field="*{semanaId}" required>
@@ -74,7 +94,7 @@
                             </div>
                         </fieldset>
                     </section>
-                    <section class="treino-cartao">
+                    <section class="treino-secao">
                         <div class="treino-titulo"><span>02</span><div><h2>Detalhes da sessão</h2><p>Dê um nome e descreva o objetivo do treino.</p></div></div>
                         <div class="treino-grade">
                             <div><label for="nome">Nome do treino *</label><input th:field="*{nome}" required maxlength="255" placeholder="Ex.: Preparação física"></div>
@@ -83,18 +103,35 @@
                         <label for="descricao">Descrição <small>(opcional)</small></label>
                         <textarea th:field="*{descricao}" rows="3" maxlength="255" placeholder="Objetivos, intensidade e orientações para o atleta..."></textarea>
                     </section>
-                    <section class="treino-cartao">
+                    <section class="treino-secao">
                         <div class="treino-titulo"><span>03</span><div><h2>Horário do treino</h2><p>Defina o início e o fim da sessão, entre 06:00 e 22:00.</p></div></div>
                         <div class="treino-grade treino-grade-horarios">
                             <div><label for="horarioInicio">Horário de início *</label><input type="time" th:field="*{horarioInicio}" min="06:00" max="22:00" required></div>
                             <div><label for="horarioFim">Horário de fim *</label><input type="time" th:field="*{horarioFim}" min="06:00" max="22:00" required></div>
                         </div>
                     </section>
-                    <footer class="treino-acoes"><p>O treino será vinculado ao dia e à semana selecionados.</p><button type="submit">Salvar treino <span aria-hidden="true">→</span></button></footer>
+                    <section id="exercicios" class="treino-secao">
+                        <div class="treino-titulo"><span>04</span><div><h2>Exercícios do treino</h2><p>Adicione as atividades que farão parte desta sessão.</p></div></div>
+                        <div id="lista-exercicios">
+                            <div class="exercicio-item" th:each="item, status : *{exercicios}">
+                                <div class="treino-grade">
+                                    <div><label th:for="|exercicios${status.index}.nome|">Nome do exercício *</label><input th:field="*{exercicios[__${status.index}__].nome}" required maxlength="255"></div>
+                                    <div><label th:for="|exercicios${status.index}.duracao|">Duração (minutos) *</label><input type="number" th:field="*{exercicios[__${status.index}__].duracao}" min="1" step="1" required></div>
+                                </div>
+                                <label th:for="|exercicios${status.index}.descricao|">Descrição (opcional)</label><input th:field="*{exercicios[__${status.index}__].descricao}" maxlength="255">
+                                <button type="button" data-remover-exercicio class="treino-link">Remover exercício</button>
+                            </div>
+                        </div>
+                        <p id="sem-exercicios" class="treino-ajuda">Você pode incluir exercícios agora ou salvar somente o treino.</p>
+                        <button id="adicionar-exercicio" type="button" class="treino-link">+ Adicionar exercício</button>
+                    </section>
+                    <footer class="treino-acoes"><p>O treino e seus exercícios serão salvos juntos na semana selecionada.</p><button type="submit">Salvar treino <span aria-hidden="true">→</span></button></footer>
                 </fieldset>
             </form>
             <section class="treino-planejados" th:unless="${#lists.isEmpty(semanas)}">
-                <h2>Treinos por semana</h2>
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <h2>Treinos por semana</h2>
+                </div>
                 <details th:each="s : ${semanas}" class="treino-cartao">
                     <summary th:text="${s.nome + ' — ' + s.atleta_fk.name}"></summary>
                     <p class="treino-ajuda" th:if="${#lists.isEmpty(s.dias)}">Nenhum treino cadastrado nesta semana.</p>
@@ -110,5 +147,46 @@
         </main>
     </div>
 
+<template id="modelo-exercicio">
+    <div class="exercicio-item">
+        <div class="treino-grade">
+            <div><label data-campo="nome">Nome do exercício *</label><input data-campo="nome" required maxlength="255" placeholder="Ex.: Corrida leve"></div>
+            <div><label data-campo="duracao">Duração (minutos) *</label><input data-campo="duracao" type="number" min="1" step="1" required placeholder="Ex.: 20"></div>
+        </div>
+        <label data-campo="descricao">Descrição (opcional)</label><input data-campo="descricao" maxlength="255" placeholder="Orientações para o atleta">
+        <button type="button" data-remover-exercicio class="treino-link">Remover exercício</button>
+    </div>
+</template>
+<script>
+    const lista = document.getElementById('lista-exercicios');
+    const adicionar = document.getElementById('adicionar-exercicio');
+    function atualizarExercicios() {
+        const itens = lista.querySelectorAll('.exercicio-item');
+        itens.forEach((item, index) => {
+            item.querySelectorAll('input').forEach(input => {
+                const campo = input.dataset.campo || input.name.split('.').pop();
+                const idAnterior = input.id;
+                input.name = `exercicios[${index}].${campo}`;
+                input.id = `exercicio-${index}-${campo}`;
+                const label = input.parentElement.querySelector(`label[data-campo="${campo}"]`) || item.querySelector(`label[for="${idAnterior}"]`);
+                if (label) label.htmlFor = input.id;
+            });
+        });
+        document.getElementById('sem-exercicios').hidden = itens.length > 0;
+        adicionar.disabled = itens.length >= 50;
+    }
+    adicionar.addEventListener('click', () => {
+        lista.append(document.getElementById('modelo-exercicio').content.cloneNode(true));
+        atualizarExercicios();
+        lista.lastElementChild.querySelector('input').focus();
+    });
+    lista.addEventListener('click', event => {
+        if (event.target.closest('[data-remover-exercicio]')) {
+            event.target.closest('.exercicio-item').remove();
+            atualizarExercicios();
+        }
+    });
+    atualizarExercicios();
+</script>
 </body>
 </html>

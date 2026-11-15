@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exame de Urina | Portal Médico</title>
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+    <link rel="icon" th:href="@{/img/iconFun.png}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind-theme.js}"></script>
+</head>
+
+<body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
+    <div class="min-h-screen md:flex">
+        <aside aria-label="Navegação do médico"
+        class="print:hidden relative flex shrink-0 flex-col bg-emerald-950 px-4 py-5 text-emerald-100 md:sticky md:top-0 md:h-dvh md:w-64 md:overflow-y-auto md:px-5 md:py-7">
+        <a th:href="@{/medico}" class="mb-6 flex items-center gap-3 pr-24 md:pr-0">
+            <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
+            <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
+        </a>
+        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
+            <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/add_atleta.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Vincular atletas</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/atletas-vinculados}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/ateltaVincule.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Atletas vinculados</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/alimentacao}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/medico_ifood.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Alimentação</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/exame-urina}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-emerald-200 bg-emerald-50 font-bold text-emerald-950" aria-current="page">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Exame de urina</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/exame-sangue}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Exame de sangue</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/perfil}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Meu perfil</p>
+                </div>
+            </a>
+        </nav>
+        <div class="mt-auto pt-7">
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="w-full rounded-xl px-3 py-3 text-left text-sm hover:bg-white/10">Sair</button>
+            </form>
+        </div>
+    </aside>
+
+        <!--teste-->
+
+        <main class="medico-content min-w-0 flex-1 px-5 py-6 sm:px-8 lg:px-10">
+            <header
+                class="w-full h-20 flex items-center justify-between px-6 bg-green-700 text-white rounded-lg xl:mt-5 mt-0">
+
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-flask text-3xl"></i>
+                    <h1 class="text-2xl font-extrabold">Tittos</h1>
+                </div>
+
+                <span class="font-semibold">Exame de Urina</span>
+
+            </header>
+
+            <article class="w-full bg-white p-6 rounded-xl shadow-sm mb-10">
+
+                <form th:action="@{/medico/exame-urina/salvar}" th:object="${exameUrina}" method="post" class="flex flex-col gap-6">
+                    <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+
+                    <!-- 1 - ATLETA -->
+                    <div class="flex flex-col gap-3 py-5">
+
+                        <div class="border-b border-gray-800 pb-2">
+                            <h2 class="text-2xl font-semibold">
+                                Seleção do Atleta
+                            </h2>
+                        </div>
+
+                        <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="atletaId" class="text-gray-700 font-medium">
+                                    Atleta
+                                </label>
+
+                                <select id="atletaId" th:field="*{atletaId}" required
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+
+                                    <option value="">Selecione um atleta</option>
+
+                                    <option th:each="atleta : ${atletas}" th:value="${atleta.id}"
+                                        th:text="${atleta.name}">
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="dataColeta" class="text-gray-700 font-medium">
+                                    Data da Coleta
+                                </label>
+
+                                <input id="dataColeta" type="date" th:field="*{dataColeta}" required
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <!-- 2 - PARÂMETROS FÍSICOS -->
+                    <div class="flex flex-col gap-3 py-5">
+
+                        <div class="border-b border-gray-800 pb-2">
+                            <h2 class="text-2xl font-semibold">
+                                Parâmetros Físicos
+                            </h2>
+                        </div>
+
+                        <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="temperatura" class="text-gray-700 font-medium">
+                                    Temperatura (°C)
+                                </label>
+
+                                <input id="temperatura" type="number" th:field="*{temperatura}" step="0.1"
+                                    placeholder="Ex.: 36.5"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="cor" class="text-gray-700 font-medium">
+                                    Cor da Urina
+                                </label>
+
+                                <select id="cor" th:field="*{cor}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+
+                                    <option value="">Selecione</option>
+                                    <option th:each="cor : ${T(com.api.Projeto_3.model.enums.EnumCorUrina).values()}"
+                                        th:value="${cor.name()}" th:text="${cor.rotulo}"></option>
+
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="ph" class="text-gray-700 font-medium">
+                                    pH
+                                </label>
+
+                                <input id="ph" type="number" th:field="*{ph}" step="0.1" min="0" max="14" placeholder="Ex.: 6.0"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="densidade" class="text-gray-700 font-medium">
+                                    Densidade Específica
+                                </label>
+
+                                <input id="densidade" type="number" th:field="*{densidade}" step="0.001" min="0" placeholder="Ex.: 1.020"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <!-- 3 - BIOQUÍMICA -->
+                    <div class="flex flex-col gap-3 py-5">
+
+                        <div class="border-b border-gray-800 pb-2">
+                            <h2 class="text-2xl font-semibold">
+                                Análise Bioquímica
+                            </h2>
+                        </div>
+
+                        <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="creatinina" class="text-gray-700 font-medium">
+                                    Creatinina Urinária (mg/dL)
+                                </label>
+
+                                <input id="creatinina" type="number" th:field="*{creatinina}" step="0.1" min="0"
+                                    placeholder="Ex.: 120"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="proteinas" class="text-gray-700 font-medium">
+                                    Proteínas
+                                </label>
+
+                                <select id="proteinas" th:field="*{proteinas}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                                    <option value="">Selecione</option>
+                                    <option value="NEGATIVO">Negativo</option>
+                                    <option value="TRACOS">Traços</option>
+                                    <option value="POSITIVO">Positivo</option>
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="glicose" class="text-gray-700 font-medium">
+                                    Glicose
+                                </label>
+
+                                <select id="glicose" th:field="*{glicose}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                                    <option value="">Selecione</option>
+                                    <option th:each="opcao : ${T(com.api.Projeto_3.model.enums.EnumGlicose).values()}"
+                                        th:value="${opcao.name()}" th:text="${opcao.getName()}"></option>
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="sangue" class="text-gray-700 font-medium">
+                                    Sangue na Urina
+                                </label>
+
+                                <select id="sangue" th:field="*{sangue}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+                                    <option value="">Selecione</option>
+                                    <option value="NEGATIVO">Negativo</option>
+                                    <option value="TRACOS">Traços</option>
+                                    <option value="POSITIVO">Positivo</option>
+                                </select>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <!-- 4 - ANTIDOPING -->
+                    <div class="flex flex-col gap-3 py-5">
+
+                        <div class="border-b border-gray-800 pb-2">
+                            <h2 class="text-2xl font-semibold">
+                                Triagem Antidoping
+                            </h2>
+                        </div>
+
+                        <p class="text-sm text-gray-600">
+                            Preencha somente com resultados de testes laboratoriais
+                            específicos. Exame comum de urina não detecta doping.
+                        </p>
+
+                        <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="anabolizantes" class="text-gray-700 font-medium">
+                                    Esteroides Anabolizantes
+                                </label>
+
+                                <select id="anabolizantes" th:field="*{anabolizantes}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+
+                                    <option value="">Selecione</option>
+                                    <option value="NAO_REALIZADO">Não realizado</option>
+                                    <option value="NEGATIVO">Negativo na triagem</option>
+                                    <option value="SUSPEITO">Suspeito na triagem</option>
+                                    <option value="INCONCLUSIVO">Inconclusivo</option>
+
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="estimulantes" class="text-gray-700 font-medium">
+                                    Estimulantes
+                                </label>
+
+                                <select id="estimulantes" th:field="*{estimulantes}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+
+                                    <option value="">Selecione</option>
+                                    <option value="NAO_REALIZADO">Não realizado</option>
+                                    <option value="NEGATIVO">Negativo na triagem</option>
+                                    <option value="SUSPEITO">Suspeito na triagem</option>
+                                    <option value="INCONCLUSIVO">Inconclusivo</option>
+
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-1.5">
+                                <label for="diureticos" class="text-gray-700 font-medium">
+                                    Diuréticos e Mascarantes
+                                </label>
+
+                                <select id="diureticos" th:field="*{diureticos}"
+                                    class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
+
+                                    <option value="">Selecione</option>
+                                    <option value="NAO_REALIZADO">Não realizado</option>
+                                    <option value="NEGATIVO">Negativo na triagem</option>
+                                    <option value="SUSPEITO">Suspeito na triagem</option>
+                                    <option value="INCONCLUSIVO">Inconclusivo</option>
+
+                                </select>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <!-- OBSERVAÇÕES -->
+                    <div class="flex flex-col gap-3 py-5">
+
+                        <div class="border-b border-gray-800 pb-2">
+                            <h2 class="text-2xl font-semibold">
+                                Observações Médicas
+                            </h2>
+                        </div>
+
+                        <textarea th:field="*{observacoes}" rows="4"
+                            placeholder="Descreva os resultados e possíveis alterações..."
+                            class="border-2 border-green-400 w-full px-4 py-3 rounded-xl focus:outline-none focus:border-green-600"></textarea>
+
+                    </div>
+
+                    <!-- SALVAR -->
+                    <div class="flex justify-end gap-4 border-t pt-6">
+
+                        <button type="reset"
+                            class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-xl">
+                            Limpar
+                        </button>
+
+                        <button type="submit"
+                            class="bg-green-700 hover:bg-green-800 text-white font-semibold px-8 py-3 rounded-xl">
+                            <i class="fa-solid fa-floppy-disk mr-2"></i>
+                            Salvar Exame
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </article>
+
+        </main>
+
+    </div>
+</body>
+
+</html>

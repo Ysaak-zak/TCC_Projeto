@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acessar Portal | Sistema Médico Desportivo</title>
-    <th:block th:replace="~{fragments/layout :: head-resources}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+        <link rel="icon" th:href="@{/img/iconFun.png}">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/tailwind-theme.js}"></script>
 </head>
 <body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
 
-    <header th:replace="~{fragments/layout :: brand-header(titulo='Acessar Portal', tone='brand')}"></header>
+    <header class="flex items-center justify-between px-6 py-4 text-white bg-brand-700">
+        <a th:href="@{/home}" class="font-bold">Sistema Médico Desportivo</a>
+        <span>Acessar Portal</span>
+    </header>
 
     <main class="flex min-h-[calc(100vh-64px)] items-center justify-center px-5 py-10 sm:px-8">
         <div class="w-full max-w-sm rounded-2xl border border-slate-100 bg-white p-8 shadow-sm">

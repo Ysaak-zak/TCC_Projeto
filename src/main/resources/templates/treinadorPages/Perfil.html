@@ -11,7 +11,27 @@
 
 <body class="treinador-layout bg-black font-serif">
    
-    <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='perfil', treinador=${treinador})}"></aside>
+    <aside class="treinador-menu">
+        <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
+        <nav aria-label="Menu do treinador">
+            <a th:href="@{/treinador}">
+                <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
+            </a>
+            <a th:href="@{/treinador/atletas-vinculados}">
+                <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
+            </a>
+            <a th:href="@{/treinador/perfil}" class="selecionado">
+                <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
+            </a>
+            <a th:href="@{/treinador/treinos/semanas}">
+                <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
+            </a>
+        </nav>
+        <form th:action="@{/logout}" method="post" class="treinador-sair">
+            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit">Sair</button>
+        </form>
+    </aside>
 
     <main class="w-full flex flex-col gap-14">
         <div class="flex bg-amber-50 py-4 text-2xl font-black px-2 justify-center xl:justify-start">

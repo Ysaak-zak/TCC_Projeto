@@ -12,12 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
+import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
-import com.api.Projeto_3.dtos.model.PerfilsDtos;
-import com.api.Projeto_3.dtos.model.RecomendacaoAlimentarDto;
-import com.api.Projeto_3.dtos.model.RoleDtos;
 import com.api.Projeto_3.model.MedicoModelo;
 import com.api.Projeto_3.model.enums.EnumGenero;
 import com.api.Projeto_3.model.enums.EnumSague;
@@ -99,7 +97,6 @@ public class MedicoController {
         if (medico == null) {
             return "redirect:/login?error";
         }
-
         model.addAttribute("medico", medico);
         model.addAttribute("nomeMedico", medicoService.buscarNomes(userLogado.getUsername()));
         model.addAttribute("lisNome", medicoService.mostrandoAtletaNomes(medico.getId()));
@@ -108,47 +105,26 @@ public class MedicoController {
         return "medicoPages/listaAtletasVinculados";
     }
 
-    @GetMapping("/medico/alimentacao/{atletaId}")
-    public String getAlimentacao(@AuthenticationPrincipal UserDetails userLogado,
-                                 @PathVariable Long atletaId,
-                                 @RequestParam(defaultValue = "false") boolean salvo, Model model) {
+    @GetMapping("/medico/exame-urina")
+    public String getExameUrina(@AuthenticationPrincipal UserDetails userLogado, Model model) {
+        if (userLogado == null) return "redirect:/login";
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-
         if (medico == null) return "redirect:/login?error";
-        var atleta = medicoService.atletasVinculados(medico.getId()).stream()
-                .filter(item -> atletaId.equals(item.getId())).findFirst().orElse(null);
-        if (atleta == null) return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
-        model.addAttribute("atleta", atleta);
-        model.addAttribute("recomendacao", new RecomendacaoAlimentarDto());
-        model.addAttribute("recomendacoes", medicoService.recomendacoes(medico.getId(), atletaId));
-        model.addAttribute("salvo", salvo);
-        return "medicoPages/alimentacao";
+
+        model.addAttribute("medico", medico);
+        model.addAttribute("atletas", medicoService.atletasVinculados(medico.getId()));
+        return "medicoPages/TestUrina";
     }
 
-    @PostMapping("/medico/alimentacao/{atletaId}")
-    public String salvarAlimentacao(@AuthenticationPrincipal UserDetails userLogado,
-                                    @PathVariable Long atletaId,
-                                    @ModelAttribute("recomendacao") @Valid RecomendacaoAlimentarDto recomendacao,
-                                    BindingResult result, Model model) {
+    @GetMapping("/medico/exame-sangue")
+    public String getExameSangue(@AuthenticationPrincipal UserDetails userLogado, Model model) {
+        if (userLogado == null) return "redirect:/login";
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
         if (medico == null) return "redirect:/login?error";
-        if (recomendacao.getDataInicio() != null && recomendacao.getDataRevisao() != null
-                && recomendacao.getDataRevisao().isBefore(recomendacao.getDataInicio())) {
-            result.rejectValue("dataRevisao", "dataRevisao.invalida", "A revisão deve ser na data inicial ou depois.");
-        }
-        var atleta = medicoService.atletasVinculados(medico.getId()).stream()
-                .filter(item -> atletaId.equals(item.getId())).findFirst().orElse(null);
-        if (atleta == null) return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
-        if (result.hasErrors()) {
-            model.addAttribute("atleta", atleta);
-            model.addAttribute("recomendacoes", medicoService.recomendacoes(medico.getId(), atletaId));
-            model.addAttribute("salvo", false);
-            return "medicoPages/alimentacao";
-        }
-        if (!medicoService.recomendarAlimentacao(medico.getId(), atletaId, recomendacao)) {
-            return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
-        }
-        return "redirect:/medico/alimentacao/" + atletaId + "?salvo=true";
+
+        model.addAttribute("medico", medico);
+        model.addAttribute("atletas", medicoService.atletasVinculados(medico.getId()));
+        return "medicoPages/TesSangue";
     }
 
     @PostMapping("/medico/{medicoId}/vincular-atleta/{atletaId}")
@@ -156,6 +132,25 @@ public class MedicoController {
                                 @PathVariable("atletaId") Long atletaId) {
         atletaService.insertFkAMedico(atletaId, medicoId);
         return "redirect:/medico";
+    }
+
+    @PostMapping("/medico/atletas/{atletaId}/desvincular")
+    public String desvincularAtleta(@AuthenticationPrincipal UserDetails userLogado,
+                                   @PathVariable Long atletaId) {
+        if (userLogado == null) {
+            return "redirect:/login";
+        }
+
+        MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
+        if (medico == null) {
+            return "redirect:/login?error";
+        }
+
+        if (!medicoService.desvincularAtleta(medico.getId(), atletaId)) {
+            return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
+        }
+
+        return "redirect:/medico/atletas-vinculados?desvinculado";
     }
 
     private void carregarDadosCadastro(Long id, Model model) {

@@ -4,19 +4,21 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import com.api.Projeto_3.model.enums.*;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "ATLETAS")
 public class AtletaModelo extends PerfisModelo {
+
+    @OneToMany(mappedBy = "atleta")
+    private List<EmaxeUrina> examesUrina = new ArrayList<>();
+
+    public List<EmaxeUrina> getExamesUrina() {
+        return examesUrina;
+    }
 
     @OneToMany(mappedBy = "atleta_fk", cascade = CascadeType.ALL)
     private List<SemanaModel> semanas = new ArrayList<>();
@@ -36,6 +38,10 @@ public class AtletaModelo extends PerfisModelo {
     @ManyToOne
     @JoinColumn(name = "atleta_medico_fk")
     private MedicoModelo medico_fk;
+
+    @OneToOne
+    @JoinColumn(name = "atlFixaMedic")
+    private FichaMedicaModel atlFixaMedic;
 
     public AtletaModelo(){
         super();

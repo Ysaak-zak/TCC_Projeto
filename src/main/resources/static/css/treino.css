@@ -46,3 +46,11 @@
 @media (max-width: 1100px) { .treino-dia small { display: none; } .treino-grade-horarios { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .treino-cabecalho, .treino-acoes { align-items: flex-start; flex-direction: column; } .treino-pagina { padding: 24px 16px; } .treino-cartao { padding: 18px; } .treino-dias { grid-template-columns: repeat(4, minmax(0, 1fr)); } .treino-grade { grid-template-columns: 1fr; } .treino-acoes button { width: 100%; } }
 @media (max-width: 640px) { body.treino-layout { grid-template-columns: 1fr; } .treino-layout .treinador-menu { position: static; height: auto; } .treino-layout .treinador-marca { padding: 14px 16px; } .treino-layout .treinador-menu nav { flex-direction: row; flex-wrap: wrap; padding: 0; } .treino-layout .treinador-menu nav a { flex: 1; font-size: 12px; padding: 12px; } .treino-layout .treinador-sair { padding: 10px 16px; font-size: 12px; } }
+
+.treino-card-unico { gap: 0; }
+.treino-card-unico .treino-secao { min-width: 0; padding: 24px 0; }
+.treino-card-unico .treino-secao:first-child { padding-top: 0; }
+.treino-card-unico .treino-secao + .treino-secao { border-top: 1px solid #e2e8f0; }
+.treino-card-unico .treino-acoes { border-top: 1px solid #e2e8f0; padding-top: 24px; }
+.treino-card-unico .exercicio-item { padding: 16px 0; border: 0; border-radius: 0; background: transparent; }
+.treino-card-unico .exercicio-item + .exercicio-item { border-top: 1px dashed #e2e8f0; }

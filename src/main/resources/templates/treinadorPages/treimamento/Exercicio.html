@@ -25,19 +25,45 @@
         }
     </script>
     <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
+    <link rel="stylesheet" th:href="@{/css/treinamento-etapas.css}">
 </head>
 
-<body class="treinador-layout bg-black font-serif">
+<body class="treinador-layout bg-slate-50 font-sans">
     
-    <aside th:replace="~{fragments/treinadorLayout :: sidebar(active='treinos', treinador=${treinador})}"></aside>
+    <aside class="treinador-menu">
+        <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
+        <nav aria-label="Menu do treinador">
+            <a th:href="@{/treinador}">
+                <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
+            </a>
+            <a th:href="@{/treinador/atletas-vinculados}">
+                <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
+            </a>
+            <a th:href="@{/treinador/perfil}">
+                <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
+            </a>
+            <a th:href="@{/treinador/treinos/semanas}" class="selecionado">
+                <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
+            </a>
+        </nav>
+        <form th:action="@{/logout}" method="post" class="treinador-sair">
+            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit">Sair</button>
+        </form>
+    </aside>
 
     <div class="treinamento-area">
         <nav class="treinamento-abas" aria-label="Etapas do treinamento">
-            <a th:href="@{/treinador/treinos/semanas}"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span>Semana</span></a>
-            <a th:href="@{/treinador/treinos}"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span>Treino</span></a>
-            <a th:href="@{/treinador/treinos/exercicios}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true"><span>Exercício</span></a>
+            <a th:href="@{/treinador/treinos/semanas}"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span><small>PASSO 1</small>Criar semana</span></a>
+            <a th:href="@{/treinador/treinos}"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span><small>PASSO 2</small>Criar treino</span></a>
+            <a th:href="@{/treinador/treinos/exercicios}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true"><span><small>PASSO 3</small>Adicionar exercício</span></a>
         </nav>
         <main class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
+            <header class="planejamento-cabecalho">
+                <span>PLANEJAMENTO DO ATLETA · PASSO 3 DE 3</span>
+                <h1>Complete o treino com exercícios</h1>
+                <p>Escolha a semana e o treino. Adicione os exercícios e a duração de cada atividade.</p>
+            </header>
             <!-- Conteúdo da Página -->
             <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
                 <div class="pb-3 border-b border-slate-100 flex items-center justify-between">

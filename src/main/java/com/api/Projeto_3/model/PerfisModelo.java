@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.api.Projeto_3.dtos.model.RoleDtos;
+import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.model.enums.EnumGenero;
 import com.api.Projeto_3.model.enums.EnumSague;
 import com.api.Projeto_3.model.enums.EnumUf;

@@ -12,7 +12,8 @@ import org.springframework.web.context.support.StaticWebApplicationContext;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import com.api.Projeto_3.dtos.model.CriarExercicioDto;
+
+import com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto;
 import com.api.Projeto_3.model.*;
 import com.api.Projeto_3.model.enums.DiasEnum;
 

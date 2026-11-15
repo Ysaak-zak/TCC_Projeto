@@ -7,7 +7,8 @@ import java.time.LocalTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.server.ResponseStatusException;
-import com.api.Projeto_3.dtos.model.DashDto;
+
+import com.api.Projeto_3.dtos.DtosModelos.DashDto;
 import com.api.Projeto_3.model.*;
 import com.api.Projeto_3.model.enums.DiasEnum;
 import com.api.Projeto_3.repository.DashRepository;

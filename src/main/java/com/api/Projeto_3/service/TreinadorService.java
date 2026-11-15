@@ -79,6 +79,24 @@ public class TreinadorService {
     }
 
 
+    @Transactional(readOnly = true)
+    public List<ListDasAtleta> listarAtletasVinculados(Long idTreinador) {
+        logger.info("Listando atletas vinculados ao treinador {}", idTreinador);
+        List<ListDasAtleta> list = jpaAtleta.atletListVinculadosTreinador(idTreinador);
+        if (list == null || list.isEmpty()) {
+            logger.warn("Nenhum atleta vinculado ao treinador {}", idTreinador);
+        } else {
+            logger.info("Total de atletas vinculados: {}", list.size());
+        }
+        return list;
+    }
+
+
+    @Transactional
+    public boolean desvincularAtleta(Long treinadorId, Long atletaId) {
+        return jpaAtleta.desvincularTreinador(atletaId, treinadorId) > 0;
+    }
+
     public void salvarImagemNaPasta(MultipartFile arquivo , Long id) throws IOException {
         Path caminhoPasta = Paths.get(PASTA_LOCAL);
         if (!Files.exists(caminhoPasta)) {

@@ -5,7 +5,8 @@ import static org.mockito.Mockito.*;
 import java.time.LocalTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import com.api.Projeto_3.dtos.model.CriarTreinoDto;
+
+import com.api.Projeto_3.dtos.DtosModelos.CriarTreinoDto;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
 import com.api.Projeto_3.repository.SemanaResponitory;
@@ -86,7 +87,7 @@ class TrenamentosSeriveTest {
         when(repo.listarPorTreinador("cpf")).thenReturn(List.of(semana));
         var service = new TrenamentosSerive();
         service.snJpa = repo;
-        var form = new com.api.Projeto_3.dtos.model.CriarExercicioDto();
+        var form = new com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto();
         form.setSemanaId(1L);
         form.setTreinamentoId(5L);
         form.setNome(" Corrida ");
@@ -109,7 +110,7 @@ class TrenamentosSeriveTest {
     void exigeSemanaTreinamentoNomeEDuracaoPositiva() {
         try (var factory = Validation.buildDefaultValidatorFactory()) {
             var validator = factory.getValidator();
-            var form = new com.api.Projeto_3.dtos.model.CriarExercicioDto();
+            var form = new com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto();
             assertEquals(4, validator.validate(form).size());
             form.setSemanaId(1L);
             form.setTreinamentoId(2L);

@@ -1,0 +1,600 @@
+%PDF-1.4
+%âãÏÓ
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Count 6 /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R] >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>
+endobj
+5 0 obj
+<< /Length 5266 >>
+stream
+0.05 0.48 0.52 rg 0 835 1191 7 re f
+BT /F2 24 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 794 Tm (01  |  Perfis, acesso e cadastro) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 771 Tm (DIAGRAMA DE RELACIONAMENTOS  /  Cadastro e especialização dos usuários) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 290 642 m 445 642 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 297 650 Tm (0..1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 405 650 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 340 656 Tm (fal_fk) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 290 492 m 365 492 l 365 582 l 445 582 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 297 500 Tm (0..1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 405 590 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 315 511 Tm (mord) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 745 642 m 900 642 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 752 650 Tm (0..N) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 860 650 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 800 656 Tm (role_id) Tj ET
+0.35 0.47 0.57 RG 1.2 w [5 4] 0 d 495 515 m 495 437 l 210 437 l 210 357 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 502 498 Tm (1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 217 365 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 240 451 Tm (Herança JOINED) Tj ET
+0.35 0.47 0.57 RG 1.2 w [5 4] 0 d 595 515 m 595 357 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 602 498 Tm (1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 602 365 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 610 416 Tm (Herança JOINED) Tj ET
+0.35 0.47 0.57 RG 1.2 w [5 4] 0 d 695 515 m 695 437 l 1000 437 l 1000 357 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 702 498 Tm (1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 1007 365 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 805 451 Tm (Herança JOINED) Tj ET
+0.08 0.26 0.35 rg 35 668 255 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 45 679 Tm (AFLIACAO) Tj ET
+0.95 0.97 0.99 rg 35 623 255 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 45 652 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 45 634 Tm (Dados dos pais / responsáveis) Tj ET
+0.08 0.26 0.35 rg 35 513 255 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 45 524 Tm (MORADIA) Tj ET
+0.95 0.97 0.99 rg 35 468 255 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 45 497 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 45 479 Tm (Endereço do perfil) Tj ET
+0.08 0.26 0.35 rg 445 668 300 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 455 679 Tm (PerfisModelo) Tj ET
+0.95 0.97 0.99 rg 445 515 300 153 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 652 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 634 Tm (FK  fal_fk  ->  AFLIACAO) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 616 Tm (FK  mord  ->  MORADIA) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 598 Tm (FK  role_id  ->  roles_tb) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 580 Tm (CPF único e obrigatório) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 562 Tm (Dados pessoais e credenciais) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 544 Tm (Atributos comuns aos três perfis) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 526 Tm (Herança com tabelas separadas) Tj ET
+0.08 0.26 0.35 rg 900 668 255 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 910 679 Tm (roles_tb) Tj ET
+0.95 0.97 0.99 rg 900 623 255 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 910 652 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 910 634 Tm (authority) Tj ET
+0.08 0.26 0.35 rg 70 328 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 80 339 Tm (ATLETAS) Tj ET
+0.95 0.97 0.99 rg 70 265 280 63 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 80 312 Tm (PK/FK  id  ->  PerfisModelo) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 80 294 Tm (FK  atleta_trenador_fk) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 80 276 Tm (FK  atleta_medico_fk) Tj ET
+0.08 0.26 0.35 rg 455 328 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 465 339 Tm (MEDICOS) Tj ET
+0.95 0.97 0.99 rg 455 283 280 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 465 312 Tm (PK/FK  id  ->  PerfisModelo) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 465 294 Tm (Dados pessoais herdados) Tj ET
+0.08 0.26 0.35 rg 840 328 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 850 339 Tm (TREINADORES) Tj ET
+0.95 0.97 0.99 rg 840 283 280 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 850 312 Tm (PK/FK  id  ->  PerfisModelo) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 850 294 Tm (FK  treimanento_fk) Tj ET
+0.94 0.97 0.98 rg 35 82 1120 95 re f
+BT /F2 12 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 153 Tm (Como ler o diagrama) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 129 Tm (PK = chave primária. FK = chave estrangeira. Os números próximos às tabelas indicam a quantidade de registros em cada ponta.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 110 Tm (0..1 = vínculo opcional; 1 = exatamente um; 0..N = zero ou muitos. Linhas tracejadas representam a herança com PK compartilhada.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 91 Tm (A coleção roles_tb.perfils declara outra associação com tabela de junção implícita; consulte a observação da página 4.) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 22 Tm (Projeto-TCC_v2  |  Fonte: entidades JPA em src/main/java/com/api/Projeto_3/model  |  08/11/2026) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 1110 22 Tm (1 / 6) Tj ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1191 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 4447 >>
+stream
+0.05 0.48 0.52 rg 0 835 1191 7 re f
+BT /F2 24 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 794 Tm (02  |  Planejamento e execução dos treinos) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 771 Tm (DIAGRAMA DE RELACIONAMENTOS  /  Fluxo do atleta até os exercícios) Tj ET
+0.08 0.26 0.35 rg 35 613 200 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 45 624 Tm (ATLETAS) Tj ET
+0.95 0.97 0.99 rg 35 568 200 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 45 597 Tm (PK/FK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 45 579 Tm (Perfil do atleta) Tj ET
+0.08 0.26 0.35 rg 265 613 200 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 275 624 Tm (SEMANA) Tj ET
+0.95 0.97 0.99 rg 265 568 200 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 275 597 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 275 579 Tm (FK  atleta_fk) Tj ET
+0.08 0.26 0.35 rg 495 613 200 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 505 624 Tm (DIA) Tj ET
+0.95 0.97 0.99 rg 495 568 200 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 505 597 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 505 579 Tm (FK  semana_fk) Tj ET
+0.08 0.26 0.35 rg 725 613 200 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 735 624 Tm (TREINAMENTO) Tj ET
+0.95 0.97 0.99 rg 725 568 200 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 735 597 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 735 579 Tm (FK  dia_fk) Tj ET
+0.08 0.26 0.35 rg 955 613 200 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 965 624 Tm (EXERCICIO) Tj ET
+0.95 0.97 0.99 rg 955 568 200 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 965 597 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 965 579 Tm (FK  treinamento_fk) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 235 597 m 265 597 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 215 654 Tm (1 : 0..N) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 465 597 m 495 597 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 445 654 Tm (1 : 0..N) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 695 597 m 725 597 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 675 654 Tm (1 : 0..N) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 925 597 m 955 597 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 905 654 Tm (1 : 0..N) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 265 530 Tm (Pertence a um atleta) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 495 530 Tm (Pertence a uma semana) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 725 530 Tm (Pertence a um dia) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 955 530 Tm (Pertence a um treinamento) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 825 568 m 825 417 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 832 551 Tm (0..1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 832 425 Tm (0..N) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 845 481 Tm (treimanento_fk) Tj ET
+0.08 0.26 0.35 rg 685 388 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 695 399 Tm (TREINADORES) Tj ET
+0.95 0.97 0.99 rg 685 343 280 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 695 372 Tm (PK/FK  id  ->  PerfisModelo) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 695 354 Tm (FK  treimanento_fk  ->  TREINAMENTO) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 135 568 m 135 352 l 435 352 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 142 551 Tm (0..N) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 395 360 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 170 366 Tm (atleta_trenador_fk) Tj ET
+0.08 0.26 0.35 rg 435 388 210 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 445 399 Tm (TREINADORES) Tj ET
+0.95 0.97 0.99 rg 435 343 210 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 445 372 Tm (PK/FK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 445 354 Tm (Vínculo com os atletas) Tj ET
+0.94 0.97 0.98 rg 35 122 1120 95 re f
+BT /F2 12 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 193 Tm (Regras e leitura do fluxo) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 169 Tm (Cada semana pertence a um atleta; cada dia pertence a uma semana; cada treinamento pertence a um dia; cada exercício pertence a um treinamento.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 150 Tm (As quatro FKs do fluxo são obrigatórias. As coleções podem ter zero ou vários registros; o limite de sete dias é aplicado no código Java.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 51 131 Tm (TREINADORES aparece duas vezes para mostrar dois vínculos distintos. A FK treimanento_fk mantém a grafia existente no projeto.) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 22 Tm (Projeto-TCC_v2  |  Fonte: entidades JPA em src/main/java/com/api/Projeto_3/model  |  08/11/2026) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 1110 22 Tm (2 / 6) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1191 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 3246 >>
+stream
+0.05 0.48 0.52 rg 0 835 1191 7 re f
+BT /F2 24 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 794 Tm (03  |  Acompanhamento médico e alimentação) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 771 Tm (DIAGRAMA DE RELACIONAMENTOS  /  Vínculos médicos, recomendações e exames) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 330 647 m 855 647 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 337 655 Tm (0..N) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 815 655 Tm (0..1) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 520 661 Tm (atleta_medico_fk) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 190 568 m 190 422 l 445 422 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 197 551 Tm (1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 405 430 Tm (0..N) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 215 436 Tm (atleta_id \(obrigatória\)) Tj ET
+0.35 0.47 0.57 RG 1.2 w [] 0 d 995 568 m 995 422 l 745 422 l S
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 1002 551 Tm (1) Tj ET
+BT /F2 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 752 430 Tm (0..N) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 785 436 Tm (medico_id \(obrigatória\)) Tj ET
+0.08 0.26 0.35 rg 50 668 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 60 679 Tm (ATLETAS) Tj ET
+0.95 0.97 0.99 rg 50 623 280 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 60 652 Tm (PK/FK  id  ->  PerfisModelo) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 60 634 Tm (FK  atleta_medico_fk) Tj ET
+0.08 0.26 0.35 rg 855 668 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 865 679 Tm (MEDICOS) Tj ET
+0.95 0.97 0.99 rg 855 623 280 45 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 865 652 Tm (PK/FK  id  ->  PerfisModelo) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 865 634 Tm (Médico responsável) Tj ET
+0.08 0.26 0.35 rg 445 453 300 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 455 464 Tm (recomendacao_alimentar) Tj ET
+0.95 0.97 0.99 rg 445 354 300 99 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 437 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 419 Tm (FK  atleta_id  ->  ATLETAS) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 401 Tm (FK  medico_id  ->  MEDICOS) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 383 Tm (Refeição, objetivo e orientação) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 455 365 Tm (Datas de início e revisão) Tj ET
+0.08 0.26 0.35 rg 50 233 280 29 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 60 244 Tm (EXAMA_URINA) Tj ET
+0.95 0.97 0.99 rg 50 170 280 63 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 60 217 Tm (PK  id) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 60 199 Tm (Dados da amostra e do resultado) Tj ET
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 60 181 Tm (Sem FK declarada nas entidades) Tj ET
+BT /F2 14 Tf 0.12 0.18 0.26 rg 1 0 0 1 395 238 Tm (Observações do acompanhamento) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 395 206 Tm (Cada recomendação possui exatamente um atleta e um médico.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 395 181 Tm (Um atleta e um médico podem possuir várias recomendações.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 395 156 Tm (O exame de urina ainda não tem relacionamento JPA com atleta ou médico.) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 22 Tm (Projeto-TCC_v2  |  Fonte: entidades JPA em src/main/java/com/api/Projeto_3/model  |  08/11/2026) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 1110 22 Tm (3 / 6) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1191 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Length 7835 >>
+stream
+0.05 0.48 0.52 rg 0 835 1191 7 re f
+BT /F2 24 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 794 Tm (04  |  Cardinalidades e observações) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 771 Tm (Leitura: cada registro da tabela de origem referencia a quantidade indicada de registros da tabela de destino.) Tj ET
+0.08 0.26 0.35 rg 35 714 385 28 re f
+BT /F2 11 Tf 1 1 1 rg 1 0 0 1 42 724 Tm (Origem / FK) Tj ET
+0.08 0.26 0.35 rg 420 714 265 28 re f
+BT /F2 11 Tf 1 1 1 rg 1 0 0 1 427 724 Tm (Destino / PK) Tj ET
+0.08 0.26 0.35 rg 685 714 85 28 re f
+BT /F2 11 Tf 1 1 1 rg 1 0 0 1 692 724 Tm (Destino) Tj ET
+0.08 0.26 0.35 rg 770 714 386 28 re f
+BT /F2 11 Tf 1 1 1 rg 1 0 0 1 777 724 Tm (Relação inversa) Tj ET
+0.94 0.96 0.98 rg 35 685 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 696 Tm (PerfisModelo.fal_fk) Tj ET
+0.94 0.96 0.98 rg 420 685 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 696 Tm (AFLIACAO.id) Tj ET
+0.94 0.96 0.98 rg 685 685 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 696 Tm (0..1) Tj ET
+0.94 0.96 0.98 rg 770 685 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 696 Tm (0..1 perfil por afiliação) Tj ET
+1 1 1 rg 35 656 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 667 Tm (PerfisModelo.mord) Tj ET
+1 1 1 rg 420 656 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 667 Tm (MORADIA.id) Tj ET
+1 1 1 rg 685 656 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 667 Tm (0..1) Tj ET
+1 1 1 rg 770 656 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 667 Tm (0..1 perfil por moradia) Tj ET
+0.94 0.96 0.98 rg 35 627 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 638 Tm (PerfisModelo.role_id) Tj ET
+0.94 0.96 0.98 rg 420 627 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 638 Tm (roles_tb.id) Tj ET
+0.94 0.96 0.98 rg 685 627 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 638 Tm (0..1) Tj ET
+0.94 0.96 0.98 rg 770 627 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 638 Tm (0..N perfis por papel) Tj ET
+1 1 1 rg 35 598 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 609 Tm (ATLETAS.id / MEDICOS.id / TREINADORES.id) Tj ET
+1 1 1 rg 420 598 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 609 Tm (PerfisModelo.id) Tj ET
+1 1 1 rg 685 598 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 609 Tm (1) Tj ET
+1 1 1 rg 770 598 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 609 Tm (Herança JOINED; PK também é FK) Tj ET
+0.94 0.96 0.98 rg 35 569 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 580 Tm (ATLETAS.atleta_trenador_fk) Tj ET
+0.94 0.96 0.98 rg 420 569 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 580 Tm (TREINADORES.id) Tj ET
+0.94 0.96 0.98 rg 685 569 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 580 Tm (0..1) Tj ET
+0.94 0.96 0.98 rg 770 569 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 580 Tm (0..N atletas por treinador) Tj ET
+1 1 1 rg 35 540 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 551 Tm (ATLETAS.atleta_medico_fk) Tj ET
+1 1 1 rg 420 540 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 551 Tm (MEDICOS.id) Tj ET
+1 1 1 rg 685 540 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 551 Tm (0..1) Tj ET
+1 1 1 rg 770 540 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 551 Tm (0..N atletas por médico) Tj ET
+0.94 0.96 0.98 rg 35 511 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 522 Tm (SEMANA.atleta_fk) Tj ET
+0.94 0.96 0.98 rg 420 511 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 522 Tm (ATLETAS.id) Tj ET
+0.94 0.96 0.98 rg 685 511 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 522 Tm (1) Tj ET
+0.94 0.96 0.98 rg 770 511 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 522 Tm (0..N semanas por atleta) Tj ET
+1 1 1 rg 35 482 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 493 Tm (DIA.semana_fk) Tj ET
+1 1 1 rg 420 482 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 493 Tm (SEMANA.id) Tj ET
+1 1 1 rg 685 482 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 493 Tm (1) Tj ET
+1 1 1 rg 770 482 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 493 Tm (0..N dias por semana) Tj ET
+0.94 0.96 0.98 rg 35 453 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 464 Tm (TREINAMENTO.dia_fk) Tj ET
+0.94 0.96 0.98 rg 420 453 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 464 Tm (DIA.id) Tj ET
+0.94 0.96 0.98 rg 685 453 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 464 Tm (1) Tj ET
+0.94 0.96 0.98 rg 770 453 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 464 Tm (0..N treinamentos por dia) Tj ET
+1 1 1 rg 35 424 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 435 Tm (EXERCICIO.treinamento_fk) Tj ET
+1 1 1 rg 420 424 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 435 Tm (TREINAMENTO.id) Tj ET
+1 1 1 rg 685 424 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 435 Tm (1) Tj ET
+1 1 1 rg 770 424 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 435 Tm (0..N exercícios por treinamento) Tj ET
+0.94 0.96 0.98 rg 35 395 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 406 Tm (TREINADORES.treimanento_fk) Tj ET
+0.94 0.96 0.98 rg 420 395 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 406 Tm (TREINAMENTO.id) Tj ET
+0.94 0.96 0.98 rg 685 395 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 406 Tm (0..1) Tj ET
+0.94 0.96 0.98 rg 770 395 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 406 Tm (0..N treinadores por treinamento) Tj ET
+1 1 1 rg 35 366 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 377 Tm (recomendacao_alimentar.atleta_id) Tj ET
+1 1 1 rg 420 366 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 377 Tm (ATLETAS.id) Tj ET
+1 1 1 rg 685 366 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 377 Tm (1) Tj ET
+1 1 1 rg 770 366 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 377 Tm (0..N recomendações por atleta) Tj ET
+0.94 0.96 0.98 rg 35 337 385 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 42 348 Tm (recomendacao_alimentar.medico_id) Tj ET
+0.94 0.96 0.98 rg 420 337 265 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 427 348 Tm (MEDICOS.id) Tj ET
+0.94 0.96 0.98 rg 685 337 85 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 692 348 Tm (1) Tj ET
+0.94 0.96 0.98 rg 770 337 386 29 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 777 348 Tm (0..N recomendações por médico) Tj ET
+BT /F2 12 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 295 Tm (Associação adicional de papéis) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 273 Tm (RolesModel.perfils usa @OneToMany sem mappedBy. O JPA prevê uma tabela de junção adicional, distinta de role_id.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 255 Tm (Ela associa roles_tb a PerfisModelo \(1:N\). Seu nome e os nomes das colunas dependem das convenções do provedor.) Tj ET
+BT /F2 12 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 212 Tm (Nomes físicos e escopo) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 190 Tm (Os nomes de tabelas explícitos e das FKs foram mantidos como no código, inclusive AFLIACAO, EXAMA_URINA e treimanento_fk.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 172 Tm (PerfisModelo não declara @Table. Nomes implícitos, caixa e snake_case dependem da estratégia de nomenclatura do Hibernate.) Tj ET
+BT /F2 12 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 129 Tm (Limites e ausência de vínculos) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 107 Tm (EXAMA_URINA não possui FK para atleta ou médico. O limite de sete dias é aplicado no método adicionarDia, não por uma restrição JPA.) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 89 Tm (Este documento descreve os mapeamentos do repositório; não foi feita consulta ao esquema de uma instância do PostgreSQL.) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 22 Tm (Projeto-TCC_v2  |  Fonte: entidades JPA em src/main/java/com/api/Projeto_3/model  |  08/11/2026) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 1110 22 Tm (4 / 6) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1191 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 11 0 R >>
+endobj
+13 0 obj
+<< /Length 5430 >>
+stream
+0.05 0.48 0.52 rg 0 835 1191 7 re f
+BT /F2 24 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 794 Tm (05  |  Dicionário: cadastro e perfis) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 771 Tm (ATRIBUTOS DAS ENTIDADES  /  Nomes e tipos Java declarados no código; atributos herdados permanecem em PerfisModelo) Tj ET
+0.08 0.26 0.35 rg 35 705 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 47 714 Tm (PerfisModelo) Tj ET
+0.95 0.97 0.99 rg 35 680 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 685 Tm (id: Long) Tj ET
+1 1 1 rg 35 663 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 668 Tm (fotoImg: String) Tj ET
+0.95 0.97 0.99 rg 35 646 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 651 Tm (name: String) Tj ET
+1 1 1 rg 35 629 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 634 Tm (dataNascimento: LocalDate) Tj ET
+0.95 0.97 0.99 rg 35 612 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 617 Tm (cpf: String) Tj ET
+1 1 1 rg 35 595 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 600 Tm (rg: String) Tj ET
+0.95 0.97 0.99 rg 35 578 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 583 Tm (email: String) Tj ET
+1 1 1 rg 35 561 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 566 Tm (senha: String) Tj ET
+0.95 0.97 0.99 rg 35 544 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 549 Tm (telefoneFixo: String) Tj ET
+1 1 1 rg 35 527 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 532 Tm (telefoneZap: String) Tj ET
+0.95 0.97 0.99 rg 35 510 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 515 Tm (pesoMigrama: String) Tj ET
+1 1 1 rg 35 493 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 498 Tm (alturaCetimentro: String) Tj ET
+0.95 0.97 0.99 rg 35 476 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 481 Tm (uf: EnumUf) Tj ET
+1 1 1 rg 35 459 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 464 Tm (sexo: EnumGenero) Tj ET
+0.95 0.97 0.99 rg 35 442 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 447 Tm (sangue: EnumSague) Tj ET
+1 1 1 rg 35 425 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 430 Tm (pais_fk: AfiliacaoModelo) Tj ET
+0.95 0.97 0.99 rg 35 408 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 413 Tm (moradia_fk: MoradiaModel) Tj ET
+1 1 1 rg 35 391 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 396 Tm (role: RolesModel) Tj ET
+0.08 0.26 0.35 rg 35 346 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 47 355 Tm (roles_tb) Tj ET
+0.95 0.97 0.99 rg 35 321 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 326 Tm (id: Long) Tj ET
+1 1 1 rg 35 304 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 309 Tm (authority: String) Tj ET
+0.08 0.26 0.35 rg 610 705 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 714 Tm (AFLIACAO) Tj ET
+0.95 0.97 0.99 rg 610 680 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 685 Tm (id: Long) Tj ET
+1 1 1 rg 610 663 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 668 Tm (maeNome: String) Tj ET
+0.95 0.97 0.99 rg 610 646 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 651 Tm (maeTelefone: String) Tj ET
+1 1 1 rg 610 629 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 634 Tm (maeEmail: String) Tj ET
+0.95 0.97 0.99 rg 610 612 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 617 Tm (paiName: String) Tj ET
+1 1 1 rg 610 595 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 600 Tm (paiTelefone: String) Tj ET
+0.95 0.97 0.99 rg 610 578 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 583 Tm (paiEmail: String) Tj ET
+0.08 0.26 0.35 rg 610 533 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 542 Tm (MORADIA) Tj ET
+0.95 0.97 0.99 rg 610 508 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 513 Tm (id: long) Tj ET
+1 1 1 rg 610 491 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 496 Tm (cep: String) Tj ET
+0.95 0.97 0.99 rg 610 474 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 479 Tm (avenida: String) Tj ET
+1 1 1 rg 610 457 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 462 Tm (sn: String) Tj ET
+0.95 0.97 0.99 rg 610 440 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 445 Tm (bairro: String) Tj ET
+1 1 1 rg 610 423 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 428 Tm (cidade: String) Tj ET
+0.08 0.26 0.35 rg 610 378 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 387 Tm (ATLETAS) Tj ET
+0.95 0.97 0.99 rg 610 353 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 358 Tm (id: Long \(PK/FK herdada\)) Tj ET
+1 1 1 rg 610 336 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 341 Tm (treinador_fk: TreinadorModel) Tj ET
+0.95 0.97 0.99 rg 610 319 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 324 Tm (medico_fk: MedicoModelo) Tj ET
+0.08 0.26 0.35 rg 610 274 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 283 Tm (MEDICOS) Tj ET
+0.95 0.97 0.99 rg 610 249 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 254 Tm (id: Long \(PK/FK herdada\)) Tj ET
+0.08 0.26 0.35 rg 610 204 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 213 Tm (TREINADORES) Tj ET
+0.95 0.97 0.99 rg 610 179 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 184 Tm (id: Long \(PK/FK herdada\)) Tj ET
+1 1 1 rg 610 162 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 167 Tm (treimanento_fk: TreinamentoModel) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 22 Tm (Projeto-TCC_v2  |  Fonte: entidades JPA em src/main/java/com/api/Projeto_3/model  |  08/11/2026) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 1110 22 Tm (5 / 6) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1191 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 13 0 R >>
+endobj
+15 0 obj
+<< /Length 5949 >>
+stream
+0.05 0.48 0.52 rg 0 835 1191 7 re f
+BT /F2 24 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 794 Tm (06  |  Dicionário: treinos e saúde) Tj ET
+BT /F1 11 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 771 Tm (ATRIBUTOS DAS ENTIDADES  /  Nomes e tipos Java declarados no código; atributos herdados permanecem em PerfisModelo) Tj ET
+0.08 0.26 0.35 rg 35 705 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 47 714 Tm (SEMANA) Tj ET
+0.95 0.97 0.99 rg 35 680 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 685 Tm (id: Long) Tj ET
+1 1 1 rg 35 663 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 668 Tm (nome: String) Tj ET
+0.95 0.97 0.99 rg 35 646 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 651 Tm (descricao: String) Tj ET
+1 1 1 rg 35 629 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 634 Tm (atleta_fk: AtletaModelo) Tj ET
+0.08 0.26 0.35 rg 35 584 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 47 593 Tm (DIA) Tj ET
+0.95 0.97 0.99 rg 35 559 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 564 Tm (id: Long) Tj ET
+1 1 1 rg 35 542 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 547 Tm (nome: DiasEnum) Tj ET
+0.95 0.97 0.99 rg 35 525 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 530 Tm (semana_fk: SemanaModel) Tj ET
+0.08 0.26 0.35 rg 35 480 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 47 489 Tm (TREINAMENTO) Tj ET
+0.95 0.97 0.99 rg 35 455 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 460 Tm (satisfacao: Integer) Tj ET
+1 1 1 rg 35 438 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 443 Tm (id: Long) Tj ET
+0.95 0.97 0.99 rg 35 421 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 426 Tm (nome: String) Tj ET
+1 1 1 rg 35 404 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 409 Tm (categoria: String) Tj ET
+0.95 0.97 0.99 rg 35 387 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 392 Tm (descricao: String) Tj ET
+1 1 1 rg 35 370 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 375 Tm (dataInicio: LocalDate) Tj ET
+0.95 0.97 0.99 rg 35 353 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 358 Tm (dataFim: LocalDate) Tj ET
+1 1 1 rg 35 336 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 341 Tm (horarioInicio: LocalTime) Tj ET
+0.95 0.97 0.99 rg 35 319 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 324 Tm (horarioFim: LocalTime) Tj ET
+1 1 1 rg 35 302 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 307 Tm (dia_fk: DiaModel) Tj ET
+0.08 0.26 0.35 rg 35 257 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 47 266 Tm (EXERCICIO) Tj ET
+0.95 0.97 0.99 rg 35 232 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 237 Tm (id: Long) Tj ET
+1 1 1 rg 35 215 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 220 Tm (nome: String) Tj ET
+0.95 0.97 0.99 rg 35 198 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 203 Tm (duracacao: double) Tj ET
+1 1 1 rg 35 181 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 186 Tm (descricao: String) Tj ET
+0.95 0.97 0.99 rg 35 164 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 47 169 Tm (treinamento_fk: TreinamentoModel) Tj ET
+0.08 0.26 0.35 rg 610 705 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 714 Tm (recomendacao_alimentar) Tj ET
+0.95 0.97 0.99 rg 610 680 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 685 Tm (id: Long) Tj ET
+1 1 1 rg 610 663 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 668 Tm (atleta: AtletaModelo) Tj ET
+0.95 0.97 0.99 rg 610 646 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 651 Tm (medico: MedicoModelo) Tj ET
+1 1 1 rg 610 629 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 634 Tm (refeicao: String) Tj ET
+0.95 0.97 0.99 rg 610 612 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 617 Tm (objetivo: String) Tj ET
+1 1 1 rg 610 595 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 600 Tm (orientacao: String) Tj ET
+0.95 0.97 0.99 rg 610 578 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 583 Tm (dataInicio: LocalDate) Tj ET
+1 1 1 rg 610 561 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 566 Tm (dataRevisao: LocalDate) Tj ET
+0.08 0.26 0.35 rg 610 516 545 27 re f
+BT /F2 12 Tf 1 1 1 rg 1 0 0 1 622 525 Tm (EXAMA_URINA) Tj ET
+0.95 0.97 0.99 rg 610 491 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 496 Tm (id: Long) Tj ET
+1 1 1 rg 610 474 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 479 Tm (data_hora_coleta: Date) Tj ET
+0.95 0.97 0.99 rg 610 457 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 462 Tm (dataHoraRecebimento: Date) Tj ET
+1 1 1 rg 610 440 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 445 Tm (dataHoraLiberacao: Date) Tj ET
+0.95 0.97 0.99 rg 610 423 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 428 Tm (tempeturaAmostraCelsius: double) Tj ET
+1 1 1 rg 610 406 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 411 Tm (cor_amostra: String) Tj ET
+0.95 0.97 0.99 rg 610 389 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 394 Tm (ph: double) Tj ET
+1 1 1 rg 610 372 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 377 Tm (densidade_epecifica: double) Tj ET
+0.95 0.97 0.99 rg 610 355 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 360 Tm (creatinina_urinaria: double) Tj ET
+1 1 1 rg 610 338 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 343 Tm (test_adulteracao: String) Tj ET
+0.95 0.97 0.99 rg 610 321 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 326 Tm (metodologia_triagem: String) Tj ET
+1 1 1 rg 610 304 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 309 Tm (status_amostra: String) Tj ET
+0.95 0.97 0.99 rg 610 287 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 292 Tm (resultado_sbstancia: String) Tj ET
+1 1 1 rg 610 270 545 17 re f
+BT /F1 10 Tf 0.12 0.18 0.26 rg 1 0 0 1 622 275 Tm (valorCorteCuoff: String) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 35 22 Tm (Projeto-TCC_v2  |  Fonte: entidades JPA em src/main/java/com/api/Projeto_3/model  |  08/11/2026) Tj ET
+BT /F1 9 Tf 0.12 0.18 0.26 rg 1 0 0 1 1110 22 Tm (6 / 6) Tj ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 1191 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents 15 0 R >>
+endobj
+xref
+0 17
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000155 00000 n 
+0000000252 00000 n 
+0000000354 00000 n 
+0000005672 00000 n 
+0000005809 00000 n 
+0000010308 00000 n 
+0000010445 00000 n 
+0000013743 00000 n 
+0000013881 00000 n 
+0000021769 00000 n 
+0000021908 00000 n 
+0000027391 00000 n 
+0000027530 00000 n 
+0000033532 00000 n 
+trailer
+<< /Size 17 /Root 1 0 R >>
+startxref
+33671
+%%EOF

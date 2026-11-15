@@ -11,11 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 @Entity
 @Table(name = "EXERCICIO")
 public class ExercicioModel implements Serializable {
@@ -31,4 +27,71 @@ public class ExercicioModel implements Serializable {
     @JoinColumn(name = "treinamento_fk", nullable = false)
     @ToString.Exclude
     private TreinamentoModel treinamento_fk;
+
+    
+    public ExercicioModel(Long id, String nome, double duracacao, String descricao, TreinamentoModel treinamento_fk) {
+        this.id = id;
+        this.nome = nome;
+        this.duracacao = duracacao;
+        this.descricao = descricao;
+        this.treinamento_fk = treinamento_fk;
+    }
+
+
+    public ExercicioModel() {
+     }
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public String getNome() {
+        return nome;
+    }
+
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+
+    public double getDuracacao() {
+        return duracacao;
+    }
+
+
+    public void setDuracacao(double duracacao) {
+        this.duracacao = duracacao;
+    }
+
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+
+    public TreinamentoModel getTreinamento_fk() {
+        return treinamento_fk;
+    }
+
+
+    public void setTreinamento_fk(TreinamentoModel treinamento_fk) {
+        this.treinamento_fk = treinamento_fk;
+    }
+
+
+    
+
+    
 }

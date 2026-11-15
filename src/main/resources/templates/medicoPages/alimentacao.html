@@ -1,112 +1,199 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plano alimentar | Portal Médico</title>
-    <th:block th:replace="~{fragments/layout :: head-resources}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+    <link rel="icon" th:href="@{/img/iconFun.png}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind-theme.js}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/alimentacao.css}">
 </head>
+
 <body class="min-h-screen bg-[#f5f8fd] font-sans text-slate-700">
-<div class="min-h-screen md:flex">
-    <aside th:replace="~{fragments/medicoLayout :: sidebar(active='alimentacao')}"></aside>
-    <main class="medico-content nutrition-page min-w-0 flex-1">
-        <header class="nutrition-header">
-            <a th:href="@{/medico/atletas-vinculados}">← Atletas vinculados</a>
-            <span>Portal Médico · Alimentação esportiva</span>
-        </header>
-        <section class="nutrition-hero">
-            <div>
-                <p class="eyebrow">ACOMPANHAMENTO INDIVIDUAL</p>
-                <h1>Plano alimentar</h1>
-                <p>Orientações de alimentação e histórico deste atleta.</p>
-            </div>
-            <div class="athlete-chip">
-                <span class="athlete-avatar" th:text="${#strings.substring(atleta.name,0,1)}">A</span>
-                <div>
-                    <small>ATLETA</small>
-                    <strong th:text="${atleta.name}">Nome do atleta</strong>
+    <div class="min-h-screen md:flex">
+
+        <aside aria-label="Navegação do médico"
+        class="print:hidden relative flex shrink-0 flex-col bg-emerald-950 px-4 py-5 text-emerald-100 md:sticky md:top-0 md:h-dvh md:w-64 md:overflow-y-auto md:px-5 md:py-7">
+        <a th:href="@{/medico}" class="mb-6 flex items-center gap-3 pr-24 md:pr-0">
+            <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
+            <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
+        </a>
+        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
+            <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/add_atleta.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Vincular atletas</p>
                 </div>
-            </div>
-        </section>
-        <div class="nutrition-grid">
-            <section class="panel recommendation-panel">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow">NOVA ORIENTAÇÃO</p>
-                        <h2>Recomendar alimentação</h2>
-                    </div>
-                    <span class="panel-icon" aria-hidden="true">＋</span>
+            </a>
+            <a th:href="@{/medico/atletas-vinculados}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/ateltaVincule.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Atletas vinculados</p>
                 </div>
-                <div th:if="${salvo}" class="success-message" role="status">Recomendação salva e vinculada ao histórico do atleta.</div>
-                <form th:action="@{/medico/alimentacao/{id}(id=${atleta.id})}" th:object="${recomendacao}" method="post" class="recommendation-form">
-                    <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                    <label>Momento da alimentação
-                        <select th:field="*{refeicao}" required>
-                            <option value="">Selecione</option>
-                            <option value="Café da manhã">Café da manhã</option>
-                            <option value="Lanche pré-treino">Lanche pré-treino</option>
-                            <option value="Pós-treino">Pós-treino</option>
-                            <option value="Almoço">Almoço</option>
-                            <option value="Lanche da tarde">Lanche da tarde</option>
-                            <option value="Jantar">Jantar</option>
-                            <option value="Hidratação">Hidratação</option>
-                            <option value="Orientação geral">Orientação geral</option>
-                        </select>
-                        <span class="field-error" th:errors="*{refeicao}"></span>
-                    </label>
-                    <label>Objetivo
-                        <input th:field="*{objetivo}" maxlength="120" placeholder="Ex.: recuperação após treino intenso" required>
-                        <span class="field-error" th:errors="*{objetivo}"></span>
-                    </label>
-                    <label>Orientação para o atleta
-                        <textarea th:field="*{orientacao}" maxlength="2000" rows="5" placeholder="Descreva a recomendação, porções e observações relevantes..." required></textarea>
-                        <span class="field-error" th:errors="*{orientacao}"></span>
-                    </label>
-                    <div class="date-fields">
-                        <label>Início
-                            <input type="date" th:field="*{dataInicio}" required>
-                            <span class="field-error" th:errors="*{dataInicio}"></span>
-                        </label>
-                        <label>Revisar em <small>(opcional)</small>
-                            <input type="date" th:field="*{dataRevisao}">
-                            <span class="field-error" th:errors="*{dataRevisao}"></span>
-                        </label>
-                    </div>
-                    <p class="form-note">Considere o histórico clínico, a rotina de treinos e as necessidades individuais do atleta.</p>
-                    <button class="submit-button" type="submit">Salvar recomendação</button>
-                </form>
-            </section>
-            <section class="panel history-panel">
-                <div class="panel-heading">
-                    <div>
-                        <p class="eyebrow">REGISTROS DO ATLETA</p>
-                        <h2>Histórico de recomendações</h2>
-                    </div>
-                    <span class="history-count" th:text="${#lists.size(recomendacoes)} + ' registros'">0 registros</span>
+            </a>
+            <a th:href="@{/medico/alimentacao}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-emerald-200 bg-emerald-50 font-bold text-emerald-950" aria-current="page">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/medico_ifood.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Alimentação</p>
                 </div>
-                <div th:if="${#lists.isEmpty(recomendacoes)}" class="empty-history">
-                    <span aria-hidden="true">☷</span>
-                    <strong>Nenhuma recomendação registrada</strong>
-                    <p>Adicione a primeira orientação alimentar deste atleta pelo formulário.</p>
+            </a>
+            <a th:href="@{/medico/exame-urina}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Exame de urina</p>
                 </div>
-                <ol th:unless="${#lists.isEmpty(recomendacoes)}" class="recommendation-list">
-                    <li th:each="item : ${recomendacoes}" class="recommendation-item">
-                        <div class="record-top">
-                            <span class="meal-tag" th:text="${item.refeicao}">Pós-treino</span>
-                            <time th:text="${#temporals.format(item.dataInicio, 'dd/MM/yyyy')}">26/10/2026</time>
-                        </div>
-                        <h3 th:text="${item.objetivo}">Objetivo</h3>
-                        <p th:text="${item.orientacao}">Orientação</p>
-                        <small th:if="${item.dataRevisao != null}" class="review-date" th:text="${'Revisão prevista para ' + #temporals.format(item.dataRevisao, 'dd/MM/yyyy')}">Revisão prevista</small>
-                    </li>
-                </ol>
-            </section>
+            </a>
+            <a th:href="@{/medico/exame-sangue}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Exame de sangue</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/perfil}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Meu perfil</p>
+                </div>
+            </a>
+        </nav>
+        <div class="mt-auto pt-7">
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="w-full rounded-xl px-3 py-3 text-left text-sm hover:bg-white/10">Sair</button>
+            </form>
         </div>
-    </main>
-</div>
+    </aside>
+
+        <main class="medico-content nutrition-page min-w-0 flex-1">
+            <header class="nutrition-header">
+                <a th:href="@{/medico/atletas-vinculados}">← Atletas vinculados</a>
+                <span>Portal Médico · Alimentação esportiva</span>
+            </header>
+            <section class="nutrition-hero">
+                <div>
+                    <p class="eyebrow">ACOMPANHAMENTO INDIVIDUAL</p>
+                    <h1>Alimentação do atleta</h1>
+                    <p>Planeje os cuidados de hoje. Acompanhe a evolução a cada orientação.</p>
+                </div>
+                <div class="athlete-chip">
+                    <span class="athlete-avatar"
+                        th:text="${#strings.isEmpty(atleta.name) ? 'A' : #strings.substring(atleta.name,0,1)}">A</span>
+                    <div>
+                        <small>ATLETA</small>
+                        <strong th:text="${atleta.name}">Nome do atleta</strong>
+                    </div>
+                </div>
+            </section>
+            <div class="nutrition-toolbar">
+            <div class="athlete-selector">
+                <label for="selecionar-atleta" >Escolha o atleta</label>
+                <select id="selecionar-atleta" 
+                        onchange="if (this.value) { window.location.assign(this.value); }">
+                    <option th:each="item : ${atletas}" th:value="@{/medico/alimentacao/{id}(id=${item.id})}"
+                            th:selected="${item.id == atleta.id}" th:text="${item.name}">Atleta</option>
+                </select>
+            </div>
+                <div class="toolbar-summary">
+                    <span class="summary-dot" aria-hidden="true"></span>
+                    <span>Acompanhamento alimentar</span>
+                    <strong th:text="${#lists.size(recomendacoes)} + ' recomendações'">0 recomendações</strong>
+                </div>
+            </div>
+            <div class="nutrition-grid">
+                <section class="panel recommendation-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">NOVA ORIENTAÇÃO</p>
+                            <h2>Nova recomendação</h2>
+                        </div>
+                        <span class="panel-icon" aria-hidden="true">＋</span>
+                    </div>
+                    <div th:if="${salvo}" class="success-message" role="status">Recomendação salva e vinculada ao
+                        histórico do atleta.</div>
+                    <form th:action="@{/medico/alimentacao/{id}(id=${atleta.id})}" th:object="${recomendacao}"
+                        method="post" class="recommendation-form">
+                        <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}"
+                            th:value="${_csrf.token}">
+                        <label>Momento da alimentação
+                            <select th:field="*{refeicao}" required>
+                                <option value="">Selecione</option>
+                                <option value="Café da manhã">Café da manhã</option>
+                                <option value="Lanche pré-treino">Lanche pré-treino</option>
+                                <option value="Pós-treino">Pós-treino</option>
+                                <option value="Almoço">Almoço</option>
+                                <option value="Lanche da tarde">Lanche da tarde</option>
+                                <option value="Jantar">Jantar</option>
+                                <option value="Hidratação">Hidratação</option>
+                                <option value="Orientação geral">Orientação geral</option>
+                            </select>
+                            <span class="field-error" th:errors="*{refeicao}"></span>
+                        </label>
+                        <label>Objetivo
+                            <input th:field="*{objetivo}" maxlength="120"
+                                placeholder="Ex.: recuperação após treino intenso" required>
+                            <span class="field-error" th:errors="*{objetivo}"></span>
+                        </label>
+                        <label>Orientação para o atleta
+                            <textarea th:field="*{orientacao}" maxlength="2000" rows="5"
+                                placeholder="Descreva a recomendação, porções e observações relevantes..."
+                                required></textarea>
+                            <span class="field-error" th:errors="*{orientacao}"></span>
+                        </label>
+                        <div class="date-fields">
+                            <label>Início
+                                <input type="date" th:field="*{dataInicio}" required>
+                                <span class="field-error" th:errors="*{dataInicio}"></span>
+                            </label>
+                            <label>Revisar em <small>(opcional)</small>
+                                <input type="date" th:field="*{dataRevisao}">
+                                <span class="field-error" th:errors="*{dataRevisao}"></span>
+                            </label>
+                        </div>
+                        <p class="form-note">Considere o histórico clínico, a rotina de treinos e as necessidades
+                            individuais do atleta.</p>
+                        <button class="submit-button" type="submit">Salvar recomendação</button>
+                    </form>
+                </section>
+                <section class="panel history-panel">
+                    <div class="panel-heading">
+                        <div>
+                            <p class="eyebrow">REGISTROS DO ATLETA</p>
+                            <h2>Histórico de recomendações</h2>
+                        </div>
+                        <span class="history-count" th:text="${#lists.size(recomendacoes)} + ' registros'">0
+                            registros</span>
+                    </div>
+                    <div th:if="${#lists.isEmpty(recomendacoes)}" class="empty-history">
+                        <span aria-hidden="true">☷</span>
+                        <strong>Nenhuma recomendação registrada</strong>
+                        <p>Adicione a primeira orientação alimentar deste atleta pelo formulário.</p>
+                    </div>
+                    <ol th:unless="${#lists.isEmpty(recomendacoes)}" class="recommendation-list">
+                        <li th:each="item : ${recomendacoes}" class="recommendation-item">
+                            <div class="record-top">
+                                <span class="meal-tag" th:text="${item.refeicao}">Pós-treino</span>
+                                <time th:text="${#temporals.format(item.dataInicio, 'dd/MM/yyyy')}">26/10/2026</time>
+                            </div>
+                            <h3 th:text="${item.objetivo}">Objetivo</h3>
+                            <p th:text="${item.orientacao}">Orientação</p>
+                            <small th:if="${item.dataRevisao != null}" class="review-date"
+                                th:text="${'Revisão prevista para ' + #temporals.format(item.dataRevisao, 'dd/MM/yyyy')}">Revisão
+                                prevista</small>
+                        </li>
+                    </ol>
+                </section>
+            </div>
+        </main>
+    </div>
 </body>
+
 </html>

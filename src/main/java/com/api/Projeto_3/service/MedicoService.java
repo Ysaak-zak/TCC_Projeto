@@ -9,13 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
-import com.api.Projeto_3.dtos.model.RecomendacaoAlimentarDto;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.MedicoModelo;
-import com.api.Projeto_3.model.RecomendacaoAlimentar;
 import com.api.Projeto_3.repository.AtletaRespository;
 import com.api.Projeto_3.repository.MedicoRespository;
-import com.api.Projeto_3.repository.RecomendacaoAlimentarRepository;
 
 @Service
 public class MedicoService {
@@ -24,9 +21,6 @@ public class MedicoService {
 
     @Autowired
     MedicoRespository jpaMedico;
-
-    @Autowired
-    RecomendacaoAlimentarRepository recomendacaoRepository;
 
     @Autowired
     AtletaRespository jpaAtleta;
@@ -64,34 +58,9 @@ public class MedicoService {
         return jpaAtleta.findByMedicoFk_IdOrderByName(medicoId);
     }
 
-    @Transactional(readOnly = true)
-    public List<RecomendacaoAlimentar> recomendacoes(Long medicoId, Long atletaId) {
-        return recomendacaoRepository.findByAtletaIdAndMedicoIdOrderByDataInicioDesc(atletaId, medicoId);
+    @Transactional
+    public boolean desvincularAtleta(Long medicoId, Long atletaId) {
+        return jpaAtleta.desvincularMedico(atletaId, medicoId) > 0;
     }
 
-    @Transactional
-    public boolean recomendarAlimentacao(Long medicoId, Long atletaId, RecomendacaoAlimentarDto dados) {
-        if (dados.getDataInicio() == null) {
-            return false;
-        }
-        MedicoModelo medico = jpaMedico.findById(medicoId).orElse(null);
-        AtletaModelo atleta = jpaAtleta.findById(atletaId).orElse(null);
-        if (medico == null || atleta == null || atleta.getMedico_fk() == null
-                || !medicoId.equals(atleta.getMedico_fk().getId())) {
-            return false;
-        }
-        if (dados.getDataRevisao() != null && dados.getDataRevisao().isBefore(dados.getDataInicio())) {
-            return false;
-        }
-        RecomendacaoAlimentar recomendacao = new RecomendacaoAlimentar();
-        recomendacao.setMedico(medico);
-        recomendacao.setAtleta(atleta);
-        recomendacao.setRefeicao(dados.getRefeicao().trim());
-        recomendacao.setObjetivo(dados.getObjetivo().trim());
-        recomendacao.setOrientacao(dados.getOrientacao().trim());
-        recomendacao.setDataInicio(dados.getDataInicio());
-        recomendacao.setDataRevisao(dados.getDataRevisao());
-        recomendacaoRepository.save(recomendacao);
-        return true;
-    }
 }

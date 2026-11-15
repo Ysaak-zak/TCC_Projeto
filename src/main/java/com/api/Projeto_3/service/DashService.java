@@ -6,9 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import com.api.Projeto_3.dtos.model.DashDto;
-import com.api.Projeto_3.dtos.model.DashPontoDto;
-import com.api.Projeto_3.dtos.model.DashTreinoDto;
+
+import com.api.Projeto_3.dtos.DtosModelos.DashDto;
+import com.api.Projeto_3.dtos.DtosModelos.DashPontoDto;
+import com.api.Projeto_3.dtos.DtosModelos.DashTreinoDto;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.DiaModel;
 import com.api.Projeto_3.model.SemanaModel;

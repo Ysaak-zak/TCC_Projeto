@@ -1,7 +1,6 @@
 main.medico-content.nutrition-page,
 main.medico-content.nutrition-page * {
     font-family: 'DM Sans', sans-serif;
-    font-size: revert;
     line-height: 1.5;
 }
 
@@ -98,7 +97,7 @@ main.medico-content.nutrition-page .athlete-chip strong {
 
 main.medico-content.nutrition-page .nutrition-grid {
     display: grid;
-    grid-template-columns: minmax(300px, .92fr) minmax(360px, 1.08fr);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 1.2rem;
     max-width: 1280px;
     margin: 0 auto;
@@ -107,9 +106,9 @@ main.medico-content.nutrition-page .nutrition-grid {
 
 main.medico-content.nutrition-page .panel {
     align-self: start;
-    padding: 1.4rem;
+    padding: clamp(1.25rem, 2.5vw, 2rem);
     border: 1px solid #e5eaf0;
-    border-radius: 16px;
+    border-radius: 20px;
     background: #fff;
     box-shadow: 0 4px 18px #173a2a08;
 }
@@ -150,7 +149,7 @@ main.medico-content.nutrition-page .recommendation-form label {
     display: grid;
     gap: .35rem;
     color: #344a40;
-    font-size: .77rem;
+    font-size: .85rem;
     font-weight: 700;
 }
 
@@ -164,7 +163,8 @@ main.medico-content.nutrition-page .recommendation-form textarea {
     outline: none;
     background: #fbfdfb;
     color: #263b31;
-    font: 400 .82rem 'DM Sans', sans-serif;
+    font: 400 .9rem 'DM Sans', sans-serif;
+    min-height: 46px;
 }
 
 main.medico-content.nutrition-page .recommendation-form textarea {
@@ -219,7 +219,8 @@ main.medico-content.nutrition-page .submit-button:hover {
 
 main.medico-content.nutrition-page .submit-button:focus-visible,
 main.medico-content.nutrition-page .submit-button:active {
-    outline: none;
+    outline: 3px solid #66bb92;
+    outline-offset: 3px;
 }
 
 main.medico-content.nutrition-page .success-message {
@@ -315,4 +316,160 @@ main.medico-content.nutrition-page .history-count {
     color: #0f5c3c;
     font-size: .72rem;
     font-weight: 700;
+}
+
+/* Page structure and athlete selection */
+main.medico-content.nutrition-page {
+    background: #f3f7f4;
+    min-width: 0;
+}
+
+main.medico-content.nutrition-page .nutrition-hero {
+    min-height: 210px;
+    padding-block: 2.5rem;
+    background: radial-gradient(ellipse at top right, #287d54 0, transparent 65%), #103f30;
+}
+
+main.medico-content.nutrition-page .nutrition-toolbar {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem clamp(1.25rem, 4vw, 2.5rem) 0;
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+main.medico-content.nutrition-page .athlete-selector {
+    width: min(100%, 390px);
+}
+
+main.medico-content.nutrition-page .athlete-selector label {
+    display: block;
+    margin-bottom: .5rem;
+    font-size: .8rem;
+    font-weight: 700;
+    color: #344a40;
+}
+
+main.medico-content.nutrition-page .athlete-selector select {
+    width: 100%;
+    min-height: 48px;
+    padding: .75rem 1rem;
+    border: 1px solid #cbded1;
+    border-radius: 12px;
+    background: white;
+    color: #183328;
+    font-size: .9rem;
+    cursor: pointer;
+}
+
+main.medico-content.nutrition-page .athlete-selector select:focus-visible {
+    outline: 3px solid #a9dcc1;
+    outline-offset: 2px;
+}
+
+main.medico-content.nutrition-page .toolbar-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .5rem;
+    padding-bottom: .7rem;
+    color: #61756a;
+    font-size: .75rem;
+}
+
+main.medico-content.nutrition-page .toolbar-summary strong {
+    color: #185a39;
+    border-left: 1px solid #ceded3;
+    padding-left: .6rem;
+}
+
+main.medico-content.nutrition-page .summary-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #299964;
+}
+
+main.medico-content.nutrition-page .panel-heading {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #edf2ee;
+}
+
+main.medico-content.nutrition-page .history-count {
+    flex-shrink: 0;
+    border-radius: 999px;
+    padding: .4rem .7rem;
+    background: #eaf5ee;
+}
+
+main.medico-content.nutrition-page .recommendation-item {
+    border-left: 3px solid #66ac85;
+    background: #fcfefd;
+    overflow-wrap: anywhere;
+}
+
+main.medico-content.nutrition-page .recommendation-item p {
+    font-size: .9rem;
+    line-height: 1.75;
+}
+
+main.medico-content.nutrition-page .athlete-chip {
+    max-width: 100%;
+    min-width: 0;
+}
+
+main.medico-content.nutrition-page .athlete-avatar {
+    flex-shrink: 0;
+}
+
+main.medico-content.nutrition-page .athlete-chip strong {
+    overflow-wrap: anywhere;
+}
+
+main.medico-content.nutrition-page .empty-history {
+    min-height: 290px;
+    align-content: center;
+    gap: .75rem;
+    background: #f7faf8;
+}
+
+main.medico-content.nutrition-page .empty-history p {
+    max-width: 280px;
+    font-size: .85rem;
+    color: #73827b;
+}
+
+@media (max-width: 1100px) {
+    main.medico-content.nutrition-page .nutrition-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    main.medico-content.nutrition-page .nutrition-toolbar {
+        align-items: start;
+        flex-direction: column;
+        gap: .75rem;
+    }
+}
+
+@media (max-width: 600px) {
+    main.medico-content.nutrition-page .nutrition-hero {
+        flex-direction: column;
+        align-items: start;
+        gap: 1.25rem;
+    }
+    main.medico-content.nutrition-page .nutrition-header {
+        flex-wrap: wrap;
+        gap: .5rem;
+    }
+    main.medico-content.nutrition-page .athlete-selector {
+        width: 100%;
+    }
+    main.medico-content.nutrition-page .date-fields {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    main.medico-content.nutrition-page .record-top,
+    main.medico-content.nutrition-page .panel-heading {
+        flex-wrap: wrap;
+    }
 }

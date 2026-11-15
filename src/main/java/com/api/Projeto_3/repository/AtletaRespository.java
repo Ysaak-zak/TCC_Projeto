@@ -62,6 +62,19 @@ int atletaSemVinculados();
                         " INNER JOIN treinadores tre  ON tre.id = atl.atleta_trenador_fk " + 
                          "  WHERE tre.id = :indTreinador " , nativeQuery = true )
         List<String> listAtletasVinculados(Long indTreinador);
+        // Atletas já vinculados a um treinador, com os mesmos campos da tabela do dashboard (ListDasAtleta).
+        // LEFT JOIN em moradia: o atleta sem endereço cadastrado continua aparecendo na lista
+        // (e o total da tela bate com atletaVinculados, que não depende de moradia).
+        @Query(value = "SELECT atl.id AS id, per.per_nome AS per_nome, per.cpf AS cpf, " +
+                       "       per.sexo AS sexo, per.email AS email, mor.cidade AS cidade " +
+                       "FROM perfis_modelo AS per " +
+                       "INNER JOIN atletas atl ON per.id = atl.id " +
+                       "LEFT JOIN moradia mor ON per.mord = mor.id " +
+                       "WHERE atl.atleta_trenador_fk = :treinadorId " +
+                       "ORDER BY per.per_nome", nativeQuery = true)
+        List<ListDasAtleta> atletListVinculadosTreinador(@Param("treinadorId") Long treinadorId);
+
+
 
      
 
@@ -98,5 +111,15 @@ int atletaSemVinculados();
                         " INNER JOIN medicos med  ON med.id = atl.atleta_medico_fk " +
                          "  WHERE med.id = :indMedico " , nativeQuery = true )
         List<String> listAtletasVinculadosMedico(Long indMedico);
+
+    @Modifying
+    @Query(value = "UPDATE atletas SET atleta_medico_fk = NULL "
+            + "WHERE id = :atletaId AND atleta_medico_fk = :medicoId", nativeQuery = true)
+    int desvincularMedico(@Param("atletaId") Long atletaId, @Param("medicoId") Long medicoId);
+
+    @Modifying
+    @Query(value = "UPDATE atletas SET atleta_trenador_fk = NULL "
+            + "WHERE id = :atletaId AND atleta_trenador_fk = :treinadorId", nativeQuery = true)
+    int desvincularTreinador(@Param("atletaId") Long atletaId, @Param("treinadorId") Long treinadorId);
 
 }

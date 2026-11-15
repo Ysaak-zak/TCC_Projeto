@@ -9,7 +9,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
-import com.api.Projeto_3.dtos.model.CriarSemanaDto;
+
+import com.api.Projeto_3.dtos.DtosModelos.CriarSemanaDto;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.repository.AtletaRespository;
@@ -63,7 +64,7 @@ class TreinamentoControllerTest {
         var semanas = mock(SemanaResponitory.class);
         var controller = new TreinamentoController(service, atletas, semanas);
         var usuario = User.withUsername("cpf").password("senha").roles("TREINADOR").build();
-        var form = new com.api.Projeto_3.dtos.model.CriarExercicioDto();
+        var form = new com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto();
         form.setSemanaId(1L);
         form.setTreinamentoId(2L);
         form.setNome("Corrida");

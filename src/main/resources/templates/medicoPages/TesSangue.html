@@ -1,0 +1,365 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Exame de Sangue</title>
+
+    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
+    <link rel="icon" th:href="@{/img/iconFun.png}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/tailwind-theme.js}"></script>
+</head>
+
+<body class="min-h-screen bg-gray-100 text-gray-800">
+    <div class="min-h-screen md:flex">
+    <aside aria-label="Navegação do médico"
+        class="print:hidden relative flex shrink-0 flex-col bg-emerald-950 px-4 py-5 text-emerald-100 md:sticky md:top-0 md:h-dvh md:w-64 md:overflow-y-auto md:px-5 md:py-7">
+        <a th:href="@{/medico}" class="mb-6 flex items-center gap-3 pr-24 md:pr-0">
+            <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
+            <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
+        </a>
+        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
+            <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/add_atleta.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Vincular atletas</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/atletas-vinculados}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/ateltaVincule.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Atletas vinculados</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/alimentacao}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/medico_ifood.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Alimentação</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/exame-urina}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Exame de urina</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/exame-sangue}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-emerald-200 bg-emerald-50 font-bold text-emerald-950" aria-current="page">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Exame de sangue</p>
+                </div>
+            </a>
+            <a th:href="@{/medico/perfil}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
+                <div class="flex items-center gap-3">
+                    <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <p>Meu perfil</p>
+                </div>
+            </a>
+        </nav>
+        <div class="mt-auto pt-7">
+            <form th:action="@{/logout}" method="post">
+                <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" class="w-full rounded-xl px-3 py-3 text-left text-sm hover:bg-white/10">Sair</button>
+            </form>
+        </div>
+    </aside>
+
+    <main class="medico-content min-w-0 flex-1 p-4 flex flex-col gap-6">
+
+        <article class="w-full rounded-xl bg-white p-6 shadow-sm sm:p-8">
+
+        <!-- CABEÇALHO -->
+
+        <header class="border-b border-gray-200 pb-6 mb-6">
+
+            <h1 class="text-2xl font-bold">
+                Exame de Sangue
+            </h1>
+
+            <p class="text-gray-500 mt-2">
+                Análise de sangue com inteligência artificial
+            </p>
+
+        </header>
+
+        <!-- FORMULÁRIO -->
+
+        <form th:action="@{/medico/exame-sangue/salvar}"
+              method="post"
+              class="w-full flex flex-col gap-6">
+
+            <input type="hidden"
+                   th:if="${_csrf != null}"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+            <!-- ATLETA -->
+
+            <section>
+
+                <h2 class="text-xl font-semibold mb-5">
+                    Dados do atleta
+                </h2>
+
+                <div class="flex flex-col gap-2">
+
+                    <label for="atletaId" class="font-medium">
+                        Selecionar atleta
+                    </label>
+
+                    <select id="atletaId"
+                            name="atletaId"
+                            required
+                            class="w-full border rounded-lg p-3">
+
+                        <option value="">Selecione um atleta</option>
+
+                        <option th:each="atleta : ${atletas}"
+                                th:value="${atleta.id}"
+                                th:text="${atleta.name}">
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </section>
+
+            <!-- RESULTADOS SANGUÍNEOS -->
+
+            <section class="border-t border-gray-200 pt-6">
+
+                <h2 class="text-xl font-semibold mb-2">
+                    Resultados sanguíneos
+                </h2>
+
+                <p class="text-gray-500 text-sm mb-5">
+                    Informe os resultados laboratoriais do atleta.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="hemoglobina" class="font-medium">
+                            Hemoglobina (g/dL)
+                        </label>
+
+                        <input id="hemoglobina"
+                               type="number"
+                               name="hemoglobina"
+                               step="0.01"
+                               min="0"
+                               placeholder="Ex: 15.50"
+                               class="w-full border rounded-lg p-3">
+
+                    </div>
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="hematocrito" class="font-medium">
+                            Hematócrito (%)
+                        </label>
+
+                        <input id="hematocrito"
+                               type="number"
+                               name="hematocrito"
+                               step="0.01"
+                               min="0"
+                               max="100"
+                               placeholder="Ex: 45.00"
+                               class="w-full border rounded-lg p-3">
+
+                    </div>
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="reticulocitos" class="font-medium">
+                            Reticulócitos (%)
+                        </label>
+
+                        <input id="reticulocitos"
+                               type="number"
+                               name="reticulocitos"
+                               step="0.01"
+                               min="0"
+                               max="100"
+                               placeholder="Ex: 1.30"
+                               class="w-full border rounded-lg p-3">
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- INVESTIGAÇÃO DE SUBSTÂNCIA -->
+
+            <section class="border-t border-gray-200 pt-6">
+
+                <h2 class="text-xl font-semibold mb-2">
+                    Investigação de substância
+                </h2>
+
+                <p class="text-gray-500 text-sm mb-5">
+                    Informe os resultados da pesquisa laboratorial simulada.
+                </p>
+
+                <div class="flex flex-wrap gap-4">
+
+                    <!-- SUBSTÂNCIA -->
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="substancia" class="font-medium">
+                            Substância pesquisada
+                        </label>
+
+                        <input id="substancia"
+                               type="text"
+                               name="substancias[0].nomeSubstancia"
+                               placeholder="Ex: Estanozolol"
+                               class="w-full border rounded-lg p-3">
+
+                    </div>
+
+                    <!-- TRIAGEM -->
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="triagem" class="font-medium">
+                            Resultado da triagem
+                        </label>
+
+                        <select id="triagem"
+                                name="substancias[0].resultadoTriagem"
+                                class="w-full border rounded-lg p-3">
+
+                            <option value="">Selecione</option>
+                            <option value="DETECTADO">Detectado</option>
+                            <option value="NAO_DETECTADO">
+                                Não detectado
+                            </option>
+                            <option value="INCONCLUSIVO">
+                                Inconclusivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- CONCENTRAÇÃO -->
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="concentracao" class="font-medium">
+                            Concentração
+                        </label>
+
+                        <input id="concentracao"
+                               type="number"
+                               name="substancias[0].concentracao"
+                               step="0.0001"
+                               min="0"
+                               placeholder="Ex: 2.5000"
+                               class="w-full border rounded-lg p-3">
+
+                    </div>
+
+                    <!-- MÉTODO -->
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="metodo" class="font-medium">
+                            Método de análise
+                        </label>
+
+                        <select id="metodo"
+                                name="substancias[0].metodoAnalise"
+                                class="w-full border rounded-lg p-3">
+
+                            <option value="">Selecione</option>
+                            <option value="LC-MS/MS">LC-MS/MS</option>
+                            <option value="GC-MS/MS">GC-MS/MS</option>
+                            <option value="IMUNOENSAIO">
+                                Imunoensaio
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- CONFIRMAÇÃO -->
+
+                    <div class="flex flex-col flex-1 min-w-56 gap-2">
+
+                        <label for="confirmacao" class="font-medium">
+                            Resultado da confirmação
+                        </label>
+
+                        <select id="confirmacao"
+                                name="substancias[0].resultadoConfirmacao"
+                                class="w-full border rounded-lg p-3">
+
+                            <option value="">Selecione</option>
+                            <option value="PENDENTE">Pendente</option>
+                            <option value="CONFIRMADO">Confirmado</option>
+                            <option value="NAO_CONFIRMADO">
+                                Não confirmado
+                            </option>
+                            <option value="INCONCLUSIVO">
+                                Inconclusivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- OBSERVAÇÕES -->
+
+            <section class="border-t border-gray-200 pt-6">
+
+                <h2 class="text-xl font-semibold mb-4">
+                    Observações médicas
+                </h2>
+
+                <textarea name="observacoes"
+                          rows="4"
+                          placeholder="Digite observações adicionais..."
+                          class="w-full border rounded-lg p-3"></textarea>
+
+            </section>
+
+            <!-- BOTÕES -->
+
+            <div class="flex flex-wrap justify-end gap-4 border-t border-gray-200 pt-6">
+
+                <a th:href="@{/medico}"
+                   class="bg-gray-200 hover:bg-gray-300 px-6 py-3 rounded-lg">
+                    Cancelar
+                </a>
+
+                <button type="submit"
+                        class="bg-green-700 hover:bg-green-800 text-white font-semibold px-8 py-3 rounded-lg">
+                    Realizar exame
+                </button>
+
+            </div>
+
+        </form>
+        </article>
+
+    </main>
+    </div>
+
+</body>
+</html>
