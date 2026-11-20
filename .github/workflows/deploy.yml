@@ -19,37 +19,28 @@ jobs:
 
       - name: Configurar SSH
         env:
-          VPS_HOST: ${{ secrets.VPS_HOST }}
-          VPS_USER: ${{ secrets.VPS_USER }}
           VPS_KEY: ${{ secrets.VPS_SSH_KEY }}
-          VPS_FINGERPRINT: ${{ secrets.VPS_FINGERPRINT }}
+          HOST_KEYS: ${{ secrets.VPS_KNOWN_HOSTS }}
         run: |
-          test -n "$VPS_HOST" || exit 1
-          test -n "$VPS_USER" || exit 1
-          test -n "$VPS_KEY" || exit 1
-          test -n "$VPS_FINGERPRINT" || exit 1
+          test -n "$VPS_KEY" || { echo "VPS_SSH_KEY ausente"; exit 1; }
+          test -n "$HOST_KEYS" || { echo "VPS_KNOWN_HOSTS ausente"; exit 1; }
 
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-
           printf '%s\n' "$VPS_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "$HOST_KEYS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
 
           ssh-keygen -y -P "" -f ~/.ssh/id_ed25519 > /dev/null
 
-          ssh-keyscan -T 10 -t ed25519 "$VPS_HOST" \
-            > ~/.ssh/known_hosts
-
-          FINGERPRINT=$(ssh-keygen -lf ~/.ssh/known_hosts | awk '{print $2}')
-          test "$FINGERPRINT" = "$VPS_FINGERPRINT"
-
-          chmod 600 ~/.ssh/known_hosts
-
-      - name: Enviar projeto para VPS
+      - name: Enviar projeto
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run: |
+          test -n "$VPS_HOST" || { echo "VPS_HOST ausente"; exit 1; }
+          test -n "$VPS_USER" || { echo "VPS_USER ausente"; exit 1; }
+
           rsync -az \
             --exclude='.git/' \
             --exclude='.env' \
