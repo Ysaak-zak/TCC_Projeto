@@ -1,0 +1,80 @@
+
+name: projeto-tcc
+
+services:
+
+  postgres:
+    image: postgres:16
+    container_name: tcc_postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+    networks:
+      - tcc_network
+
+  springboot:
+    build: .
+    container_name: tcc_springboot
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:8080:8080"
+
+    environment:
+      SERVER_PORT: 8080
+      JAVA_TOOL_OPTIONS: "-Xms256m -Xmx1024m"
+
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      SPRING_DATASOURCE_USERNAME: ${DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+
+      APP_OLLAMA_BASE_URL: http://ollama:11434
+      APP_OLLAMA_MODEL_NAME: qwen2.5:1.5b
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    volumes:
+      - uploads_data:/app/uploads
+
+    networks:
+      - tcc_network
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: tcc_ollama
+    restart: unless-stopped
+
+    environment:
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+
+    volumes:
+      - ollama_data:/root/.ollama
+
+    networks:
+      - tcc_network
+
+volumes:
+  postgres_data:
+  uploads_data:
+  ollama_data:
+
+networks:
+  tcc_network:
+    driver: bridge
