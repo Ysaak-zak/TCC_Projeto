@@ -1,0 +1,27 @@
+
+name: Deploy Docker VPS
+
+on:
+  push:
+    branches:
+      - producao
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Atualizar projeto na VPS
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          fingerprint: ${{ secrets.VPS_FINGERPRINT }}
+
+          script: |
+            set -e
+            cd ~/TCC_Projeto
+            git fetch origin producao
+            git checkout -B producao origin/producao
+            docker compose up -d --build --no-deps app
