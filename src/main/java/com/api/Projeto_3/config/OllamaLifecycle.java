@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URI;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 
 @Component
+@ConditionalOnProperty(name = "app.ollama.start-local", havingValue = "true", matchIfMissing = true)
 public class OllamaLifecycle {
 
     private Process processo;
