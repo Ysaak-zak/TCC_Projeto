@@ -4,6 +4,7 @@ name: Deploy TCC
 on:
   push:
     branches: [producao]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -13,26 +14,58 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Baixar projeto
+        uses: actions/checkout@v4
+
+      - name: Configurar SSH
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+          VPS_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_FINGERPRINT: ${{ secrets.VPS_FINGERPRINT }}
+        run: |
+          test -n "$VPS_HOST" || exit 1
+          test -n "$VPS_USER" || exit 1
+          test -n "$VPS_KEY" || exit 1
+          test -n "$VPS_FINGERPRINT" || exit 1
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$VPS_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+
+          ssh-keygen -y -P "" -f ~/.ssh/id_ed25519 > /dev/null
+
+          ssh-keyscan -T 10 -t ed25519 "$VPS_HOST" \
+            > ~/.ssh/known_hosts
+
+          FINGERPRINT=$(ssh-keygen -lf ~/.ssh/known_hosts | awk '{print $2}')
+          test "$FINGERPRINT" = "$VPS_FINGERPRINT"
+
+          chmod 600 ~/.ssh/known_hosts
 
       - name: Enviar projeto para VPS
-        uses: appleboy/scp-action@v1
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          fingerprint: ${{ secrets.VPS_FINGERPRINT }}
-          source: ".,!.git,!.env,!target,!uploads"
-          target: /opt/projeto-tcc
-          overwrite: true
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          rsync -az \
+            --exclude='.git/' \
+            --exclude='.env' \
+            --exclude='target/' \
+            --exclude='uploads/' \
+            -e "ssh -o StrictHostKeyChecking=yes" \
+            ./ "$VPS_USER@$VPS_HOST:/opt/projeto-tcc/"
 
       - name: Iniciar Docker
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          fingerprint: ${{ secrets.VPS_FINGERPRINT }}
-          script: |
-            cd /opt/projeto-tcc
-            docker compose -f docker-compose.yml up -d --build
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          ssh -o StrictHostKeyChecking=yes \
+            "$VPS_USER@$VPS_HOST" \
+            'cd /opt/projeto-tcc &&
+             docker compose -f docker-compose.yml config --quiet &&
+             docker compose -f docker-compose.yml up -d --build &&
+             docker compose -f docker-compose.yml ps'
