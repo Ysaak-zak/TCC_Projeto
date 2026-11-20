@@ -2,8 +2,10 @@ package com.api.Projeto_3.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.api.Projeto_3.model.RolesModel;
+import com.api.Projeto_3.model.enums.RoleAuthority;
 import com.api.Projeto_3.repository.RoleRepository;
 
 @Component
@@ -16,16 +18,20 @@ public class RoleDataInitializer implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) {
-        atualizarOuCriar(1L, "ROLE_ATLETA");
-        atualizarOuCriar(2L, "ROLE_MEDICO");
-        atualizarOuCriar(3L, "ROLE_TREINADOR");
+        // Serializa a consulta e a criação quando várias instâncias iniciam juntas.
+        roleRepository.bloquearCriacaoDeRoles();
+        for (RoleAuthority authority : RoleAuthority.values()) {
+            criarSeAusente(authority.name());
+        }
     }
 
-    private void atualizarOuCriar(Long id, String authority) {
-        RolesModel role = roleRepository.findById(id).orElseGet(RolesModel::new);
-        role.setId(id);
-        role.setAuthority(authority);
-        roleRepository.save(role);
+    private void criarSeAusente(String authority) {
+        if (roleRepository.findFirstByAuthorityOrderByIdAsc(authority).isEmpty()) {
+            RolesModel role = new RolesModel();
+            role.setAuthority(authority);
+            roleRepository.save(role);
+        }
     }
 }

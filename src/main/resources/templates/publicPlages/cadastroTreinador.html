@@ -19,10 +19,9 @@
         <div class="w-full xl:ml-52 flex justify-baseline xl:mr-36">
             <h1 class="xl:text-3xl font-display">Cadastro Treinador</h1>
         </div>
-        <input type="hidden" name="idDaRole" th:value="${roleId}" />
     </header>
 
-    <form th:action="@{/cadastro/treinador/save/{id}(id=${id})}" th:object="${treinadorDtos}" method="post">
+    <form th:action="@{/cadastro/treinador/save}" th:object="${treinadorDtos}" method="post">
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         <nav class="sm:w-full flex items-center gap-2 justify-center flex-col lg:flex-row lg:gap-12 lg:px-16 bg-white py-4 lg:py-7 lg:rounded-2xl lg:w-5/6 mx-auto">
             <section class="border-4 border-dashed flex flex-col items-center gap-3 w-5/6 py-3 duration-500 xl:w-full xl:px-24 xl:rounded-2xl ">
@@ -30,17 +29,17 @@
                 <p class="lg:text-3xl font-black text-gray-700 ">FOTO</p>
             </section>
 
-            <a th:href="@{/cadastro/medico/{id}(id=2)}" class="border-4 border-treinador-600 hover:bg-treinador-300 flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
+            <a th:href="@{/cadastro/medico}" class="border-4 border-treinador-600 hover:bg-treinador-300 flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
                 <img th:src="@{/img/medicoLaranj.svg}" class="w-16">
                 <p class="lg:text-2xl font-black text-gray-700">Medico</p>
             </a>
             
-            <a th:href="@{/cadastro/atleta/{id}(id=1)}" class="border-4 border-treinador-600 hover:bg-treinador-300 bg-white flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
+            <a th:href="@{/cadastro/atleta}" class="border-4 border-treinador-600 hover:bg-treinador-300 bg-white flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
                 <img th:src="@{/img/atletaLaranja.svg}" class="w-16">
                 <p class="lg:text-2xl font-black text-gray-700 ">Atleta</p>
             </a>
             
-            <a th:href="@{/cadastro/treinador/{id}(id=${id})}" class="pointer-events-none border-4 border-treinador-600 bg-treinador-600 flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
+            <a th:href="@{/cadastro/treinador}" class="pointer-events-none border-4 border-treinador-600 bg-treinador-600 flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
                 <img th:src="@{/img/treinadorBranc.svg}" class="w-16">
                 <p class="lg:text-2xl font-black text-white ">Treinador</p>
             </a>

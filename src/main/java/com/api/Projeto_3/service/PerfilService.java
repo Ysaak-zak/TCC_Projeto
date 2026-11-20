@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.api.Projeto_3.dtos.DtosModelos.AfiliacaoDtos;
 import com.api.Projeto_3.dtos.DtosModelos.MoradiaDto;
 import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
-import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.model.AfiliacaoModelo;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.MedicoModelo;
@@ -22,6 +21,7 @@ import com.api.Projeto_3.model.MoradiaModel;
 import com.api.Projeto_3.model.PerfisModelo;
 import com.api.Projeto_3.model.RolesModel;
 import com.api.Projeto_3.model.TreinadorModel;
+import com.api.Projeto_3.model.enums.RoleAuthority;
 import com.api.Projeto_3.repository.AtletaRespository;
 import com.api.Projeto_3.repository.MedicoRespository;
 import com.api.Projeto_3.repository.PerfilRepository;
@@ -57,7 +57,7 @@ public class PerfilService implements UserDetailsService {
         AtletaModelo atl = new AtletaModelo();           
         
         preencherDadosBasicos(atl,dtos);
-        salvarPerfil(dtos,atl );
+        atl.setRole(buscarRole(RoleAuthority.ROLE_ATLETA));
         salvarAfiliado(dtos.getPais_fk(), atl);
         salvarMoradia(dtos.getMoradia_fk(), atl);
         
@@ -72,7 +72,7 @@ public class PerfilService implements UserDetailsService {
         MedicoModelo med = new MedicoModelo();
         
         preencherDadosBasicos(med, dos);
-        salvarPerfil(dos, med);
+        med.setRole(buscarRole(RoleAuthority.ROLE_MEDICO));
         salvarAfiliado(dos.getPais_fk(), med);
         salvarMoradia(dos.getMoradia_fk(), med);
 
@@ -86,7 +86,7 @@ public class PerfilService implements UserDetailsService {
         TreinadorModel trei = new TreinadorModel();
         
         preencherDadosBasicos(trei, dos);
-        salvarPerfil(dos, trei);
+        trei.setRole(buscarRole(RoleAuthority.ROLE_TREINADOR));
         salvarAfiliado(dos.getPais_fk(), trei);
         salvarMoradia(dos.getMoradia_fk(), trei);
 
@@ -95,21 +95,9 @@ public class PerfilService implements UserDetailsService {
         return new PerfilsDtos(salveTrei);
     }
 
-    
-    public RoleDtos infoRoles(Long id){
-            var rol = roles.findById(id).orElseThrow(()-> new RuntimeException());
-            return new RoleDtos(rol);
-        }
-
-
-    
-    public String buscarNomeRoles(Long id){
-        RoleDtos role = infoRoles(id);
-
-        if(role != null && role.getAuthority() != null){
-            return role.getAuthority();
-        }
-        return role.getAuthority();
+    private RolesModel buscarRole(RoleAuthority authority) {
+        return roles.findFirstByAuthorityOrderByIdAsc(authority.name())
+                .orElseThrow(() -> new IllegalStateException("Role não encontrada: " + authority));
     }
 
     private void   preencherDadosBasicos(PerfisModelo perMod, PerfilsDtos dtos){
@@ -131,11 +119,6 @@ public class PerfilService implements UserDetailsService {
             perMod.setSexo(dtos.getGenero());
 
      }
-
-      private   void salvarPerfil(PerfilsDtos dos,PerfisModelo atl){
-        RolesModel roleReal = roles.findById(dos.getRoles().getId()).orElseThrow(() -> new RuntimeException("Role não encontrada"));
-       atl.setRole(roleReal);
-    }
 
     private void salvarAfiliado(AfiliacaoDtos afi , PerfisModelo perMod){
          AfiliacaoModelo pais = new AfiliacaoModelo();

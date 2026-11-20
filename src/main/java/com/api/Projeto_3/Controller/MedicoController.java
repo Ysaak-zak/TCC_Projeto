@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
-import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
 import com.api.Projeto_3.model.MedicoModelo;
 import com.api.Projeto_3.model.enums.EnumGenero;
@@ -38,24 +37,20 @@ public class MedicoController {
     @Autowired
     AtletaService atletaService;
 
-    @GetMapping("/cadastro/medico/{id}")
-    public String getCadastroMedico(@PathVariable("id") Long id, PerfilsDtos medicosDtos, Model model) {
-        carregarDadosCadastro(id, model);
+    @GetMapping({"/cadastro/medico", "/cadastro/medico/{id:\\d+}"})
+    public String getCadastroMedico(PerfilsDtos medicosDtos, Model model) {
+        carregarDadosCadastro(model);
         model.addAttribute("medicosDtos", medicosDtos);
         return "publicPlages/cadastroMedico";
     }
 
-    @PostMapping("/cadastro/medico/save/{id}")
-    public String postMedicoInsert(@PathVariable("id") Long id, @ModelAttribute("medicosDtos") @Valid PerfilsDtos medicosDtos, BindingResult result, Model model) {
+    @PostMapping({"/cadastro/medico/save", "/cadastro/medico/save/{id:\\d+}"})
+    public String postMedicoInsert(@ModelAttribute("medicosDtos") @Valid PerfilsDtos medicosDtos, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            carregarDadosCadastro(id, model);
+            carregarDadosCadastro(model);
             return "publicPlages/cadastroMedico";
         }
-        if (medicosDtos.getRoles() == null) {
-            medicosDtos.setRoles(new RoleDtos());
-        }
-        medicosDtos.getRoles().setId(id);
         service.insertMeidco(medicosDtos);
 
         return "redirect:/login";
@@ -153,12 +148,9 @@ public class MedicoController {
         return "redirect:/medico/atletas-vinculados?desvinculado";
     }
 
-    private void carregarDadosCadastro(Long id, Model model) {
-        model.addAttribute("id", id);
+    private void carregarDadosCadastro(Model model) {
         model.addAttribute("listaUfs", EnumUf.values());
         model.addAttribute("listSague", EnumSague.values());
         model.addAttribute("listEnumGenero", EnumGenero.values());
-        model.addAttribute("roleId", service.infoRoles(id));
-        model.addAttribute("roleNome", service.buscarNomeRoles(id));
     }
 }

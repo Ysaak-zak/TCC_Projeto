@@ -21,10 +21,9 @@
         </div>
         </div> 
 
-   <input type="hidden" name="idDaRole" th:value="${roleId}" />
     </header>
 
-<form th:action="@{/cadastro/atleta/save/{id}(id=${id})}" th:method="post" th:object="${atletaDtos}" >
+<form th:action="@{/cadastro/atleta/save}" th:method="post" th:object="${atletaDtos}" >
     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <nav class="sm:w-full flex items-center gap-2 justify-center flex-col lg:flex-row lg:gap-12 lg:w-full lg:px-16 bg-white py-4 lg:py-7 lg:rounded-2xl lg:w-5/6 ">
         
@@ -34,17 +33,17 @@
         </section>
 
 
-        <a  th:href="@{/cadastro/medico/{id}(id=2)}" class="border-4 border-atleta-600 flex flex-col items-center gap-5 w-5/6 hover:bg-atleta-300 duration-500 xl:w-full py-2 xl:rounded-2xl">
+        <a  th:href="@{/cadastro/medico}" class="border-4 border-atleta-600 flex flex-col items-center gap-5 w-5/6 hover:bg-atleta-300 duration-500 xl:w-full py-2 xl:rounded-2xl">
             <img th:src="@{/img/medico.svg}" class="w-16">
             <p class="lg:text-2xl font-black text-gray-700 ">MEDICO</p>
         </a>
         
-       <a th:href="@{/cadastro/atleta/{id}(id=${id})}" class="pointer-events-none border-4 border-atleta-600 bg-atleta-600 flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
+       <a th:href="@{/cadastro/atleta}" class="pointer-events-none border-4 border-atleta-600 bg-atleta-600 flex flex-col items-center gap-5 w-5/6 duration-500 xl:w-full py-2 xl:rounded-2xl">
     <img th:src="@{/img/atletaBranco.svg}" class="w-16">
     <p class="lg:text-2xl font-black text-white">Atleta</p>
 </a>
         
-        <a th:href="@{/cadastro/treinador/{id}(id=3)}" class="border-4 border-atleta-600 flex flex-col items-center gap-5 w-5/6 hover:bg-atleta-300 duration-500 xl:w-full py-2 xl:rounded-2xl">
+        <a th:href="@{/cadastro/treinador}" class="border-4 border-atleta-600 flex flex-col items-center gap-5 w-5/6 hover:bg-atleta-300 duration-500 xl:w-full py-2 xl:rounded-2xl">
             <img th:src="@{/img/treinadorAzul.svg}" class="w-16">
             <p class="lg:text-2xl font-black text-gray-700 ">TREINADOR</p>
         </a>

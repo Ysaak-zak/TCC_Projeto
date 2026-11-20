@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
-import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.CustomerNome;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
 import com.api.Projeto_3.dtos.interfaceCustomer.TreinadorCustomer;
@@ -44,27 +43,21 @@ public class TreinadorController {
 
     private String id_username = null;
 
-    @GetMapping("/cadastro/treinador/{id}")
-    public String getCadastroTreinador(@PathVariable("id") Long id, PerfilsDtos treinadorDtos, Model model) {
-        carregarDadosCadastro(id, model);
+    @GetMapping({"/cadastro/treinador", "/cadastro/treinador/{id:\\d+}"})
+    public String getCadastroTreinador(PerfilsDtos treinadorDtos, Model model) {
+        carregarDadosCadastro(model);
         model.addAttribute("treinadorDtos", treinadorDtos);
         return "publicPlages/cadastroTreinador";
     }
 
-    @PostMapping("/cadastro/treinador/save/{id}")
-    public String postTreinadorInsert(@PathVariable("id") Long id,
-            @ModelAttribute("treinadorDtos") @Valid PerfilsDtos treinadorDtos, BindingResult result, Model model) {
+    @PostMapping({"/cadastro/treinador/save", "/cadastro/treinador/save/{id:\\d+}"})
+    public String postTreinadorInsert(@ModelAttribute("treinadorDtos") @Valid PerfilsDtos treinadorDtos, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            carregarDadosCadastro(id, model);
+            carregarDadosCadastro(model);
             return "publicPlages/cadastroTreinador";
         }
 
-        if (treinadorDtos.getRoles() == null) {
-            treinadorDtos.setRoles(new RoleDtos());
-        }
-
-        treinadorDtos.getRoles().setId(id);
 
         service.insertTreinador(treinadorDtos);
         return "redirect:/login";
@@ -137,13 +130,10 @@ public class TreinadorController {
         return "redirect:/treinador/atletas-vinculados?desvinculado";
     }
 
-    private void carregarDadosCadastro(Long id, Model model) {
-        model.addAttribute("id", id);
+    private void carregarDadosCadastro(Model model) {
         model.addAttribute("listaUfs", EnumUf.values());
         model.addAttribute("listSague", EnumSague.values());
         model.addAttribute("listEnumGenero", EnumGenero.values());
-        model.addAttribute("roleId", service.infoRoles(id));
-        model.addAttribute("roleNome", service.buscarNomeRoles(id));
     }
 
 }
