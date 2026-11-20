@@ -1,27 +1,38 @@
 
-name: Deploy Docker VPS
+name: Deploy TCC
 
 on:
   push:
-    branches:
-      - producao
+    branches: [producao]
+
+permissions:
+  contents: read
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Atualizar projeto na VPS
-        uses: appleboy/ssh-action@v1.2.0
+      - uses: actions/checkout@v4
+
+      - name: Enviar projeto para VPS
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           fingerprint: ${{ secrets.VPS_FINGERPRINT }}
+          source: ".,!.git,!.env,!target,!uploads"
+          target: /opt/projeto-tcc
+          overwrite: true
 
+      - name: Iniciar Docker
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          fingerprint: ${{ secrets.VPS_FINGERPRINT }}
           script: |
-            set -e
-            cd ~/TCC_Projeto
-            git fetch origin producao
-            git checkout -B producao origin/producao
-            docker compose up -d --build --no-deps app
+            cd /opt/projeto-tcc
+            docker compose -f docker-compose.yml up -d --build
