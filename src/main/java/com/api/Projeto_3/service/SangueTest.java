@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.api.Projeto_3.dtos.DtosModelos.ExameSagueDtos;
 import com.api.Projeto_3.dtos.DtosModelos.SangueSubsDtos;
+import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.ExameSangue;
 import com.api.Projeto_3.model.SangueSubs;
 import com.api.Projeto_3.repository.AtletaRespository;
@@ -29,21 +30,25 @@ public class SangueTest {
     @Autowired
     private ProcessamentoChatService processamentoChatService;
 
-    public ExameSagueDtos realizarExameParaPagina(ExameSagueDtos exame) {
-        exame.setAnalise(processamentoChatService.separarResposta(realizandoExame(exame)));
-        return exame;
+    public ExameSagueDtos realizarExameParaPagina(ExameSagueDtos dados) {
+        String resposta = realizandoExame(dados);
+        dados.setAnalise(processamentoChatService.separarResposta(resposta));
+        return dados;
     }
 
-    public String realizandoExame(ExameSagueDtos dtos) {
-        ExameSangue exame = salvarExame(dtos);
-        String resposta = chatExecucao(dtos);
+    public String realizandoExame(ExameSagueDtos dados) {
+        List<SangueSubsDtos> substancias = selecionarSubstancias(dados.getSubstancias());
+        ExameSangue exame = salvarExame(dados, substancias);
+        String resposta = analisarExame(dados, substancias);
+
         exame.setAnaliseIa(resposta);
         sangueRepository.save(exame);
-        dtos.setAnaliseIa(resposta);
+        dados.setAnaliseIa(resposta);
         return resposta;
     }
 
-    private String chatExecucao(ExameSagueDtos dtos) {
+    private String analisarExame(ExameSagueDtos dados, List<SangueSubsDtos> substancias) {
+        String descricaoSubstancias = formatarSubstancias(substancias);
         String prompt = """
                 Analise o exame de sangue de um atleta em uma simulação acadêmica antidoping.
 
@@ -79,17 +84,20 @@ public class SangueTest {
                 Substâncias pesquisadas:
                 %s
                 Observações: %s
-                """.formatted(dtos.getDataColeta(), dtos.getTipoAmostra(), dtos.getHemoglobina(),
-                dtos.getHematocrito(), dtos.getHemacias(), dtos.getReticulocitos(),
-                formatarSubstancias(dtos),
-                dtos.getObservacoes());
+                """.formatted(dados.getDataColeta(), dados.getTipoAmostra(), dados.getHemoglobina(),
+                dados.getHematocrito(), dados.getHemacias(), dados.getReticulocitos(),
+                descricaoSubstancias, dados.getObservacoes());
         return chatModel.chat(prompt);
     }
 
-    private String formatarSubstancias(ExameSagueDtos dtos) {
-        StringBuilder substancias = new StringBuilder();
-        for (SangueSubsDtos substancia : substanciasPreenchidas(dtos)) {
-            substancias.append("""
+    private String formatarSubstancias(List<SangueSubsDtos> substancias) {
+        if (substancias.isEmpty()) {
+            return "Nenhuma substância informada.";
+        }
+
+        StringBuilder descricao = new StringBuilder();
+        for (SangueSubsDtos substancia : substancias) {
+            descricao.append("""
                     Nome: %s
                     Categoria: %s
                     Triagem: %s
@@ -102,21 +110,22 @@ public class SangueTest {
                     substancia.getMetodoAnalise(),
                     substancia.getResultadoConfirmacao()));
         }
-        return substancias.isEmpty() ? "Nenhuma substância informada." : substancias.toString();
+        return descricao.toString();
     }
 
-    private ExameSangue salvarExame(ExameSagueDtos dtos) {
-        var atleta = atletaRepository.findById(dtos.getAtletaId()).orElseThrow();
+    private ExameSangue salvarExame(ExameSagueDtos dados, List<SangueSubsDtos> substancias) {
+        AtletaModelo atleta = atletaRepository.findById(dados.getAtletaId()).orElseThrow();
         ExameSangue exame = new ExameSangue();
         exame.setAtletaId(atleta.getId());
-        exame.setDataColeta(dtos.getDataColeta());
-        exame.setTipoAmostra(dtos.getTipoAmostra());
-        exame.setHemoglobina(dtos.getHemoglobina());
-        exame.setHematocrito(dtos.getHematocrito());
-        exame.setHemacias(dtos.getHemacias());
-        exame.setReticulocitos(dtos.getReticulocitos());
-        exame.setObservacoes(dtos.getObservacoes());
-        for (SangueSubsDtos dto : substanciasPreenchidas(dtos)) {
+        exame.setDataColeta(dados.getDataColeta());
+        exame.setTipoAmostra(dados.getTipoAmostra());
+        exame.setHemoglobina(dados.getHemoglobina());
+        exame.setHematocrito(dados.getHematocrito());
+        exame.setHemacias(dados.getHemacias());
+        exame.setReticulocitos(dados.getReticulocitos());
+        exame.setObservacoes(dados.getObservacoes());
+
+        for (SangueSubsDtos dto : substancias) {
             SangueSubs substancia = new SangueSubs();
             substancia.setExameSangue(exame);
             substancia.setNomeSubstancia(dto.getNomeSubstancia());
@@ -127,20 +136,26 @@ public class SangueTest {
             substancia.setResultadoConfirmacao(dto.getResultadoConfirmacao());
             exame.getSubstancias().add(substancia);
         }
-        exame = sangueRepository.save(exame);
-        dtos.setId(exame.getId());
-        dtos.setCriadoEm(exame.getCriadoEm());
-        return exame;
+
+        ExameSangue exameSalvo = sangueRepository.save(exame);
+        dados.setId(exameSalvo.getId());
+        dados.setCriadoEm(exameSalvo.getCriadoEm());
+        return exameSalvo;
     }
 
-    private List<SangueSubsDtos> substanciasPreenchidas(ExameSagueDtos dtos) {
-        List<SangueSubsDtos> preenchidas = new ArrayList<>();
-        if (dtos.getSubstancias() == null) {
-            return preenchidas;
+    private List<SangueSubsDtos> selecionarSubstancias(List<SangueSubsDtos> substancias) {
+        if (substancias == null) {
+            return List.of();
         }
-        for (SangueSubsDtos substancia : dtos.getSubstancias()) {
-            if (substancia != null && substancia.getNomeSubstancia() != null
-                    && !substancia.getNomeSubstancia().isBlank()) {
+
+        List<SangueSubsDtos> preenchidas = new ArrayList<>();
+        for (SangueSubsDtos substancia : substancias) {
+            if (substancia == null) {
+                continue;
+            }
+
+            String nome = substancia.getNomeSubstancia();
+            if (nome != null && !nome.isBlank()) {
                 preenchidas.add(substancia);
             }
         }

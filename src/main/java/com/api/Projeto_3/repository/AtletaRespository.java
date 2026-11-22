@@ -7,15 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
-
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
 import com.api.Projeto_3.model.AtletaModelo;
 
 
 
 
-@Repository
 public interface AtletaRespository extends  JpaRepository<AtletaModelo,Long>  {
 
     List<AtletaModelo> findByCpf(String cpf);
@@ -62,9 +59,7 @@ int atletaSemVinculados();
                         " INNER JOIN treinadores tre  ON tre.id = atl.atleta_trenador_fk " + 
                          "  WHERE tre.id = :indTreinador " , nativeQuery = true )
         List<String> listAtletasVinculados(Long indTreinador);
-        // Atletas já vinculados a um treinador, com os mesmos campos da tabela do dashboard (ListDasAtleta).
-        // LEFT JOIN em moradia: o atleta sem endereço cadastrado continua aparecendo na lista
-        // (e o total da tela bate com atletaVinculados, que não depende de moradia).
+
         @Query(value = "SELECT atl.id AS id, per.per_nome AS per_nome, per.cpf AS cpf, " +
                        "       per.sexo AS sexo, per.email AS email, mor.cidade AS cidade " +
                        "FROM perfis_modelo AS per " +

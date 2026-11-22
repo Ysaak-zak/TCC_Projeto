@@ -1,6 +1,8 @@
 package com.api.Projeto_3.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,11 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 @Table(name = "TREINAMENTO")
 @Entity
 public class TreinamentoModel implements Serializable {
@@ -54,6 +52,10 @@ public class TreinamentoModel implements Serializable {
     @ToString.Exclude
     private List<TreinadorModel> listTreinador = new ArrayList<>();
 
+    
+
+    public TreinamentoModel() {
+    }
 
     public Integer getSatisfacao() {
         return satisfacao;
@@ -62,4 +64,121 @@ public class TreinamentoModel implements Serializable {
     public void setSatisfacao(Integer satisfacao) {
         this.satisfacao = satisfacao;
     }
+
+    public TreinamentoModel(Integer satisfacao, Long id, String nome, String categoria, String descricao,
+            LocalDate dataInicio, LocalDate dataFim, LocalTime horarioInicio, LocalTime horarioFim, DiaModel dia_fk,
+            List<ExercicioModel> exercicios, List<TreinadorModel> listTreinador) {
+        this.satisfacao = satisfacao;
+        this.id = id;
+        this.nome = nome;
+        this.categoria = categoria;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.horarioInicio = horarioInicio;
+        this.horarioFim = horarioFim;
+        this.dia_fk = dia_fk;
+        this.exercicios = exercicios;
+        this.listTreinador = listTreinador;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public java.time.LocalDate getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(java.time.LocalDate dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public java.time.LocalDate getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(java.time.LocalDate dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public java.time.LocalTime getHorarioInicio() {
+        return horarioInicio;
+    }
+
+    public void setHorarioInicio(java.time.LocalTime horarioInicio) {
+        this.horarioInicio = horarioInicio;
+    }
+
+    public java.time.LocalTime getHorarioFim() {
+        return horarioFim;
+    }
+
+    public void setHorarioFim(java.time.LocalTime horarioFim) {
+        this.horarioFim = horarioFim;
+    }
+
+    public DiaModel getDia_fk() {
+        return dia_fk;
+    }
+
+    public void setDia_fk(DiaModel dia_fk) {
+        this.dia_fk = dia_fk;
+    }
+
+    public List<ExercicioModel> getExercicios() {
+        return exercicios;
+    }
+
+    public void setExercicios(List<ExercicioModel> exercicios) {
+        this.exercicios = exercicios;
+    }
+
+    public List<TreinadorModel> getListTreinador() {
+        return listTreinador;
+    }
+
+    public void setListTreinador(List<TreinadorModel> listTreinador) {
+        this.listTreinador = listTreinador;
+    }
+
+    @Override
+    public String toString() {
+        return "TreinamentoModel [satisfacao=" + satisfacao + ", id=" + id + ", nome=" + nome + ", categoria="
+                + categoria + ", descricao=" + descricao + ", dataInicio=" + dataInicio + ", dataFim=" + dataFim
+                + ", horarioInicio=" + horarioInicio + ", horarioFim=" + horarioFim + ", dia_fk=" + dia_fk
+                + ", exercicios=" + exercicios + ", listTreinador=" + listTreinador + "]";
+    }
+
+    
+    
+    
 }

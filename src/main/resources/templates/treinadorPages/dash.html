@@ -35,14 +35,12 @@
             </form>
         </aside>
 
-        <!-- ===== Conteúdo principal (mesmo esqueleto de medicoPages/vincularAtleta.html) ===== -->
         <main class="min-w-0 flex-1">
             <div class="px-5 py-6 sm:px-8 lg:px-10">
             <div class="mx-auto max-w-6xl">
 
                 <h1 class="font-display text-2xl font-bold text-treinador-700 sm:text-3xl">Painel do Treinador</h1>
 
-                <!-- Cards de resumo -->
                 <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
                     <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
                         <p class="text-sm text-slate-500">Atletas Vinculados</p>
@@ -54,13 +52,11 @@
                     </div>
                 </div>
 
-                <!-- Título da seção -->
                 <div class="mt-8 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 text-treinador-600"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 8v6M22 11h-6"/></svg>
                     <h2 class="font-display text-xl font-bold text-treinador-700 sm:text-2xl">Adicionar Novos Atletas</h2>
                 </div>
 
-                <!-- Busca -->
                 <div class="mt-4">
                     <label class="block" for="search">
                         <span class="sr-only">Buscar por nome ou CPF...</span>
@@ -69,7 +65,6 @@
                     </label>
                 </div>
 
-                <!-- Tabela -->
                 <div id="lista-atletas" class="mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-[760px] text-left text-sm">
@@ -98,7 +93,6 @@
                     </div>
                 </div>
 
-                <!-- Estado vazio -->
                 <div th:if="${#lists.isEmpty(listaAtletas)}" class="mt-4">
                     <div class="rounded-xl border border-slate-100 bg-white p-8 text-center">
                         <h2 class="font-bold text-treinador-700">Nenhum atleta novo por aqui</h2>

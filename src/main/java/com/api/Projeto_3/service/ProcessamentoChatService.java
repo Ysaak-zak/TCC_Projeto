@@ -14,7 +14,6 @@ public class ProcessamentoChatService {
             return new ProcessamentoChat("Análise não disponível.", List.of(), List.of());
         }
         String json = resposta.strip();
-        // Alguns modelos envolvem o JSON em um bloco Markdown.
         if (json.startsWith("```")) {
             json = json.replaceFirst("^```(?:json)?\\s*", "")
                     .replaceFirst("\\s*```$", "").strip();

@@ -16,11 +16,7 @@ import jakarta.persistence.Table;
 import lombok.*;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
+
 @Table(name = "SEMANA")
 @Entity
 public class SemanaModel implements Serializable {
@@ -50,5 +46,80 @@ public class SemanaModel implements Serializable {
 
         dias.add(dia);
     }
+
+
+     public SemanaModel(Long id, String nome, String descricao, AtletaModelo atleta_fk, List<DiaModel> dias) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.atleta_fk = atleta_fk;
+        this.dias = dias;
+     }
+
+
+     public SemanaModel() {
+     }
+
+
+     public Long getId() {
+         return id;
+     }
+
+
+     public void setId(Long id) {
+         this.id = id;
+     }
+
+
+     public String getNome() {
+         return nome;
+     }
+
+
+     public void setNome(String nome) {
+         this.nome = nome;
+     }
+
+
+     public String getDescricao() {
+         return descricao;
+     }
+
+
+     public void setDescricao(String descricao) {
+         this.descricao = descricao;
+     }
+
+
+     public AtletaModelo getAtleta_fk() {
+         return atleta_fk;
+     }
+
+
+     public void setAtleta_fk(AtletaModelo atleta_fk) {
+         this.atleta_fk = atleta_fk;
+     }
+
+
+     public List<DiaModel> getDias() {
+         return dias;
+     }
+
+
+     public void setDias(List<DiaModel> dias) {
+         this.dias = dias;
+     }
+
+
+     @Override
+     public String toString() {
+        return "SemanaModel [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", atleta_fk=" + atleta_fk
+                + ", dias=" + dias + "]";
+     }
+
+    
+     
+     
+    
 
 }

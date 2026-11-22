@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.api.Projeto_3.dtos.DtosModelos.ExameSagueDtos;
 import com.api.Projeto_3.service.SangueTest;
@@ -17,8 +16,7 @@ class ExameSangueControllerTest {
     void recebeFormularioEAbreResultado() throws Exception {
         var service = mock(SangueTest.class);
         when(service.realizarExameParaPagina(any())).thenAnswer(call -> call.getArgument(0));
-        var controller = new ChatMedicoExame();
-        ReflectionTestUtils.setField(controller, "sangueService", service);
+        var controller = new ChatMedicoExame(null, service);
         var mvc = MockMvcBuilders.standaloneSetup(controller).build();
 
         var response = mvc.perform(post("/medico/exame-sangue/salvar")

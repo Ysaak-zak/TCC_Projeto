@@ -1,9 +1,9 @@
 package com.api.Projeto_3.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.api.Projeto_3.dtos.DtosModelos.RecomendacaoAlimentarDto;
@@ -14,24 +14,38 @@ import com.api.Projeto_3.repository.AtletaRespository;
 import com.api.Projeto_3.repository.MedicoRespository;
 import com.api.Projeto_3.repository.RecomendacaoAlimentarRepository;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
 @RequiredArgsConstructor
 public class AlimentoService {
-    private final MedicoRespository jpaMedico;
-    private final AtletaRespository jpaAtleta;
+    private final MedicoRespository medicoRepository;
+    private final AtletaRespository atletaRepository;
     private final RecomendacaoAlimentarRepository recomendacaoRepository;
 
     @Transactional(readOnly = true)
     public AtletaModelo buscarAtletaVinculado(Long medicoId, Long atletaId) {
-        return jpaAtleta.findById(atletaId)
-                .filter(atleta -> atleta.getMedico_fk() != null
-                        && medicoId.equals(atleta.getMedico_fk().getId()))
-                .orElse(null);
+        AtletaModelo atleta = atletaRepository.findById(atletaId).orElse(null);
+        if (atleta == null) {
+            return null;
+        }
+
+        MedicoModelo medicoDoAtleta = atleta.getMedico_fk();
+        if (medicoDoAtleta == null || !medicoId.equals(medicoDoAtleta.getId())) {
+            return null;
+        }
+
+        return atleta;
     }
 
     public boolean dataRevisaoInvalida(RecomendacaoAlimentarDto dados) {
-        return dados.getDataInicio() != null && dados.getDataRevisao() != null
-                && dados.getDataRevisao().isBefore(dados.getDataInicio());
+        LocalDate dataInicio = dados.getDataInicio();
+        LocalDate dataRevisao = dados.getDataRevisao();
+        if (dataInicio == null || dataRevisao == null) {
+            return false;
+        }
+
+        return dataRevisao.isBefore(dataInicio);
     }
 
     @Transactional(readOnly = true)
@@ -44,11 +58,17 @@ public class AlimentoService {
         if (dados.getDataInicio() == null || dataRevisaoInvalida(dados)) {
             return false;
         }
-        MedicoModelo medico = jpaMedico.findById(medicoId).orElse(null);
-        AtletaModelo atleta = buscarAtletaVinculado(medicoId, atletaId);
-        if (medico == null || atleta == null) {
+
+        MedicoModelo medico = medicoRepository.findById(medicoId).orElse(null);
+        if (medico == null) {
             return false;
         }
+
+        AtletaModelo atleta = buscarAtletaVinculado(medicoId, atletaId);
+        if (atleta == null) {
+            return false;
+        }
+
         RecomendacaoAlimentar recomendacao = new RecomendacaoAlimentar();
         recomendacao.setMedico(medico);
         recomendacao.setAtleta(atleta);
@@ -57,6 +77,7 @@ public class AlimentoService {
         recomendacao.setOrientacao(dados.getOrientacao().trim());
         recomendacao.setDataInicio(dados.getDataInicio());
         recomendacao.setDataRevisao(dados.getDataRevisao());
+
         recomendacaoRepository.save(recomendacao);
         return true;
     }

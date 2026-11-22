@@ -21,8 +21,7 @@ class ExameUrinaControllerTest {
                             "Resposta real do chat", List.of("Conferir dados"), List.of("Avaliação médica")));
                     return exame;
                 });
-        var controller = new ChatMedicoExame();
-        org.springframework.test.util.ReflectionTestUtils.setField(controller, "examesService", service);
+        var controller = new ChatMedicoExame(service, null);
         var mvc = org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup(controller).build();
         var response = mvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders
                 .post("/medico/exame/urina").param("observacoes", "Observação original"))

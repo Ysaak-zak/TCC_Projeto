@@ -29,5 +29,63 @@ public class FichaMedicaModel implements Serializable {
     @JoinColumn(name = "urinaExame")
     private List<EmaxeUrina> exameUrinaAtl = new ArrayList<>();
 
+   
+
+    public FichaMedicaModel() {
+    }
+
+
+
+    public FichaMedicaModel(Long id, AtletaModelo atl, List<EmaxeUrina> exameUrinaAtl) {
+        this.id = id;
+        this.atl = atl;
+        this.exameUrinaAtl = exameUrinaAtl;
+    }
+
+
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+    public AtletaModelo getAtl() {
+        return atl;
+    }
+
+
+
+    public void setAtl(AtletaModelo atl) {
+        this.atl = atl;
+    }
+
+
+
+    public List<EmaxeUrina> getExameUrinaAtl() {
+        return exameUrinaAtl;
+    }
+
+
+
+    public void setExameUrinaAtl(List<EmaxeUrina> exameUrinaAtl) {
+        this.exameUrinaAtl = exameUrinaAtl;
+    }
+
+    
+    
+    
 }
 

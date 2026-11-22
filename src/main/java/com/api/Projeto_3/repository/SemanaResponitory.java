@@ -3,9 +3,18 @@ package com.api.Projeto_3.repository;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import com.api.Projeto_3.model.SemanaModel;
 
 public interface SemanaResponitory extends JpaRepository<SemanaModel, Long> {
-    @Query("select s from SemanaModel s join fetch s.atleta_fk a where a.treinador_fk.cpf = :cpf order by s.id desc")
-    List<SemanaModel> listarPorTreinador(String cpf);
+    @Query(value = """
+            SELECT s.*
+            FROM semana s
+            JOIN atletas a ON a.id = s.atleta_fk
+            JOIN treinadores t ON t.id = a.atleta_trenador_fk
+            JOIN perfis_modelo p ON p.id = t.id
+            WHERE p.cpf = :cpf
+            ORDER BY s.id DESC
+            """, nativeQuery = true)
+    List<SemanaModel> listarPorTreinador(@Param("cpf") String cpf);
 }

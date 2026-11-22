@@ -1,31 +1,38 @@
 package com.api.Projeto_3.Controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import jakarta.validation.Valid;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
-import com.api.Projeto_3.model.enums.DiasEnum;
 import com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto;
 import com.api.Projeto_3.dtos.DtosModelos.CriarSemanaDto;
 import com.api.Projeto_3.dtos.DtosModelos.CriarTreinoDto;
 import com.api.Projeto_3.model.SemanaModel;
+import com.api.Projeto_3.model.enums.DiasEnum;
 import com.api.Projeto_3.repository.AtletaRespository;
 import com.api.Projeto_3.repository.SemanaResponitory;
 import com.api.Projeto_3.service.TrenamentosSerive;
+
+import jakarta.validation.Valid;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/treinador/treinos")
 public class TreinamentoController {
+    private static final String PAGINA_TREINOS = "treinadorPages/treimamento/Treinamento";
+    private static final String PAGINA_SEMANAS = "treinadorPages/treimamento/semana";
+    private static final String REDIRECIONAR_TREINOS = "redirect:/treinador/treinos";
+    private static final String REDIRECIONAR_EXERCICIOS = REDIRECIONAR_TREINOS + "#exercicios";
+
     private final TrenamentosSerive service;
     private final AtletaRespository atletas;
     private final SemanaResponitory semanas;
@@ -37,41 +44,32 @@ public class TreinamentoController {
         this.semanas = semanas;
     }
 
-
     @GetMapping
     public String getTreino(@AuthenticationPrincipal UserDetails usuario, Model model) {
         model.addAttribute("treinoForm", new CriarTreinoDto());
-        carregarTreino(usuario, model);
-        return "treinadorPages/treimamento/Treinamento";
-    }
-
-    private void carregarTreino(UserDetails usuario, Model model) {
-        model.addAttribute("semanas", semanas.listarPorTreinador(usuario.getUsername()));
-        model.addAttribute("diasSemana", DiasEnum.values());
+        carregarDadosDosTreinos(usuario, model);
+        return PAGINA_TREINOS;
     }
 
     @PostMapping
     public String criarTreino(@Valid @ModelAttribute("treinoForm") CriarTreinoDto form,
             BindingResult result, @AuthenticationPrincipal UserDetails usuario,
             Model model, RedirectAttributes redirect) {
-        if (!result.hasErrors()) {
-            try {
-                service.criarTreino(form, usuario.getUsername());
-                redirect.addFlashAttribute("sucesso", "Treino salvo para " + form.getDia().getRotulo() + ".");
-                return "redirect:/treinador/treinos";
-            } catch (IllegalArgumentException e) {
-                result.rejectValue("semanaId", "semana.invalida", e.getMessage());
-            }
+        if (result.hasErrors()) {
+            carregarDadosDosTreinos(usuario, model);
+            return PAGINA_TREINOS;
         }
-        carregarTreino(usuario, model);
-        return "treinadorPages/treimamento/Treinamento";
+
+        service.criarTreino(form, usuario.getUsername());
+        redirect.addFlashAttribute("sucesso", "Treino salvo para " + form.getDia().getRotulo() + ".");
+        return REDIRECIONAR_TREINOS;
     }
 
     @GetMapping("/semanas")
     public String getSemanas(@AuthenticationPrincipal UserDetails usuario, Model model) {
         model.addAttribute("semanaForm", new CriarSemanaDto());
-        carregarSemanas(usuario, model);
-        return "treinadorPages/treimamento/semana";
+        carregarDadosDasSemanas(usuario, model);
+        return PAGINA_SEMANAS;
     }
 
     @PostMapping("/semanas")
@@ -79,48 +77,34 @@ public class TreinamentoController {
             BindingResult result, @AuthenticationPrincipal UserDetails usuario,
             Model model, RedirectAttributes redirect) {
         if (result.hasErrors()) {
-            carregarSemanas(usuario, model);
-            return "treinadorPages/treimamento/semana";
+            carregarDadosDasSemanas(usuario, model);
+            return PAGINA_SEMANAS;
         }
 
-        for (var atleta : atletas.listarPorTreinador(usuario.getUsername())) {
-            if (atleta.getId().equals(form.getAtletaId())) {
-                SemanaModel semana = new SemanaModel();
-                semana.setNome(form.getNome().trim());
-                semana.setDescricao(form.getDescricao());
-                semana.setAtleta_fk(atleta);
+        var atletaSelecionado = atletas.listarPorTreinador(usuario.getUsername()).stream()
+                .filter(atleta -> atleta.getId().equals(form.getAtletaId()))
+                .findFirst();
 
-                service.creSemana(semana);
-
-                redirect.addFlashAttribute("sucesso", "Semana criada com sucesso!");
-                return "redirect:/treinador/treinos";
-            }
+        if (atletaSelecionado.isEmpty()) {
+            result.rejectValue("atletaId", "atleta.invalido", "Selecione um atleta vinculado a você.");
+            carregarDadosDasSemanas(usuario, model);
+            return PAGINA_SEMANAS;
         }
 
-        result.rejectValue("atletaId", "atleta.invalido", "Selecione um atleta vinculado a você.");
-        carregarSemanas(usuario, model);
-        return "treinadorPages/treimamento/semana";
-    }
+        SemanaModel semana = new SemanaModel();
+        semana.setNome(form.getNome().trim());
+        semana.setDescricao(form.getDescricao());
+        semana.setAtleta_fk(atletaSelecionado.get());
 
-    private void carregarSemanas(UserDetails usuario, Model model) {
-        model.addAttribute("atletas", atletas.listarPorTreinador(usuario.getUsername()));
-        model.addAttribute("semanas", semanas.listarPorTreinador(usuario.getUsername()));
+        service.creSemana(semana);
+        redirect.addFlashAttribute("sucesso", "Semana criada com sucesso!");
+        return REDIRECIONAR_TREINOS;
     }
 
     @GetMapping("/exercicios")
     public String getExercicios(@RequestParam(required = false) Long semanaId,
             @AuthenticationPrincipal UserDetails usuario, Model model) {
-        return "redirect:/treinador/treinos#exercicios";
-    }
-
-    private void carregarExercicios(CriarExercicioDto form, UserDetails usuario, Model model) {
-        model.addAttribute("semanas", semanas.listarPorTreinador(usuario.getUsername()));
-        try {
-            model.addAttribute("treinamentos", service.listarTreinosDaSemana(form.getSemanaId(), usuario.getUsername()));
-        } catch (IllegalArgumentException e) {
-            model.addAttribute("treinamentos", java.util.List.of());
-            model.addAttribute("erroSelecao", e.getMessage());
-        }
+        return REDIRECIONAR_EXERCICIOS;
     }
 
     @PostMapping("/exercicios")
@@ -128,16 +112,25 @@ public class TreinamentoController {
             BindingResult result, @AuthenticationPrincipal UserDetails usuario,
             Model model, RedirectAttributes redirect) {
         if (!result.hasErrors()) {
-            try {
-                service.criarExercicio(form, usuario.getUsername());
-                redirect.addFlashAttribute("sucesso", "Exercício adicionado ao treinamento com sucesso!");
-                redirect.addAttribute("semanaId", form.getSemanaId());
-                return "redirect:/treinador/treinos#exercicios";
-            } catch (IllegalArgumentException e) {
-                result.rejectValue("treinamentoId", "treinamento.invalido", e.getMessage());
-            }
+            service.criarExercicio(form, usuario.getUsername());
+            redirect.addFlashAttribute("sucesso", "Exercício adicionado ao treinamento com sucesso!");
+            redirect.addAttribute("semanaId", form.getSemanaId());
         }
-        carregarExercicios(form, usuario, model);
-        return "redirect:/treinador/treinos#exercicios";
+        return REDIRECIONAR_EXERCICIOS;
+    }
+
+    private void carregarDadosDosTreinos(UserDetails usuario, Model model) {
+        model.addAttribute("semanas", semanas.listarPorTreinador(usuario.getUsername()));
+        model.addAttribute("diasSemana", DiasEnum.values());
+    }
+
+    private void carregarDadosDasSemanas(UserDetails usuario, Model model) {
+        model.addAttribute("atletas", atletas.listarPorTreinador(usuario.getUsername()));
+        model.addAttribute("semanas", semanas.listarPorTreinador(usuario.getUsername()));
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<String> tratarSelecaoInvalida(IllegalArgumentException erro) {
+        return ResponseEntity.badRequest().body(erro.getMessage());
     }
 }
