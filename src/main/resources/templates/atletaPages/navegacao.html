@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <aside th:fragment="menu(pagina, nome)" class="sticky top-0 z-10 flex shrink-0 flex-wrap items-center gap-2 bg-[#9333ea] px-4 py-3 text-white shadow-md xl:h-dvh
+        xl:w-[clamp(15rem,20vw,18rem)] xl:flex-col xl:flex-nowrap xl:items-stretch xl:gap-4 xl:overflow-y-auto xl:py-5
+        [@media(max-height:575px)]:max-xl:static">
+        <a class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-20 focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-purple-950" href="#conteudo">Ir para o conteúdo</a>
+
+        <div class="flex min-w-0 flex-1 items-center gap-3 font-bold xl:flex-none xl:rounded-xl xl:border xl:border-white/20 xl:bg-purple-950/30 xl:p-3">
+            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#10b981] xl:h-11 xl:w-11"><img class="h-6 w-6 brightness-0" th:src="@{/img/user.svg}" width="28" height="28" alt=""></span>
+            <span class="truncate xl:overflow-visible xl:whitespace-normal xl:wrap-anywhere" th:text="${#strings.isEmpty(nome) ? 'Atleta' : nome}">Atleta</span>
+        </div>
+
+        <nav aria-label="Menu do atleta"
+             class="order-1 flex w-full gap-1.5 xl:order-none xl:flex-col xl:gap-2 [&_a]:flex [&_a]:min-h-11 [&_a]:min-w-0 [&_a]:flex-1
+                 [&_a]:items-center [&_a]:justify-center [&_a]:gap-1 [&_a]:rounded-lg [&_a]:border [&_a]:border-white/20
+                 [&_a]:bg-[#3b0764] [&_a]:px-1 [&_a]:py-2 [&_a]:text-xs [&_a]:font-bold [&_a:hover]:bg-[#6b21a8]
+                 [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-offset-2 [&_a:focus-visible]:outline-white
+                 [&_a[aria-current=page]]:border-blue-200 [&_a[aria-current=page]]:bg-[#1e3a8a] xl:[&_a]:min-h-12
+                 xl:[&_a]:justify-start xl:[&_a]:gap-2 xl:[&_a]:px-3 xl:[&_a]:text-sm [&_img]:h-4 [&_img]:w-4 [&_img]:shrink-0
+                 [&_img]:brightness-0 [&_img]:invert xl:[&_img]:h-5 xl:[&_img]:w-5">
+            <a th:href="@{/atleta}" th:attr="aria-current=${pagina == 'painel' ? 'page' : null}">
+                <img th:src="@{/img/dash.svg}" width="20" height="20" alt="">
+                Dashboard
+            </a>
+            <a th:href="@{/atleta/perfil}" th:attr="aria-current=${pagina == 'perfil' ? 'page' : null}">
+                <img th:src="@{/img/user.svg}" width="20" height="20" alt="">
+                Perfil
+            </a>
+            <a th:href="@{/atleta/treinos}" th:attr="aria-current=${pagina == 'treinos' ? 'page' : null}">
+                <img th:src="@{/img/calen.svg}" width="20" height="20" alt="">
+                Treinos
+            </a>
+        </nav>
+
+        <form th:action="@{/logout}" method="post" class="xl:mt-auto xl:border-t xl:border-white/25 xl:pt-3">
+            <button type="submit" class="flex min-h-11 w-full cursor-pointer items-center gap-2 rounded-lg border border-white/20 bg-[#3b0764] px-3 py-2
+                text-xs font-bold hover:bg-[#6b21a8] focus-visible:outline-2 focus-visible:outline-offset-2
+                focus-visible:outline-white xl:min-h-12 xl:text-sm">
+                <img th:src="@{/img/sair.svg}" class="h-4 w-4 shrink-0 brightness-0 invert xl:h-5 xl:w-5" width="20" height="20" alt="">
+                Sair
+            </button>
+        </form>
+    </aside>
+</body>
+</html>

@@ -55,6 +55,10 @@ public class DashService {
             for (TreinamentoModel treino : dia.getTreinamentos()) {
                 DashTreinoDto item = criarTreinoDoHistorico(treino);
                 dash.getTreinos().add(item);
+                // Treino cancelado pelo médico continua visível, mas não conta em tempo, satisfação nem categorias.
+                if (item.isCancelado()) {
+                    continue;
+                }
                 if (item.getSatisfacao() != null) {
                     somaSatisfacao += item.getSatisfacao();
                     treinosAvaliados++;
@@ -62,9 +66,10 @@ public class DashService {
 
                 if (item.getDuracao() != null) {
                     dash.setTempoTotal(dash.getTempoTotal() + item.getDuracao());
-                    somarTempoDoDia(dash.getAtividadeSemanal(), dia.getNome(), item.getDuracao());
+                    somarPonto(dash.getAtividadeSemanal(), dia.getNome().getAbreviacao(),
+                            item.getDuracao(), item.isConcluido());
                 }
-                somarCategoria(dash.getCategorias(), item.getCategoria());
+                somarPonto(dash.getCategorias(), item.getCategoria(), 1, item.isConcluido());
             }
         }
         // Média considerando os sete dias da semana, inclusive dias sem treino.
@@ -100,6 +105,8 @@ public class DashService {
         treinoDoHistorico.setNome(treino.getNome());
         treinoDoHistorico.setDescricao(treino.getDescricao());
         treinoDoHistorico.setDuracao(calcularDuracao(treino));
+        treinoDoHistorico.setCancelado(Boolean.TRUE.equals(treino.getCancelado()));
+        treinoDoHistorico.setConcluido(treino.isConcluido());
 
         if (treino.getCategoria() == null) {
             treinoDoHistorico.setCategoria("Sem categoria");
@@ -110,13 +117,19 @@ public class DashService {
         return treinoDoHistorico;
     }
 
-    private void somarTempoDoDia(List<DashPontoDto> dias, DiasEnum dia, long minutos) {
-        for (DashPontoDto ponto : dias) {
-            if (ponto.getX().equals(dia.getAbreviacao())) {
-                ponto.setY(ponto.getY() + minutos);
+    private void somarPonto(List<DashPontoDto> pontos, String nome, long valor, boolean concluido) {
+        for (DashPontoDto ponto : pontos) {
+            if (ponto.getX().equals(nome)) {
+                ponto.setY(ponto.getY() + valor);
+                if (concluido) {
+                    ponto.setYConcluido(ponto.getYConcluido() + valor);
+                }
                 return;
             }
         }
+        DashPontoDto ponto = criarPonto(nome, valor);
+        ponto.setYConcluido(concluido ? valor : 0);
+        pontos.add(ponto);
     }
 
     private Long calcularDuracao(TreinamentoModel treino) {
@@ -128,17 +141,6 @@ public class DashService {
             return null;
         }
         return minutos;
-    }
-
-    // Cada treino acrescenta 1 à sua categoria no gráfico.
-    private void somarCategoria(List<DashPontoDto> categorias, String categoria) {
-        for (DashPontoDto ponto : categorias) {
-            if (ponto.getX().equals(categoria)) {
-                ponto.setY(ponto.getY() + 1);
-                return;
-            }
-        }
-        categorias.add(criarPonto(categoria, 1));
     }
 
     private DashPontoDto criarPonto(String nome, long valor) {

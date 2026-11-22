@@ -4,14 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portal Olímpico Preview</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
     <link rel="icon" th:href="@{/img/iconFun.png}">
   </head>
   <body class="bg-gray-100 font-sans">
     <nav class="bg-white shadow">
-      <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-700">GERENCIAMENTO DE ATLETA </h1>
-        <div class="space-x-6 text-gray-600">
+      <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
+        <h1 class="text-lg font-bold text-blue-700 sm:text-2xl">GERENCIAMENTO DE ATLETA </h1>
+        <div class="flex flex-wrap gap-x-6 gap-y-2 text-gray-600">
           <a href="#" class="hover:text-blue-600">Home</a>
           <a href="#" class="hover:text-blue-600">Modalidades</a>
           <a th:href="@{/login}"  class="hover:text-blue-600">Login</a>
@@ -21,9 +21,9 @@
 
     <section class="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 text-white py-24">
       <div class="max-w-6xl mx-auto px-6 text-center">
-        <h2 class="text-5xl font-bold mb-6">GERENCIAMENTO DE ATLETAS</h2>
+        <h2 class="mb-6 break-words text-3xl font-bold sm:text-5xl">GERENCIAMENTO DE ATLETAS</h2>
         <p class="text-xl mb-8">Sistema para atletas, treinadores e equipe médica</p>
-          <a th:href="@{/login}" class="bg-amber-500 text-black px-16 py-3 font-extrabold rounded-2xl hover:bg-amber-300 hover:text-amber-50 duration-500">
+          <a th:href="@{/login}" class="inline-flex rounded-2xl bg-amber-500 px-6 py-3 font-extrabold text-black duration-500 hover:bg-amber-300 hover:text-amber-50 sm:px-16">
               Logar no perfil
           </a>
       </div>
@@ -31,7 +31,7 @@
 
     <section class="max-w-6xl mx-auto px-6 py-16">
   <h2 class="text-3xl font-bold text-center mb-12">Criar contas</h2>
-  <div class="grid md:grid-cols-3 gap-8">
+  <div class="gap-8 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(33.333333%_-_1.333333rem)] [&>*]:min-w-0">
     
     <a th:href="@{/cadastro/atleta}"
    class="block bg-white p-8 rounded-xl shadow border-2 border-transparent hover:border-blue-500 hover:shadow-xl transition">
@@ -62,7 +62,8 @@
 </section>
 
     <section class="bg-white py-16">
-      <div class="max-w-6xl mx-auto px-6 flex gap-8">
+      <div class="mx-auto flex max-w-6xl flex-wrap justify-center gap-3 px-6 sm:gap-4
+          [&>div]:min-w-0 [&>div]:flex-1 [&>div]:basis-32">
         
         <div class="border border-blue-500 p-6 rounded-lg flex items-center justify-center text-center gap-2">
               <img th:src="@{img/natacao.png}" class="w-8" alt="">
@@ -88,7 +89,6 @@
               <img th:src="@{img/esgrima.png}" class="w-8" alt="">
               <p>Esgrima</p>
           </div>
-        </div>
       </div>
     </section>
 

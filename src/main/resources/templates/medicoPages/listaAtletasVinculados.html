@@ -7,20 +7,11 @@
     <title>Atletas vinculados | Módulo Médico</title>
 
         <link rel="icon" th:href="@{/img/iconFun.png}">
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
         <script th:src="@{/js/tailwind-theme.js}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['DM Sans', 'sans-serif'], display: ['Playfair Display', 'serif'] }
-                }
-            }
-        }
-    </script>
 </head>
 <body class="min-h-screen bg-emerald-50/40 font-sans text-slate-700">
     <div class="min-h-screen md:flex">
@@ -138,7 +129,8 @@
                                     </div>
                                 </dl>
                                 <a th:if="${modoAlimentacao == true}" th:href="@{/medico/alimentacao/{id}(id=${atleta.id})}" class="mt-auto block rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800 hover:bg-emerald-100">Abrir plano alimentar</a>
-                                <form th:unless="${modoAlimentacao == true}" th:action="@{/medico/atletas/{id}/desvincular(id=${atleta.id})}" method="post" class="mt-auto">
+                                <a th:unless="${modoAlimentacao == true}" th:href="@{/medico/atletas/{id}/treinamentos(id=${atleta.id})}" class="mt-auto mb-3 block rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-semibold text-emerald-800 hover:bg-emerald-100">Ver treinamentos</a>
+                                <form th:unless="${modoAlimentacao == true}" th:action="@{/medico/atletas/{id}/desvincular(id=${atleta.id})}" method="post">
                                     <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 transition-colors hover:bg-red-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
                                         Desvincular atleta
                                     </button>

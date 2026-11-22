@@ -2,9 +2,13 @@ package com.api.Projeto_3.dtos.DtosModelos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import com.api.Projeto_3.model.SemanaModel;
 
 public class DashDto {
+    private static final List<String> CORES_CATEGORIAS =
+            List.of("#8b5cf6", "#3b82f6", "#f472b6", "#10b981", "#fbbf24", "#38bdf8");
+
     private Double satisfacaoMedia;
     private String nomeAtleta;
     private Long semanaId;
@@ -93,5 +97,33 @@ public class DashDto {
 
     public void setSatisfacaoMedia(Double satisfacaoMedia) {
         this.satisfacaoMedia = satisfacaoMedia;
+    }
+
+    public long getMaiorTempoProgramado() {
+        return atividadeSemanal.stream().mapToLong(DashPontoDto::getY).max().orElse(0L);
+    }
+
+    public String corCategoria(int indice) {
+        return CORES_CATEGORIAS.get(indice % CORES_CATEGORIAS.size());
+    }
+
+    public String getFundoCategoriasConcluidas() {
+        long total = categorias.stream().mapToLong(DashPontoDto::getYConcluido).sum();
+        if (total == 0) {
+            return null;
+        }
+
+        StringJoiner fatias = new StringJoiner(", ", "conic-gradient(", ")");
+        long acumulado = 0;
+        for (int indice = 0; indice < categorias.size(); indice++) {
+            long quantidade = categorias.get(indice).getYConcluido();
+            if (quantidade > 0) {
+                double inicio = 100.0 * acumulado / total;
+                acumulado += quantidade;
+                double fim = 100.0 * acumulado / total;
+                fatias.add(corCategoria(indice) + " " + inicio + "% " + fim + "%");
+            }
+        }
+        return fatias.toString();
     }
 }

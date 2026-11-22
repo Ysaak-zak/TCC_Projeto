@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Treinos | Atleta</title>
+    <link rel="icon" th:href="@{/img/iconFun.png}">
+    <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
+</head>
+<body class="flex min-h-screen flex-col bg-black font-sans text-white scheme-dark xl:flex-row">
+    <div th:replace="~{atletaPages/navegacao :: menu('treinos', ${agenda.nomeAtleta})}"></div>
+
+    <main id="conteudo" class="mx-auto flex w-full max-w-5xl min-w-0 flex-1 scroll-mt-36 flex-col gap-5 p-4 sm:p-6 lg:p-8
+        xl:scroll-mt-6 [&_:focus-visible]:outline-2 [&_:focus-visible]:outline-offset-2 [&_:focus-visible]:outline-purple-300">
+        <header class="flex flex-wrap items-center justify-between gap-3">
+            <h1 class="text-2xl font-bold sm:text-3xl">Meus treinos</h1>
+            <a th:if="${agenda.semanaId != null}" th:href="@{/atleta(semanaId=${agenda.semanaId})}"
+               class="text-sm font-semibold text-purple-300 underline-offset-4 hover:underline">
+                Dashboard da semana
+            </a>
+        </header>
+
+        <p th:if="${#lists.isEmpty(agenda.semanas)}" class="text-sm text-gray-300">
+            Você ainda não tem semanas de treino cadastradas.
+        </p>
+        <form th:unless="${#lists.isEmpty(agenda.semanas)}" th:action="@{/atleta/treinos}" method="get"
+              class="flex max-w-md flex-col gap-2">
+            <label for="semanaId" class="text-sm font-bold">Semana</label>
+            <div class="flex flex-wrap items-center gap-2">
+                <select id="semanaId" name="semanaId" class="min-h-11 min-w-0 flex-1 rounded-md border border-gray-600 bg-transparent px-3 text-sm">
+                    <option th:each="semana : ${agenda.semanas}" th:value="${semana.id}" th:text="${semana.nome}"
+                            th:selected="${semana.id == agenda.semanaId}"></option>
+                </select>
+                <button type="submit" class="min-h-11 cursor-pointer rounded-md border border-purple-400 px-3 text-sm font-bold text-purple-200 hover:bg-purple-950">
+                    Mostrar semana
+                </button>
+            </div>
+        </form>
+
+        <div th:if="${agenda.semanaId != null}" class="flex flex-col divide-y divide-gray-700 border-y border-gray-700">
+            <section th:each="dia : ${agenda.dias}" class="flex min-w-0 flex-col gap-3 py-4">
+                <h2 class="text-lg font-bold text-purple-300" th:text="${dia.nome.rotulo}">Segunda-feira</h2>
+                <p th:if="${#lists.isEmpty(dia.treinos)}" class="text-sm text-gray-400">Sem treinos.</p>
+
+                <article th:each="treino : ${dia.treinos}" th:id="|treino-${treino.id}|"
+                         class="flex min-w-0 scroll-mt-36 flex-col gap-3 border-l-2 border-gray-700 pl-3 xl:scroll-mt-6">
+                    <header class="flex flex-wrap items-start justify-between gap-2">
+                        <div class="min-w-0">
+                            <h3 class="wrap-anywhere font-bold" th:text="${treino.nome}">Nome do treino</h3>
+                            <p class="text-sm text-gray-300" th:if="${treino.horarioInicio != null and treino.horarioFim != null}"
+                               th:text="|${treino.horarioInicio} – ${treino.horarioFim}|">08:00 – 09:00</p>
+                            <p class="text-xs text-purple-300" th:unless="${#strings.isEmpty(treino.categoria)}"
+                               th:text="${treino.categoria}"></p>
+                        </div>
+                        <span th:if="${treino.cancelado}" class="text-xs font-bold text-red-300">Cancelado pelo médico</span>
+                        <span th:if="${treino.concluido and !treino.cancelado}" class="text-xs font-bold text-emerald-300">Treino concluído</span>
+                    </header>
+
+                    <p th:unless="${#strings.isEmpty(treino.descricao)}" class="text-sm wrap-anywhere text-gray-300"
+                       th:text="${treino.descricao}"></p>
+                    <p th:if="${resultado != null and treinoComRetorno == treino.id}"
+                       th:attr="role=${resultado.sucesso ? 'status' : 'alert'}"
+                       th:classappend="${resultado.sucesso ? 'border-emerald-400 text-emerald-200' : 'border-red-400 text-red-200'}"
+                       th:text="${resultado.mensagem}" class="border-l-2 pl-3 text-sm font-semibold"></p>
+                    <p th:if="${#lists.isEmpty(treino.exercicios)}" class="text-sm text-gray-400">Sem exercícios cadastrados.</p>
+
+                    <form th:action="@{/atleta/treinos/{id}(id=${treino.id})}" method="post" class="flex flex-col gap-3">
+                        <fieldset th:unless="${#lists.isEmpty(treino.exercicios)}"
+                                  class="flex min-w-0 flex-col divide-y divide-gray-800 border-y border-gray-800">
+                            <legend class="sr-only" th:text="|Exercícios de ${treino.nome}|">Exercícios</legend>
+                            <label th:each="exercicio : ${treino.exercicios}"
+                                   class="flex min-h-11 items-center gap-3 py-2 has-[:enabled]:cursor-pointer">
+                                <input type="checkbox" name="exercicioIds" th:value="${exercicio.id}"
+                                       th:checked="${exercicio.concluido}" th:disabled="${exercicio.concluido or treino.concluido or treino.cancelado}"
+                                       class="size-5 shrink-0 accent-emerald-500">
+                                <span class="flex min-w-0 flex-1 flex-col gap-0.5">
+                                    <strong class="text-sm wrap-anywhere" th:text="${exercicio.nome}">Exercício</strong>
+                                    <span class="text-xs wrap-anywhere text-gray-300" th:unless="${#strings.isEmpty(exercicio.descricao)}"
+                                          th:text="${exercicio.descricao}"></span>
+                                </span>
+                                <span th:if="${exercicio.duracao > 0}" class="shrink-0 text-xs text-gray-300"
+                                      th:text="${#numbers.formatDecimal(exercicio.duracao, 1, 1) + ' min'}">10 min</span>
+                            </label>
+                        </fieldset>
+
+                        <div th:unless="${treino.cancelado or treino.concluido}" class="flex flex-wrap items-center gap-2">
+                            <button th:if="${treino.totalExerciciosConcluidos < #lists.size(treino.exercicios)}"
+                                    type="submit" name="acao" value="CONCLUIR_EXERCICIOS"
+                                    class="min-h-11 cursor-pointer rounded-md bg-purple-700 px-3 text-sm font-bold hover:bg-purple-800">
+                                Salvar exercícios marcados
+                            </button>
+                            <button type="submit" name="acao" value="CONCLUIR_TREINO" th:disabled="${!treino.podeConcluir}"
+                                    class="min-h-11 cursor-pointer rounded-md bg-emerald-700 px-3 text-sm font-bold
+                                        enabled:hover:bg-emerald-800 disabled:cursor-not-allowed disabled:bg-gray-800 disabled:text-gray-300">
+                                Concluir treino
+                            </button>
+                        </div>
+                    </form>
+                </article>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
+import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.MedicoModelo;
 import com.api.Projeto_3.model.enums.EnumGenero;
 import com.api.Projeto_3.model.enums.EnumSague;
@@ -146,6 +148,55 @@ public class MedicoController {
         }
 
         return "redirect:/medico/atletas-vinculados?desvinculado";
+    }
+
+    @GetMapping("/medico/atletas/{atletaId}/treinamentos")
+    public String getTreinamentosDoAtleta(@AuthenticationPrincipal UserDetails userLogado,
+                                          @PathVariable Long atletaId, Model model) {
+        if (userLogado == null) {
+            return "redirect:/login";
+        }
+
+        MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
+        if (medico == null) {
+            return "redirect:/login?error";
+        }
+
+        // Só abre a tela se o atleta estiver vinculado a este médico.
+        AtletaModelo atleta = medicoService.buscarAtletaVinculado(medico.getId(), atletaId);
+        if (atleta == null) {
+            return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
+        }
+
+        model.addAttribute("medico", medico);
+        model.addAttribute("atleta", atleta);
+        model.addAttribute("treinamentos", medicoService.treinamentosDoAtleta(medico.getId(), atletaId));
+        model.addAttribute("motivoMax", MedicoService.MOTIVO_CANCELAMENTO_MAX);
+
+        return "medicoPages/treinamentosAtleta";
+    }
+
+    @PostMapping("/medico/atletas/{atletaId}/treinamentos/{treinamentoId}/cancelar")
+    public String cancelarTreinamento(@AuthenticationPrincipal UserDetails userLogado,
+                                      @PathVariable Long atletaId,
+                                      @PathVariable Long treinamentoId,
+                                      @RequestParam(name = "motivo", required = false) String motivo) {
+        if (userLogado == null) {
+            return "redirect:/login";
+        }
+
+        MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
+        if (medico == null) {
+            return "redirect:/login?error";
+        }
+
+        String tela = "redirect:/medico/atletas/" + atletaId + "/treinamentos";
+        return switch (medicoService.cancelarTreinamento(medico.getId(), atletaId, treinamentoId, motivo)) {
+            case CANCELADO -> tela + "?cancelado";
+            case JA_CANCELADO -> tela + "?jaCancelado";
+            case MOTIVO_INVALIDO -> tela + "?motivoInvalido";
+            case NAO_ENCONTRADO -> tela + "?treinoIndisponivel";
+        };
     }
 
     private void carregarDadosCadastro(Model model) {

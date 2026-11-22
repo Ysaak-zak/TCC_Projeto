@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil Médico | Módulo Médico</title>
-    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
         <link rel="icon" th:href="@{/img/iconFun.png}">
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
         <script th:src="@{/js/tailwind-theme.js}"></script>
 </head>
 <body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
@@ -69,10 +68,10 @@
                     <p class="text-sm font-semibold uppercase tracking-wide text-medico-600">Perfil Médico</p>
                     <h1 class="mt-2 font-display text-2xl font-bold text-medico-700 sm:text-3xl" th:text="${perfil.name}">Nome do médico</h1>
                 </header>
-                <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                <div class="gap-6 flex flex-col lg:flex-row lg:flex-wrap lg:[&>*]:w-[calc(50.000000%_-_0.750000rem)] [&>*]:min-w-0">
                     <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
                         <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Dados pessoais</h2>
-                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <dl class="gap-5 flex flex-col sm:flex-row sm:flex-wrap sm:[&>*]:w-[calc(50.000000%_-_0.625000rem)] [&>*]:min-w-0">
                             <div class="min-w-0">
                                 <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Nome</dt>
                                 <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.name ?: ''}"></dd>
@@ -101,7 +100,7 @@
                     </section>
                     <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
                         <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Contato</h2>
-                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <dl class="gap-5 flex flex-col sm:flex-row sm:flex-wrap sm:[&>*]:w-[calc(50.000000%_-_0.625000rem)] [&>*]:min-w-0">
                             <div class="min-w-0">
                                 <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">E-mail</dt>
                                 <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.email ?: ''}"></dd>
@@ -118,7 +117,7 @@
                     </section>
                     <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
                         <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Endereço</h2>
-                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <dl class="gap-5 flex flex-col sm:flex-row sm:flex-wrap sm:[&>*]:w-[calc(50.000000%_-_0.625000rem)] [&>*]:min-w-0">
                             <div class="min-w-0">
                                 <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">CEP</dt>
                                 <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.moradia_fk?.cep ?: ''}"></dd>
@@ -147,7 +146,7 @@
                     </section>
                     <section class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
                         <h2 class="mb-5 border-b border-slate-100 pb-3 font-display text-xl font-bold text-medico-700">Filiação</h2>
-                        <dl class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                        <dl class="gap-5 flex flex-col sm:flex-row sm:flex-wrap sm:[&>*]:w-[calc(50.000000%_-_0.625000rem)] [&>*]:min-w-0">
                             <div class="min-w-0">
                                 <dt class="text-xs font-semibold uppercase tracking-wide text-slate-400">Nome da mãe</dt>
                                 <dd class="mt-1 break-words font-medium text-slate-800" th:text="${perfil.pais_fk?.maeNome ?: ''}"></dd>

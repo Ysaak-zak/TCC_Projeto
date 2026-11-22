@@ -5,60 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel Treinamentos & Saúde - Semanas</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" th:href="@{/icon/iconFun.png}">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        medOrange: {
-                            50: '#fffbeb', 100: '#fef3c7', 500: '#f59e0b', 
-                            600: '#d97706', 700: '#b45309', 800: '#92400e',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
-    <link rel="stylesheet" th:href="@{/css/treinamento-etapas.css}">
+    <script th:src="@{/js/tailwind-treinador-treinos.js}"></script>
 </head>
 
-<body class="treinador-layout bg-slate-50 font-sans">
+<body class="flex min-h-screen flex-col sm:flex-row bg-slate-50 font-sans">
     
-    <aside class="treinador-menu">
-        <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
-        <nav aria-label="Menu do treinador">
-            <a th:href="@{/treinador}">
-                <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
-            </a>
-            <a th:href="@{/treinador/atletas-vinculados}">
-                <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
-            </a>
-            <a th:href="@{/treinador/perfil}">
-                <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
-            </a>
-            <a th:href="@{/treinador/treinos/semanas}" class="selecionado">
-                <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
-            </a>
-        </nav>
-        <form th:action="@{/logout}" method="post" class="treinador-sair">
-            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <button type="submit">Sair</button>
-        </form>
-    </aside>
+    <div th:replace="~{treinadorPages/navegacao :: menu('treinos', ${treinador})}"></div>
 
-    <div class="treinamento-area">
-        <nav class="treinamento-abas" aria-label="Etapas do treinamento">
-            <a th:href="@{/treinador/treinos/semanas}" class="selecionado" aria-current="page"><img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span><small>PASSO 1</small>Criar semana</span></a>
-            <a th:href="@{/treinador/treinos}"><img class="navegacao-icone" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span><small>PASSO 2</small>Criar treino e exercícios</span></a>
+    <div class="min-w-0 flex-1 bg-slate-50 text-slate-800 [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-50">
+        <nav class="flex flex-wrap gap-2 border-b border-slate-200 bg-slate-50 px-3 py-3 sm:gap-3 sm:px-6 sm:py-5 [&>a]:flex [&>a]:min-w-0
+            [&>a]:flex-1 [&>a]:flex-col [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:rounded-xl [&>a]:border
+            [&>a]:border-slate-200 [&>a]:bg-white [&>a]:px-2 [&>a]:py-3 [&>a]:text-center [&>a]:text-xs [&>a]:font-semibold
+            [&>a]:text-slate-600 [&>a:hover]:bg-amber-50 [&>a[aria-current=page]]:border-amber-600
+            [&>a[aria-current=page]]:bg-amber-50 [&>a[aria-current=page]]:text-amber-700 sm:[&>a]:flex-row sm:[&>a]:justify-start
+            sm:[&>a]:gap-3 sm:[&>a]:px-5 sm:[&>a]:py-4 sm:[&>a]:text-left sm:[&>a]:text-sm [&_span]:flex [&_span]:flex-col
+            [&_small]:text-[10px] [&_small]:tracking-widest" aria-label="Etapas do treinamento">
+            <a th:href="@{/treinador/treinos/semanas}" aria-current="page"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span><small>PASSO 1</small>Criar semana</span></a>
+            <a th:href="@{/treinador/treinos}"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span><small>PASSO 2</small>Criar treino e exercícios</span></a>
         </nav>
         <main class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
-            <header class="planejamento-cabecalho">
+            <header class="pb-3 pt-2 [&>span]:text-xs [&>span]:font-bold [&>span]:tracking-widest [&>span]:text-amber-700 [&>h1]:my-2
+                [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:text-slate-900 sm:[&>h1]:text-3xl [&>p]:max-w-2xl [&>p]:text-sm
+                [&>p]:leading-relaxed [&>p]:text-slate-500">
                 <span>PLANEJAMENTO DO ATLETA · PASSO 1 DE 2</span>
                 <h1>Comece pela semana</h1>
                 <p>Escolha um atleta e crie a semana. Depois, crie o treino com os exercícios na mesma tela.</p>
@@ -82,7 +53,7 @@
                         Nenhum atleta vinculado ao seu perfil de treinador.
                         <a th:href="@{/treinador#lista-atletas}" class="underline">Vincular atleta no dashboard</a>.
                     </p>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] [&>*]:min-w-0">
                         <div>
                             <label for="nome" class="block text-xs font-bold uppercase text-slate-500 mb-1">Nome da Semana</label>
                             <input type="text" th:field="*{nome}" maxlength="255" required placeholder="Ex: Semana 1 - Base" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
@@ -103,7 +74,7 @@
                     </div>
                     <div class="flex justify-end pt-2">
                         <button type="submit" th:disabled="${#lists.isEmpty(atletas)}" class="px-5 py-2.5 bg-medOrange-600 hover:bg-medOrange-700 text-white font-semibold rounded-xl text-sm transition shadow-sm flex items-center gap-2">
-                            <i class="fa-solid fa-calendar-plus"></i> Criar semana e continuar →
+                            Criar semana e continuar →
                         </button>
                     </div>
                 </form>

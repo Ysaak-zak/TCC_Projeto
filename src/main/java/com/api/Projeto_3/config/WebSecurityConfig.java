@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 
             .requestMatchers("/medico/chat/urina").permitAll()
 
-            .requestMatchers("/atleta", "/atleta/perfil").hasRole("ATLETA")
+            .requestMatchers("/atleta", "/atleta/**").hasRole("ATLETA")
             .requestMatchers("/medico", "/medico/**").hasRole("MEDICO")
             .requestMatchers("/treinador", "/treinador/**").hasRole("TREINADOR")
 

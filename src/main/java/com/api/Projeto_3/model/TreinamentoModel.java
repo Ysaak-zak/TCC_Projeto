@@ -38,6 +38,17 @@ public class TreinamentoModel implements Serializable {
     private java.time.LocalDate dataFim;
     private java.time.LocalTime horarioInicio;
     private java.time.LocalTime horarioFim;
+    private Boolean concluido;
+
+    // Cancelamento feito pelo médico. null ou false = treino ativo (registros antigos continuam ativos).
+    private Boolean cancelado;
+    private String motivoCancelamento;
+    private java.time.LocalDateTime canceladoEm;
+
+    @ManyToOne
+    @JoinColumn(name = "cancelado_por_fk")
+    @ToString.Exclude
+    private MedicoModelo canceladoPor;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "dia_fk", nullable = false)
@@ -144,6 +155,46 @@ public class TreinamentoModel implements Serializable {
 
     public void setHorarioFim(java.time.LocalTime horarioFim) {
         this.horarioFim = horarioFim;
+    }
+
+    public boolean isConcluido() {
+        return Boolean.TRUE.equals(concluido);
+    }
+
+    public void setConcluido(boolean concluido) {
+        this.concluido = concluido;
+    }
+
+    public Boolean getCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(Boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public String getMotivoCancelamento() {
+        return motivoCancelamento;
+    }
+
+    public void setMotivoCancelamento(String motivoCancelamento) {
+        this.motivoCancelamento = motivoCancelamento;
+    }
+
+    public java.time.LocalDateTime getCanceladoEm() {
+        return canceladoEm;
+    }
+
+    public void setCanceladoEm(java.time.LocalDateTime canceladoEm) {
+        this.canceladoEm = canceladoEm;
+    }
+
+    public MedicoModelo getCanceladoPor() {
+        return canceladoPor;
+    }
+
+    public void setCanceladoPor(MedicoModelo canceladoPor) {
+        this.canceladoPor = canceladoPor;
     }
 
     public DiaModel getDia_fk() {

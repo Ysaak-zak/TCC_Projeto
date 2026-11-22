@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "tailwind:watch": "./tailwind -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch",
+    "tailwind:build": "./tailwind -i src/main/tailwind/atleta.css -o src/main/resources/static/css/atleta-tailwind.css --minify",
+    "tailwind:watch": "npm run tailwind:build -- --watch",
     "spring:run": "./mvnw spring-boot:run",
     "dev": "concurrently \"npm run tailwind:watch\" \"npm run spring:run\""
   },

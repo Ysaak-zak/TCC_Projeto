@@ -50,9 +50,14 @@ class DashServiceTest {
         treino.setSatisfacao(4);
         treino.setHorarioInicio(LocalTime.of(8, 0));
         treino.setHorarioFim(LocalTime.of(9, 10));
+        treino.setConcluido(true);
         TreinamentoModel semHorario = new TreinamentoModel();
         semHorario.setCategoria("Força");
-        dia.setTreinamentos(List.of(treino, semHorario));
+        TreinamentoModel cancelado = new TreinamentoModel();
+        cancelado.setCategoria("Força");
+        cancelado.setCancelado(true);
+        cancelado.setConcluido(true);
+        dia.setTreinamentos(List.of(treino, semHorario, cancelado));
         semana.setDias(List.of(dia));
         SemanaModel recente = new SemanaModel();
         recente.setId(2L);
@@ -63,8 +68,10 @@ class DashServiceTest {
         assertEquals(70, dash.getTempoTotal());
         assertEquals(10.0, dash.getMediaDiaria());
         assertEquals(70, dash.getAtividadeSemanal().get(0).getY());
+        assertEquals(70, dash.getAtividadeSemanal().get(0).getYConcluido());
         assertEquals(0, dash.getAtividadeSemanal().get(1).getY());
         assertEquals(2, dash.getCategorias().get(0).getY());
+        assertEquals(1, dash.getCategorias().get(0).getYConcluido());
         assertNull(dash.getTreinos().get(1).getDuracao());
         assertEquals(2L, service.buscarDashboard("123", null).getSemanaId());
     }

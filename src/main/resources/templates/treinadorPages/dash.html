@@ -4,36 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel do Treinador</title>
-    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
         <link rel="icon" th:href="@{/img/iconFun.png}">
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
         <script th:src="@{/js/tailwind-theme.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
+    <script defer th:src="@{/js/treinador-dashboard.js}"></script>
 </head>
 <body class="min-h-screen bg-[#f9f8f6] font-sans text-slate-700">
-    <div class="min-h-screen treinador-painel">
+    <div class="min-h-screen flex flex-col sm:flex-row">
 
-        <aside class="treinador-menu">
-            <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
-            <nav aria-label="Menu do treinador">
-                <a th:href="@{/treinador}" class="selecionado">
-                    <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
-                </a>
-                <a th:href="@{/treinador/atletas-vinculados}">
-                    <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
-                </a>
-                <a th:href="@{/treinador/perfil}">
-                    <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
-                </a>
-                <a th:href="@{/treinador/treinos/semanas}">
-                    <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
-                </a>
-            </nav>
-            <form th:action="@{/logout}" method="post" class="treinador-sair">
-                <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <button type="submit">Sair</button>
-            </form>
-        </aside>
+        <div th:replace="~{treinadorPages/navegacao :: menu('painel', ${treinador})}"></div>
 
         <main class="min-w-0 flex-1">
             <div class="px-5 py-6 sm:px-8 lg:px-10">
@@ -41,7 +20,7 @@
 
                 <h1 class="font-display text-2xl font-bold text-treinador-700 sm:text-3xl">Painel do Treinador</h1>
 
-                <div class="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div class="mt-6 gap-5 flex flex-col sm:flex-row sm:flex-wrap sm:[&>*]:w-[calc(50.000000%_-_0.625000rem)] [&>*]:min-w-0">
                     <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
                         <p class="text-sm text-slate-500">Atletas Vinculados</p>
                         <p class="mt-2 text-3xl font-bold text-treinador-700" th:text="${vinculados_count}"></p>
@@ -65,7 +44,7 @@
                     </label>
                 </div>
 
-                <div id="lista-atletas" class="mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
+                <div id="lista-atletas" class="scroll-mt-5 mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-[760px] text-left text-sm">
                             <thead class="bg-treinador-50 text-treinador-700">
@@ -106,20 +85,5 @@
         </main>
     </div>
 
-    <script>
-        const search = document.getElementById('search');
-        const empty = document.getElementById('empty');
-        function rows() { return [...document.querySelectorAll('.athlete-row')]; }
-        search && search.addEventListener('input', () => {
-            const term = search.value.toLowerCase().trim();
-            let visible = 0;
-            rows().forEach(row => {
-                const match = `${row.dataset.name} ${row.dataset.cpf}`.toLowerCase().includes(term);
-                row.classList.toggle('hidden', !match);
-                if (match) visible++;
-            });
-            empty.classList.toggle('hidden', visible !== 0 || rows().length === 0);
-        });
-    </script>
 </body>
 </html>

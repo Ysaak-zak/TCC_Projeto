@@ -4,9 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atletas Vinculados | Médico</title>
-    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
         <link rel="icon" th:href="@{/img/iconFun.png}">
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
         <script th:src="@{/js/tailwind-theme.js}"></script>
 </head>
 <body class="min-h-screen bg-slate-100">
@@ -33,7 +32,7 @@
             </a>
             <a th:href="@{/medico/alimentacao}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
                 <div class="flex items-center gap-3">
-                    <img th:src="@{/img/medico_ifood.svg}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <img th:src="@{/img/medico_ifood.svg}" alt="" class="h-5 w-5 shrinkcler-0 object-contain brightness-0 invert">
                     <p>Alimentação</p>
                 </div>
             </a>

@@ -4,36 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
     <link rel="icon" th:href="@{/icon/iconFun.png}">
-    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
 </head>
 
-<body class="treinador-layout  font-serif">
+<body class="flex min-h-screen flex-col sm:flex-row font-serif">
    
-    <aside class="treinador-menu">
-        <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
-        <nav aria-label="Menu do treinador">
-            <a th:href="@{/treinador}">
-                <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
-            </a>
-            <a th:href="@{/treinador/atletas-vinculados}">
-                <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
-            </a>
-            <a th:href="@{/treinador/perfil}" class="selecionado">
-                <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
-            </a>
-            <a th:href="@{/treinador/treinos/semanas}">
-                <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
-            </a>
-        </nav>
-        <form th:action="@{/logout}" method="post" class="treinador-sair">
-            <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-            <button type="submit">Sair</button>
-        </form>
-    </aside>
+    <div th:replace="~{treinadorPages/navegacao :: menu('perfil', ${treinador})}"></div>
 
-    <main class="w-full flex flex-col gap-14">
+    <main class="flex min-w-0 flex-1 flex-col gap-14">
         <div class="flex bg-amber-50 py-4 text-2xl font-black px-2 justify-center xl:justify-start">
             <h2 class="text-3xl font-extrabold">03 - PERFIL</h2>
         </div>
@@ -58,7 +37,7 @@
                                 <img th:src="@{/img/userVerd.svg}" class="w-10">
                                 <span>DADOS PESSOAIS</span>
                             </div>
-                            <div class="h-2 w-full "></div>
+                            <div class="h-2 w-full"></div>
                             <section class="flex justify-between px-4">
                                 <section class="px-4 flex flex-col gap-2.5">
                                     <div class="flex flex-col">
@@ -89,7 +68,7 @@
                                 <img th:src="@{/img/medalh.svg}" class="w-10">
                                 <span>SAÚDE</span>
                             </div>
-                            <div class="h-2 w-full "></div>
+                            <div class="h-2 w-full"></div>
                             <section class="flex justify-between px-4">
                                 <section class="px-4 flex flex-col gap-2.5">
                                     <div class="flex flex-col">
@@ -124,7 +103,7 @@
                                 <img th:src="@{/img/ceular.svg}" class="w-10">
                                 <span class="text-2xl">CONTATOS</span>
                             </div>
-                            <div class="h-2 w-full "></div>
+                            <div class="h-2 w-full"></div>
                             <section class="flex justify-between px-4">
                                 <section class="px-4 flex flex-col gap-2.5">
                                     <div class="flex flex-col">
@@ -151,7 +130,7 @@
                                 <img th:src="@{/img/local.svg}" class="w-10">
                                 <span class="text-2xl font-extrabold">LOCALIZAÇÃO</span>
                             </div>
-                            <div class="h-2 w-full "></div>
+                            <div class="h-2 w-full"></div>
                             <section class="flex justify-between px-4">
                                 <section class="px-4 flex flex-col gap-2.5">
                                     <div class="flex flex-col">

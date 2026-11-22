@@ -54,18 +54,28 @@ class DashTemplateTest {
             var treino = new com.api.Projeto_3.dtos.DtosModelos.DashTreinoDto();
             treino.setNome("Corrida");
             treino.setDuracao(45L);
+            treino.setConcluido(true);
             dash.setTreinos(List.of(treino));
             var ponto = new com.api.Projeto_3.dtos.DtosModelos.DashPontoDto();
             ponto.setX("Seg");
             ponto.setY(45);
+            ponto.setYConcluido(45);
             dash.setAtividadeSemanal(List.of(ponto));
+            var categoria = new com.api.Projeto_3.dtos.DtosModelos.DashPontoDto();
+            categoria.setX("Cardio");
+            categoria.setY(2);
+            categoria.setYConcluido(1);
+            dash.setCategorias(List.of(categoria));
             response = new MockHttpServletResponse();
             view.render(model, new MockHttpServletRequest(servlet), response);
             html = response.getContentAsString();
             assertTrue(html.contains("Corrida"));
             assertTrue(html.contains("45 min"));
             assertTrue(html.contains("selected=\"selected\""));
-            assertTrue(html.contains("\"y\":45"));
+            assertTrue(html.contains("45 de 45 min concluídos"));
+            assertTrue(html.contains("1 / 2"));
+            assertTrue(html.contains("conic-gradient"));
+            assertFalse(html.contains("<script"));
         }
     }
 }

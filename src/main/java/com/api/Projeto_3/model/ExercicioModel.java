@@ -22,6 +22,7 @@ public class ExercicioModel implements Serializable {
     private String nome;
     private double duracacao = 0;
     private String descricao;
+    private Boolean concluido;
     
     @ManyToOne(optional = false)
     @JoinColumn(name = "treinamento_fk", nullable = false)
@@ -78,6 +79,14 @@ public class ExercicioModel implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public boolean isConcluido() {
+        return Boolean.TRUE.equals(concluido);
+    }
+
+    public void setConcluido(boolean concluido) {
+        this.concluido = concluido;
     }
 
 

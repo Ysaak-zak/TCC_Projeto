@@ -11,6 +11,7 @@ import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.TreinamentoModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
 import com.api.Projeto_3.repository.SemanaResponitory;
+import com.api.Projeto_3.repository.TreinamentoRespository;
 
 import jakarta.transaction.Transactional;
 
@@ -18,6 +19,9 @@ import jakarta.transaction.Transactional;
 public class TrenamentosSerive {
     @Autowired
     SemanaResponitory snJpa;
+
+    @Autowired
+    TreinamentoRespository treinamentoRepository;
 
     @Transactional
     public void criarTreino(CriarTreinoDto forma, String cpf) {
@@ -43,25 +47,32 @@ public class TrenamentosSerive {
     @Transactional
     public java.util.List<TreinamentoModel> listarTreinosDaSemana(Long semanaId, String cpf) {
         if (semanaId == null) return java.util.List.of();
+        // Treino cancelado pelo médico não aparece na lista de treinos que recebem exercícios.
         return buscarSemana(semanaId, cpf).getDias().stream()
-                .flatMap(dia -> dia.getTreinamentos().stream()).toList();
+                .flatMap(dia -> dia.getTreinamentos().stream())
+                .filter(treino -> !Boolean.TRUE.equals(treino.getCancelado()) && !treino.isConcluido())
+                .toList();
     }
 
     @Transactional
     public void criarExercicio(CriarExercicioDto form, String cpf) {
-        SemanaModel semana = buscarSemana(form.getSemanaId(), cpf);
-        TreinamentoModel treino = semana.getDias().stream()
-                .flatMap(dia -> dia.getTreinamentos().stream())
-                .filter(item -> item.getId().equals(form.getTreinamentoId()))
-                .findFirst().orElseThrow(() -> new IllegalArgumentException(
+        TreinamentoModel treino = treinamentoRepository
+                .buscarDoTreinadorParaAtualizar(form.getTreinamentoId(), form.getSemanaId(), cpf)
+                .orElseThrow(() -> new IllegalArgumentException(
                         "Selecione um treinamento pertencente à semana escolhida."));
+        if (Boolean.TRUE.equals(treino.getCancelado())) {
+            throw new IllegalArgumentException("Este treinamento foi cancelado pelo médico e não aceita novos exercícios.");
+        }
+        if (treino.isConcluido()) {
+            throw new IllegalArgumentException("Este treinamento já foi concluído e não aceita novos exercícios.");
+        }
         ExercicioModel exercicio = new ExercicioModel();
         exercicio.setNome(form.getNome().trim());
         exercicio.setDescricao(form.getDescricao());
         exercicio.setDuracacao(form.getDuracao());
         exercicio.setTreinamento_fk(treino);
         treino.getExercicios().add(exercicio);
-        snJpa.save(semana);
+        treinamentoRepository.save(treino);
     }
 
     public void creSemana(SemanaModel semana) {

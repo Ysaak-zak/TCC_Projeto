@@ -1,208 +1,151 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
-     <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-     <link rel="icon" th:href="@{/img/iconFun.png}">
-
-    <script src="https://code.jscharting.com/latest/jscharting.js"></script>
-
-    <title>ATLETAS</title>
+    <title>Meus treinos | Atleta</title>
+    <link rel="icon" th:href="@{/img/iconFun.png}">
+    <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
 </head>
-<body class="bg-black text-white">
-    <main class=" w-full flex flex-col xl:flex-row  ">
-        <section class="w-full xl:w-1/3 bg-purple-600 sticky top-0 z-50 h-auto xl:h-screen xl:overflow-y-auto">
-            <nav
-                class="list-none flex flex-wrap xl:flex-nowrap xl:flex-col xl:gap-5 gap-1 sm:justify-between xl:justify-start px-2 xl:py-5 xl:min-h-screen min-h-10 ">
-                <li
-                    class="    text-center  ">
-                   <section class="flex xl:border-b-4 pb-4 py-2 items-center gap-3 ">
-                        <img class="xl:bg-emerald-500 xl:p-4 px-3 rounded-4xl" th:src="@{/img/user.svg}" alt="">
-                        <h1 class="" th:text="${dash.nomeAtleta}">Atleta</h1>
-                    </section>
-                </li>
+<body class="flex min-h-screen flex-col font-sans xl:flex-row bg-black text-white">
+    <div th:replace="~{atletaPages/navegacao :: menu('painel', ${dash.nomeAtleta})}"></div>
+    <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-36 flex-col gap-6 p-4 sm:p-6 lg:p-8 xl:scroll-mt-6">
+        <header class="flex flex-wrap items-end justify-between gap-4">
+            <div>
+                <h1 class="text-2xl font-bold sm:text-3xl">Meus treinos</h1>
+                <p class="text-sm text-gray-300">Programação semanal e histórico de treinos cadastrados</p>
+            </div>
+            <form class="flex w-full max-w-sm flex-wrap gap-x-2 gap-y-1" th:action="@{/atleta}" method="get">
+                <label for="semanaId" class="w-full text-sm font-semibold">Semana</label>
+                <select class="min-h-11 min-w-0 flex-1 rounded-lg bg-[#9333ea] px-3 text-sm text-white scheme-dark disabled:bg-gray-700
+                    disabled:text-gray-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300" id="semanaId" name="semanaId" th:disabled="${#lists.isEmpty(dash.semanas)}">
+                    <option th:if="${#lists.isEmpty(dash.semanas)}" value="">Sem semanas</option>
+                    <option th:each="semana : ${dash.semanas}" th:value="${semana.id}"
+                            th:text="${semana.nome}" th:selected="${semana.id == dash.semanaId}"></option>
+                </select>
+                <button class="min-h-11 cursor-pointer rounded-lg bg-[#9333ea] px-3 text-sm font-bold text-white hover:bg-[#7e22ce]
+                    disabled:cursor-default disabled:bg-gray-700 disabled:text-gray-300 focus-visible:outline-2
+                    focus-visible:outline-offset-2 focus-visible:outline-purple-300" type="submit" th:disabled="${#lists.isEmpty(dash.semanas)}">Buscar</button>
+            </form>
+        </header>
 
-                <li
-                    class="xl:border-2 xl:rounded-2xl xl:py-5 xl:text-2xl  text-center xl:bg-blue-900 border-purple-700 py-2  xl:px-9 text-red-600 xl:text-white ">
-                    <a th:href="@{/atleta}">DASHBOARD</a>
-                </li>
+        <dl class="flex flex-wrap gap-4 [&_dt]:text-xs [&_dt]:font-bold [&_dt]:tracking-wide [&_dt]:uppercase [&_dt]:text-gray-300
+            [&_dd]:mt-1.5 [&_dd]:wrap-anywhere [&_dd]:text-lg [&_dd]:leading-tight [&_dd]:font-semibold sm:[&_dd]:text-xl
+            [&_small]:mt-1 [&_small]:block [&_small]:text-sm [&_small]:font-normal [&_small]:text-gray-300" aria-label="Resumo da semana">
+            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
+                <dt>Semana</dt>
+                <dd th:text="${dash.nomeSemana}">Sem semanas</dd>
+            </div>
+            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
+                <dt>Tempo programado</dt>
+                <dd th:text="${dash.tempoTotal + ' min'}">0 min</dd>
+            </div>
+            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
+                <dt>Tempo médio da semana</dt>
+                <dd>
+                    <strong class="text-[#c084fc]" th:text="${#numbers.formatDecimal(dash.mediaDiaria, 1, 1) + ' min/dia'}">0 min/dia</strong>
+                    <small>Considera os sete dias da semana.</small>
+                </dd>
+            </div>
+            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
+                <dt>Satisfação</dt>
+                <dd class="text-[#fbbf24]"
+                    th:text="${dash.satisfacaoMedia != null ? #numbers.formatDecimal(dash.satisfacaoMedia, 1, 1) + ' / 5' : 'Não informado'}">Não informado</dd>
+            </div>
+        </dl>
 
-                <li
-                    class="xl:border-2 xl:rounded-2xl xl:py-5 xl:text-2xl  text-center xl:bg-purple-950 border-purple-700 py-2  xl:px-9    xl:hover:bg-purple-800 duration-300 hover:text-red-600 hover:text-white">
-                    <a th:href="@{/atleta/perfil}">PERFIL</a>
-                </li>
-
-                <li
-                    class="xl:border-2 xl:rounded-2xl xl:py-5 xl:text-2xl  text-center xl:bg-purple-950 border-purple-700 py-2  xl:px-9    xl:hover:bg-purple-800 duration-300 hover:text-red-600 hover:text-white">
-                    <a href="">TREINOS</a>
-                </li>
-
-                <li
-                    class="xl:border-2 xl:rounded-2xl xl:py-5 xl:text-2xl  text-center xl:bg-purple-950 border-purple-700 py-2  xl:px-9    xl:hover:bg-purple-800 duration-300 hover:text-red-600 hover:text-white">
-                    <a href="">FICHA MEDICA</a>
-                </li>
-
-                <li class="xl:mt-auto shrink-0">
-                    <form th:action="@{/logout}" method="post" class="m-0 w-full">
-                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                        <button type="submit"
-                                class="block w-full cursor-pointer border-2 border-purple-700 rounded-2xl bg-purple-950 px-4 py-3 text-center text-white xl:px-9 xl:py-5 xl:text-2xl hover:bg-purple-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white">
-                            SAIR
-                        </button>
-                    </form>
-                </li>
-
-
-            </nav>
-        </section>
-
-        <section class=" w-full gap-3">
-
-            <section class="flex flex-col xl:flex-row items-center xl:justify-around px-4">
-                <div class="w-full flex flex-col items-center xl:items-baseline xl:mx-8 gap-1.5  py-4  ">
-                    <h1 class="text-2xl">Meus treinos</h1>
-                    <p class="text-white/60">Programação semanal e histórico de treinos cadastrados</p>
-                </div>
-
-                <form th:action="@{/atleta}" method="get">
-                    <label for="semanaId">Semana</label>
-                    <select id="semanaId" name="semanaId" class="text-center bg-purple-600 py-2"
-                            th:disabled="${#lists.isEmpty(dash.semanas)}">
-                        <option th:if="${#lists.isEmpty(dash.semanas)}" value="">Sem semanas</option>
-                        <option th:each="semana : ${dash.semanas}" th:value="${semana.id}"
-                                th:text="${semana.nome}" th:selected="${semana.id == dash.semanaId}"></option>
-                    </select>
-                    <button type="submit" class="bg-purple-600 py-2 px-3"
-                            th:disabled="${#lists.isEmpty(dash.semanas)}">Buscar</button>
-                </form>
-                
-            </section>
-
-            <section class="w-full flex flex-col xl:flex-row px-2 gap-5  xl:justify-between  ">
-                <div class=" flex flex-col items-center xl:items-baseline gap-2 bg-gray-700  rounded-2xl px-8 py-3">
-                    <h3 class="text-gray-400">SEMANA</h3>
-                    <h2 class=" xl:text-3xl text-2xl" th:text="${dash.nomeSemana}">Sem semanas</h2>
-                </div>
-
-                <div class=" flex flex-col items-center xl:items-baseline gap-2 bg-gray-700  rounded-2xl px-8 py-3">
-                    <h3 class="text-gray-400">TEMPO TOTAL (SEMANA)</h3>
-                    <h2 class=" xl:text-3xl text-2xl" th:text="${dash.tempoTotal + ' min'}">0 min</h2>
-                </div>
-
-                <div class=" flex flex-col items-center xl:items-baseline gap-2 bg-gray-700  rounded-2xl px-8 py-3">
-                    <h3 class="text-gray-400">TEMPO MÉDIO DA SEMANA</h3>
-                    <h2 class=" xl:text-3xl text-2xl text-purple-600" th:text="${#numbers.formatDecimal(dash.mediaDiaria, 1, 1) + ' min/dia'}">0 min/dia</h2>
-                    <p class="text-sm text-gray-400">Tempo total dos treinos dividido pelos 7 dias.</p>
-                </div>
-
-                <div class=" flex flex-col items-center xl:items-baseline gap-2 bg-gray-700 
-                      rounded-2xl px-8 py-3">
-                    <h3 class="text-gray-400">SATISFAÇÃO</h3>
-                    <h2 class=" xl:text-3xl text-2xl text-amber-400" th:text="${dash.satisfacaoMedia != null ? #numbers.formatDecimal(dash.satisfacaoMedia, 1, 1) + ' / 5' : 'Não informado'}">Não informado</h2>
-                </div>
-
-            </section>
-
-
-            <section class="w-full flex flex-col lg:flex-row gap-8  items-center  px-9">
-
-                <section
-                    class="xl:w-1/2 w-full lg:flex-1 flex justify-center xl:px-14 px-5 bg-gray-700/65  py-10 rounded-2xl  mt-28">
-                    <div class=" mt- w-full">
-                        <h2 class="font-bold mb-6  text-2xl">Atividade Semanal</h2>
-
-                        <div id="barras" class="bg-black h-80"></div>
-                    </div>
-                </section>
-
-                <section
-                    class="xl:w-1/2 w-full lg:flex-1 flex justify-center xl:px-14 px-5 bg-gray-700/65  py-10 rounded-2xl  mt-28">
-                    <div class=" mt- w-full">
-                        <h2 class="font-bold mb-6  text-2xl">Treinos por categoria</h2>
-
-                        <div id="pizza" class="bg-black h-80"></div>
-
-                    </div>
-                </section>
-
-
-
-
-            </section>
-
-            <section class="w-full flex flex-col lg:flex-row gap-8  items-center  px-9 mt-6  py-4 ">
-                <div class="w-full bg-gray-500/50 rounded-2xl">
-                    <h2 class="text-2xl py-6 px-3 font-extrabold ">HISTORICO</h2>
-
-                    <table class="w-full text-left border-collapse">
-                        <thead>
-                            <tr class="text-gray-400 text-xs uppercase tracking-wider border-b border-gray-800">
-                                <th class="py-4 px-2">ID</th>
-                                <th class="py-4 px-2">Nome Treinamento</th>
-                                <th class="py-4 px-2">Categoria</th>
-                                <th class="py-4 px-2 text-center">Duração</th>
-                                <th class="py-4 px-2 text-center">Satisfação</th>
-                                <th class="py-4 px-2 text-center">Gastos</th>
-                                <th class="py-4 px-2">Descrição</th>
-                            </tr>
-                        </thead>
-
-                        <tbody class="text-sm">
-                            <tr th:each="treino : ${dash.treinos}" class="border-b border-gray-800/50">
-                                <td class="py-4 px-2 text-gray-500" th:text="${treino.id}"></td>
-                                <td class="py-4 px-2 font-semibold italic" th:text="${treino.nome}"></td>
-                                <td class="py-4 px-2 text-purple-400" th:text="${treino.categoria}"></td>
-                                <td class="py-4 px-2 text-center text-emerald-400"
-                                    th:text="${treino.duracao != null ? treino.duracao + ' min' : 'Não informado'}"></td>
-                                <td class="py-4 px-2 text-center" th:text="${treino.satisfacao != null ? treino.satisfacao + ' / 5' : 'Não informado'}">Não informado</td>
-                                <td class="py-4 px-2 text-center">Não informado</td>
-                                <td class="py-4 px-2 text-gray-400" th:text="${treino.descricao}"></td>
-                            </tr>
-                            <tr th:if="${#lists.isEmpty(dash.treinos)}">
-                                <td colspan="7" class="py-4 px-2 text-center">Nenhum treino cadastrado nesta semana.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+        <div class="flex flex-col gap-4 md:flex-row">
+            <section class="min-w-0 flex-1 rounded-2xl bg-[#374151]/65 p-4 sm:p-5 [&>h2]:text-lg [&>h2]:font-bold [&>p]:text-sm [&>p]:text-gray-300" aria-labelledby="atividade" th:with="maiorTempo=${dash.maiorTempoProgramado}">
+                <h2 id="atividade">Atividade semanal</h2>
+                <p>Minutos concluídos por dia. A barra inteira mostra o tempo programado.</p>
+                <div class="mt-3 flex min-h-52 flex-col justify-center rounded-lg bg-black p-3">
+                    <p class="p-4 text-center text-gray-300" th:if="${maiorTempo == 0}">Nenhum tempo registrado nesta semana.</p>
+                    <ul class="flex list-none gap-[clamp(0.25rem,1vw,0.75rem)]
+                        bg-[repeating-linear-gradient(to_top,#374151_0_1px,transparent_1px_2.125rem)] bg-[length:100%_8.5rem]
+                        bg-[position:center_bottom_1.5rem] bg-no-repeat text-sm" th:if="${maiorTempo > 0}">
+                        <li class="relative flex h-40 min-w-0 flex-1 flex-col items-center justify-end" th:each="dia : ${dash.atividadeSemanal}"
+                            th:with="proporcao=${1.0 * dia.y / maiorTempo}, parteConcluida=${dia.y > 0 ? 1.0 * dia.yConcluido / dia.y : 0}"
+                            th:style="|--proporcao: ${proporcao}; --parte-concluida: ${parteConcluida}|"
+                            th:title="|${dia.yConcluido} de ${dia.y} min concluídos|">
+                            <span class="order-1 h-6 text-xs text-gray-300 sm:text-sm" th:text="${dia.x}">Seg</span>
+                            <span class="flex h-[7.2rem] w-full items-end justify-center" aria-hidden="true">
+                                <span class="atleta-bar flex h-[calc(100%_*_var(--proporcao))] w-[min(76%,2.25rem)] items-end overflow-hidden rounded-t-md bg-[#3b0764]"><span class="h-[calc(100%_*_var(--parte-concluida))] w-full bg-[#8b5cf6]"></span></span>
+                            </span>
+                            <span class="absolute bottom-[calc(1.6rem_+_7.2rem_*_var(--proporcao))] left-1/2 -translate-x-1/2 text-xs font-bold">
+                                <span th:text="${dia.yConcluido}">0</span>
+                                <span class="sr-only" th:text="| de ${dia.y} minutos concluídos|"></span>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </section>
 
-        </section>
-        </section>
+            <section class="min-w-0 flex-1 rounded-2xl bg-[#374151]/65 p-4 sm:p-5 [&>h2]:text-lg [&>h2]:font-bold [&>p]:text-sm [&>p]:text-gray-300" aria-labelledby="categorias" th:with="fundo=${dash.fundoCategoriasConcluidas}">
+                <h2 id="categorias">Treinos por categoria</h2>
+                <p>Treinos concluídos do total programado</p>
+                <div class="mt-3 flex min-h-52 gap-3 rounded-lg bg-black p-3" th:classappend="${fundo != null ? 'items-center justify-between' : 'flex-col justify-center'}">
+                    <p class="p-4 text-center text-gray-300" th:if="${fundo == null}">Nenhum treino concluído nesta semana.</p>
+                    <div class="atleta-pie aspect-square w-[min(38%,9rem)] shrink-0 rounded-full" th:if="${fundo != null}" th:style="|background: ${fundo}|" aria-hidden="true"></div>
+                    <ul class="flex min-w-0 flex-1 list-none flex-col gap-2 text-sm" th:unless="${#lists.isEmpty(dash.categorias)}">
+                        <li class="flex items-baseline gap-2 wrap-anywhere before:h-2.5 before:w-2.5 before:shrink-0 before:rounded-full before:bg-[var(--categoria-cor)] before:content-['']" th:each="categoria, estado : ${dash.categorias}" th:style="|--categoria-cor: ${dash.corCategoria(estado.index)}|">
+                            <span class="min-w-0 flex-1" th:text="${categoria.x}">Categoria</span>
+                            <strong class="whitespace-nowrap" th:text="|${categoria.yConcluido} / ${categoria.y}|">0 / 0</strong>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
 
+        <section id="historico" class="min-w-0 scroll-mt-36 rounded-2xl bg-gray-500/50 xl:scroll-mt-4" aria-labelledby="historico-titulo">
+            <h2 id="historico-titulo" class="p-4 text-lg font-bold">Histórico</h2>
+            <p class="p-4 text-center text-gray-300" th:if="${#lists.isEmpty(dash.treinos)}">Nenhum treino cadastrado nesta semana.</p>
+            <table class="w-full border-collapse text-left text-sm max-md:block md:[&_td]:border-t md:[&_td]:border-gray-500/45
+                md:[&_th]:border-t md:[&_th]:border-gray-500/45 md:[&_td]:px-2.5 md:[&_td]:py-3 md:[&_th]:px-2.5 md:[&_th]:py-3
+                [&_td]:wrap-anywhere [&_td]:align-top [&_th]:text-xs [&_th]:font-bold [&_th]:tracking-wide [&_th]:uppercase
+                [&_th]:text-gray-300" th:unless="${#lists.isEmpty(dash.treinos)}" aria-labelledby="historico-titulo" role="table">
+                <thead class="max-md:sr-only" role="rowgroup">
+                    <tr role="row">
+                        <th role="columnheader" scope="col">ID</th>
+                        <th role="columnheader" scope="col">Nome do treinamento</th>
+                        <th role="columnheader" scope="col">Categoria</th>
+                        <th role="columnheader" scope="col">Duração</th>
+                        <th role="columnheader" scope="col">Satisfação</th>
+                        <th role="columnheader" scope="col">Gastos</th>
+                        <th role="columnheader" scope="col">Descrição</th>
+                    </tr>
+                </thead>
+                <tbody class="max-md:block" role="rowgroup">
+                    <tr class="max-md:flex max-md:flex-wrap max-md:gap-3 max-md:border-t max-md:border-gray-500/45 max-md:p-4" th:each="treino : ${dash.treinos}" role="row">
+                        <td class="text-gray-300 max-md:w-full" role="cell">
+                            <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">ID</span>
+                            <span th:text="${treino.id ?: '—'}">1</span>
+                        </td>
+                        <td class="max-md:w-full [&>strong]:italic" role="cell">
+                            <strong th:text="${treino.nome}">Nome do treino</strong>
+                            <span class="mt-1 block w-fit rounded-md bg-[#4c1d27] px-1.5 py-0.5 text-xs font-bold text-red-200" th:if="${treino.cancelado}">Cancelado pelo médico</span>
+                            <span class="mt-1 block w-fit rounded-md bg-[#064e3b] px-1.5 py-0.5 text-xs font-bold text-emerald-200" th:if="${treino.concluido and !treino.cancelado}">Concluído</span>
+                        </td>
+                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell">
+                            <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Categoria</span>
+                            <span class="text-[#c084fc]" th:text="${treino.categoria ?: 'Sem categoria'}">Sem categoria</span>
+                        </td>
+                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell">
+                            <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Duração</span>
+                            <span class="text-[#6ee7b7]" th:text="${treino.duracao != null ? treino.duracao + ' min' : 'Não informada'}">Não informada</span>
+                        </td>
+                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell">
+                            <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Satisfação</span>
+                            <span th:text="${treino.satisfacao != null ? treino.satisfacao + ' / 5' : 'Não informada'}">Não informada</span>
+                        </td>
+                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell"><span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Gastos</span>Não informado</td>
+                        <td class="text-gray-300 max-md:w-full" role="cell">
+                            <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Descrição</span>
+                            <span th:text="${#strings.isEmpty(treino.descricao) ? 'Sem descrição' : treino.descricao}">Sem descrição</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </section>
     </main>
-
-    <script th:inline="javascript">
-        const atividadeSemanal = /*[[${dash.atividadeSemanal}]]*/ [];
-        const categorias = /*[[${dash.categorias}]]*/ [];
-
-        JSC.chart('barras', {
-            type: 'column',
-            legend_visible: false,
-            palette: ['#8b5cf6'],
-            axisX_label_text: 'Dias',
-            axisY_label_text: 'Minutos programados',
-            series: [{name: 'Tempo', points: atividadeSemanal}],
-            chartArea_fill: 'transparent'
-        });
-
-        if (categorias.length > 0) {
-            JSC.chart('pizza', {
-                type: 'pie',
-                legend_position: 'right',
-                palette: ['#8b5cf6', '#3b82f6', '#f472b6', '#10b981'],
-                series: [{name: 'Treinos', points: categorias}],
-                chartArea_fill: 'transparent'
-            });
-        } else {
-            document.getElementById('pizza').textContent = 'Nenhum treino cadastrado nesta semana.';
-        }
-    </script>
 </body>
 </html>
-
-
-
-
-   

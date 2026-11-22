@@ -55,7 +55,7 @@ class AlimentoTemplateTest {
                     } else {
                         assertTrue(html.contains("action=\"/medico/alimentacao/1\""));
                     }
-                    String marcador = !pagina.endsWith("alimentacao") ? "data-avatar=\"atleta\"" : "class=\"athlete-avatar\"";
+                    String marcador = "data-avatar=\"atleta\"";
                     String inicial = nome == null || nome.isEmpty() ? "A" : "B";
                     assertTrue(html.contains(marcador + ">" + inicial + "</span>"), pagina + ": " + nome);
                 }

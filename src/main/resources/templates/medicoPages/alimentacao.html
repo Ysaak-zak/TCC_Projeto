@@ -5,16 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plano alimentar | Portal Médico</title>
-    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
     <link rel="icon" th:href="@{/img/iconFun.png}">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
     <script th:src="@{/js/tailwind-theme.js}"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/alimentacao.css}">
+    <script defer th:src="@{/js/acoes-medico.js}"></script>
 </head>
 
 <body class="min-h-screen bg-[#f5f8fd] font-sans text-slate-700">
@@ -73,19 +72,23 @@
         </div>
     </aside>
 
-        <main class="medico-content nutrition-page min-w-0 flex-1">
-            <header class="nutrition-header">
+        <main class="bg-[#f3f7f4] min-w-0 flex-1">
+            <header class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-100 bg-white px-5 py-3 text-xs
+                text-slate-600 sm:px-8 [&>a]:font-semibold [&>a]:text-emerald-800 [&>a:hover]:underline">
                 <a th:href="@{/medico/atletas-vinculados}">← Atletas vinculados</a>
                 <span>Portal Médico · Alimentação esportiva</span>
             </header>
-            <section class="nutrition-hero">
+            <section class="flex min-h-[210px] flex-col justify-between gap-5 bg-[radial-gradient(ellipse_at_top_right,#287d54,transparent_65%)]
+                bg-[#103f30] px-5 py-10 text-white sm:flex-row sm:items-center sm:px-8 [&_h1]:mt-2 [&_h1]:font-display [&_h1]:text-2xl
+                [&_h1]:font-bold sm:[&_h1]:text-3xl [&_h1+p]:mt-2 [&_h1+p]:text-sm [&_h1+p]:text-emerald-100">
                 <div>
-                    <p class="eyebrow">ACOMPANHAMENTO INDIVIDUAL</p>
+                    <p class="text-[10px] font-bold tracking-widest">ACOMPANHAMENTO INDIVIDUAL</p>
                     <h1>Alimentação do atleta</h1>
                     <p>Planeje os cuidados de hoje. Acompanhe a evolução a cada orientação.</p>
                 </div>
-                <div class="athlete-chip">
-                    <span class="athlete-avatar"
+                <div class="flex min-w-0 max-w-full items-center gap-3 self-start rounded-xl border border-white/25 bg-white/10 p-3
+                    sm:self-auto [&_small]:block [&_small]:text-[10px] [&_small]:tracking-widest [&_strong]:break-words">
+                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-lg font-bold text-emerald-900" data-avatar="atleta"
                         th:text="${#strings.isEmpty(atleta.name) ? 'A' : #strings.substring(atleta.name,0,1)}">A</span>
                     <div>
                         <small>ATLETA</small>
@@ -93,38 +96,42 @@
                     </div>
                 </div>
             </section>
-            <div class="nutrition-toolbar">
-            <div class="athlete-selector">
+            <div class="mx-auto flex max-w-7xl flex-col gap-3 px-5 pt-6 sm:px-8 xl:flex-row xl:items-end xl:justify-between">
+            <div class="w-full max-w-[390px] [&_label]:mb-2 [&_label]:block [&_label]:text-sm [&_label]:font-bold [&_label]:text-emerald-950
+                [&_select]:w-full [&_select]:cursor-pointer [&_select]:rounded-xl [&_select]:border [&_select]:border-emerald-200
+                [&_select]:bg-white [&_select]:px-4 [&_select]:py-3 [&_select]:text-sm [&_select:focus-visible]:outline
+                [&_select:focus-visible]:outline-2 [&_select:focus-visible]:outline-emerald-600">
                 <label for="selecionar-atleta" >Escolha o atleta</label>
                 <select id="selecionar-atleta" 
-                        onchange="if (this.value) { window.location.assign(this.value); }">
+                        data-navegar-selecao>
                     <option th:each="item : ${atletas}" th:value="@{/medico/alimentacao/{id}(id=${item.id})}"
                             th:selected="${item.id == atleta.id}" th:text="${item.name}">Atleta</option>
                 </select>
             </div>
-                <div class="toolbar-summary">
-                    <span class="summary-dot" aria-hidden="true"></span>
+                <div class="flex flex-wrap items-center gap-2 pb-2 text-xs text-slate-600 [&_strong]:border-l [&_strong]:border-emerald-200 [&_strong]:pl-2 [&_strong]:text-emerald-800">
+                    <span class="h-2 w-2 shrink-0 rounded-full bg-emerald-600" aria-hidden="true"></span>
                     <span>Acompanhamento alimentar</span>
                     <strong th:text="${#lists.size(recomendacoes)} + ' recomendações'">0 recomendações</strong>
                 </div>
             </div>
-            <div class="nutrition-grid">
-                <section class="panel recommendation-panel">
-                    <div class="panel-heading">
+            <div class="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-6 sm:px-8 xl:flex-row">
+                <section class="min-w-0 flex-1 rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm sm:p-6">
+                    <div class="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-emerald-50 pb-4 text-emerald-800 [&_h2]:mt-1 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold">
                         <div>
-                            <p class="eyebrow">NOVA ORIENTAÇÃO</p>
+                            <p class="text-[10px] font-bold tracking-widest">NOVA ORIENTAÇÃO</p>
                             <h2>Nova recomendação</h2>
                         </div>
-                        <span class="panel-icon" aria-hidden="true">＋</span>
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-lg font-bold" aria-hidden="true">＋</span>
                     </div>
-                    <div th:if="${salvo}" class="success-message" role="status">Recomendação salva e vinculada ao
+                    <div th:if="${salvo}" class="mb-4 rounded-lg bg-emerald-50 p-3 text-sm font-semibold text-emerald-800" role="status">Recomendação salva e vinculada ao
                         histórico do atleta.</div>
                     <form th:action="@{/medico/alimentacao/{id}(id=${atleta.id})}" th:object="${recomendacao}"
-                        method="post" class="recommendation-form">
+                        method="post" class="flex flex-col gap-4 [&_label]:flex [&_label]:min-w-0 [&_label]:flex-col [&_label]:gap-2 [&_label]:text-sm [&_label]:font-semibold [&_label]:text-slate-700">
                         <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}"
                             th:value="${_csrf.token}">
                         <label>Momento da alimentação
-                            <select th:field="*{refeicao}" required>
+                            <select th:field="*{refeicao}" required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
+                                text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
                                 <option value="">Selecione</option>
                                 <option value="Café da manhã">Café da manhã</option>
                                 <option value="Lanche pré-treino">Lanche pré-treino</option>
@@ -135,57 +142,65 @@
                                 <option value="Hidratação">Hidratação</option>
                                 <option value="Orientação geral">Orientação geral</option>
                             </select>
-                            <span class="field-error" th:errors="*{refeicao}"></span>
+                            <span class="text-xs font-medium text-red-700" th:errors="*{refeicao}"></span>
                         </label>
                         <label>Objetivo
                             <input th:field="*{objetivo}" maxlength="120"
-                                placeholder="Ex.: recuperação após treino intenso" required>
-                            <span class="field-error" th:errors="*{objetivo}"></span>
+                                placeholder="Ex.: recuperação após treino intenso" required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
+                                    text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
+                            <span class="text-xs font-medium text-red-700" th:errors="*{objetivo}"></span>
                         </label>
                         <label>Orientação para o atleta
                             <textarea th:field="*{orientacao}" maxlength="2000" rows="5"
                                 placeholder="Descreva a recomendação, porções e observações relevantes..."
-                                required></textarea>
-                            <span class="field-error" th:errors="*{orientacao}"></span>
+                                required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
+                                    text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600"></textarea>
+                            <span class="text-xs font-medium text-red-700" th:errors="*{orientacao}"></span>
                         </label>
-                        <div class="date-fields">
+                        <div class="flex flex-col gap-3 sm:flex-row sm:[&>*]:flex-1">
                             <label>Início
-                                <input type="date" th:field="*{dataInicio}" required>
-                                <span class="field-error" th:errors="*{dataInicio}"></span>
+                                <input type="date" th:field="*{dataInicio}" required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
+                                    text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
+                                <span class="text-xs font-medium text-red-700" th:errors="*{dataInicio}"></span>
                             </label>
-                            <label>Revisar em <small>(opcional)</small>
-                                <input type="date" th:field="*{dataRevisao}">
-                                <span class="field-error" th:errors="*{dataRevisao}"></span>
+                            <label><span>Revisar em <small>(opcional)</small></span>
+                                <input type="date" th:field="*{dataRevisao}" class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
+                                    text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
+                                <span class="text-xs font-medium text-red-700" th:errors="*{dataRevisao}"></span>
                             </label>
                         </div>
-                        <p class="form-note">Considere o histórico clínico, a rotina de treinos e as necessidades
+                        <p class="text-xs leading-relaxed text-slate-600">Considere o histórico clínico, a rotina de treinos e as necessidades
                             individuais do atleta.</p>
-                        <button class="submit-button" type="submit">Salvar recomendação</button>
+                        <button class="self-start rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800
+                            focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
+                            focus-visible:outline-emerald-700" type="submit">Salvar recomendação</button>
                     </form>
                 </section>
-                <section class="panel history-panel">
-                    <div class="panel-heading">
+                <section class="min-w-0 flex-1 rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm sm:p-6">
+                    <div class="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-emerald-50 pb-4 text-emerald-800 [&_h2]:mt-1 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold">
                         <div>
-                            <p class="eyebrow">REGISTROS DO ATLETA</p>
+                            <p class="text-[10px] font-bold tracking-widest">REGISTROS DO ATLETA</p>
                             <h2>Histórico de recomendações</h2>
                         </div>
-                        <span class="history-count" th:text="${#lists.size(recomendacoes)} + ' registros'">0
+                        <span class="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800" th:text="${#lists.size(recomendacoes)} + ' registros'">0
                             registros</span>
                     </div>
-                    <div th:if="${#lists.isEmpty(recomendacoes)}" class="empty-history">
+                    <div th:if="${#lists.isEmpty(recomendacoes)}" class="flex min-h-52 flex-col items-center justify-center gap-2 rounded-xl bg-emerald-50/50 p-5 text-center text-sm text-slate-600 [&_strong]:text-emerald-900">
                         <span aria-hidden="true">☷</span>
                         <strong>Nenhuma recomendação registrada</strong>
                         <p>Adicione a primeira orientação alimentar deste atleta pelo formulário.</p>
                     </div>
-                    <ol th:unless="${#lists.isEmpty(recomendacoes)}" class="recommendation-list">
-                        <li th:each="item : ${recomendacoes}" class="recommendation-item">
-                            <div class="record-top">
-                                <span class="meal-tag" th:text="${item.refeicao}">Pós-treino</span>
+                    <ol th:unless="${#lists.isEmpty(recomendacoes)}" class="flex flex-col gap-3">
+                        <li th:each="item : ${recomendacoes}" class="min-w-0 break-words rounded-xl border border-emerald-100 border-l-4 border-l-emerald-400 bg-emerald-50/20
+                            p-4 [&_h3]:mb-1 [&_h3]:font-bold [&_h3]:text-emerald-950 [&_p]:whitespace-pre-line [&_p]:text-sm
+                            [&_p]:text-slate-700 [&_time]:text-xs [&_time]:text-slate-600">
+                            <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
+                                <span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold uppercase text-emerald-800" th:text="${item.refeicao}">Pós-treino</span>
                                 <time th:text="${#temporals.format(item.dataInicio, 'dd/MM/yyyy')}">26/10/2026</time>
                             </div>
                             <h3 th:text="${item.objetivo}">Objetivo</h3>
                             <p th:text="${item.orientacao}">Orientação</p>
-                            <small th:if="${item.dataRevisao != null}" class="review-date"
+                            <small th:if="${item.dataRevisao != null}" class="mt-2 block text-xs font-semibold text-slate-600"
                                 th:text="${'Revisão prevista para ' + #temporals.format(item.dataRevisao, 'dd/MM/yyyy')}">Revisão
                                 prevista</small>
                         </li>

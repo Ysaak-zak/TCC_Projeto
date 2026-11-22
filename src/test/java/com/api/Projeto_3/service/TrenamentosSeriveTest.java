@@ -4,12 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 import com.api.Projeto_3.dtos.DtosModelos.CriarTreinoDto;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
 import com.api.Projeto_3.repository.SemanaResponitory;
+import com.api.Projeto_3.repository.TreinamentoRespository;
 import jakarta.validation.Validation;
 
 class TrenamentosSeriveTest {
@@ -77,6 +79,7 @@ class TrenamentosSeriveTest {
     @Test
     void vinculaExercicioAoTreinoDaSemanaERejeitaOutroTreino() {
         var repo = mock(SemanaResponitory.class);
+        var treinoRepo = mock(TreinamentoRespository.class);
         var semana = new SemanaModel();
         semana.setId(1L);
         var dia = new com.api.Projeto_3.model.DiaModel();
@@ -85,8 +88,10 @@ class TrenamentosSeriveTest {
         dia.getTreinamentos().add(treino);
         semana.getDias().add(dia);
         when(repo.listarPorTreinador("cpf")).thenReturn(List.of(semana));
+        when(treinoRepo.buscarDoTreinadorParaAtualizar(5L, 1L, "cpf")).thenReturn(Optional.of(treino));
         var service = new TrenamentosSerive();
         service.snJpa = repo;
+        service.treinamentoRepository = treinoRepo;
         var form = new com.api.Projeto_3.dtos.DtosModelos.CriarExercicioDto();
         form.setSemanaId(1L);
         form.setTreinamentoId(5L);
@@ -102,7 +107,12 @@ class TrenamentosSeriveTest {
         assertThrows(IllegalArgumentException.class, () -> service.criarExercicio(form, "cpf"));
         form.setSemanaId(999L);
         assertThrows(IllegalArgumentException.class, () -> service.criarExercicio(form, "cpf"));
-        verify(repo, times(1)).save(semana);
+        treino.setConcluido(true);
+        form.setTreinamentoId(5L);
+        form.setSemanaId(1L);
+        assertThrows(IllegalArgumentException.class, () -> service.criarExercicio(form, "cpf"));
+        assertTrue(service.listarTreinosDaSemana(1L, "cpf").isEmpty());
+        verify(treinoRepo, times(1)).save(treino);
         assertEquals(1, treino.getExercicios().size());
     }
 

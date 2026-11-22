@@ -4,39 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atletas Vinculados | Treinador</title>
-    <link rel="stylesheet" th:href="@{/css/medico-layout.css}">
         <link rel="icon" th:href="@{/img/iconFun.png}">
-        <script src="https://cdn.tailwindcss.com"></script>
+        <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
         <script th:src="@{/js/tailwind-theme.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/treinador-layout.css}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
 <body class="min-h-screen bg-[#f9f8f6] font-sans text-slate-700">
-    <div class="min-h-screen treinador-painel">
+    <div class="min-h-screen flex flex-col sm:flex-row">
 
-        <aside class="treinador-menu">
-            <div class="treinador-marca" th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</div>
-            <nav aria-label="Menu do treinador">
-                <a th:href="@{/treinador}">
-                    <img class="navegacao-icone" th:src="@{/img/dash.svg}" alt="">Dashboard
-                </a>
-                <a th:href="@{/treinador/atletas-vinculados}" class="selecionado">
-                    <img class="navegacao-icone" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
-                </a>
-                <a th:href="@{/treinador/perfil}">
-                    <img class="navegacao-icone" th:src="@{/img/user.svg}" alt="">Perfil
-                </a>
-                <a th:href="@{/treinador/treinos/semanas}">
-                    <img class="navegacao-icone" th:src="@{/img/calen.svg}" alt="">Treinos
-                </a>
-            </nav>
-            <form th:action="@{/logout}" method="post" class="treinador-sair">
-                <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <button type="submit">Sair</button>
-            </form>
-        </aside>
+        <div th:replace="~{treinadorPages/navegacao :: menu('atletas', ${treinador})}"></div>
 
         <!-- ===== Conteúdo principal (mesmo esqueleto de treinadorPages/dash.html) ===== -->
         <main class="min-w-0 flex-1 bg-treinador-50/40">

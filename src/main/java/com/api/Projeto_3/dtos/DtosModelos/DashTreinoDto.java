@@ -7,6 +7,9 @@ public class DashTreinoDto {
     private String categoria;
     private String descricao;
     private Long duracao;
+    // true quando o médico cancelou o treino; ele aparece na lista, mas não entra nas somas do dashboard.
+    private boolean cancelado;
+    private boolean concluido;
 
     public Long getId() {
         return id;
@@ -53,5 +56,21 @@ public class DashTreinoDto {
 
     public void setSatisfacao(Integer satisfacao) {
         this.satisfacao = satisfacao;
+    }
+
+    public boolean isCancelado() {
+        return cancelado;
+    }
+
+    public void setCancelado(boolean cancelado) {
+        this.cancelado = cancelado;
+    }
+
+    public boolean isConcluido() {
+        return concluido;
+    }
+
+    public void setConcluido(boolean concluido) {
+        this.concluido = concluido;
     }
 }
