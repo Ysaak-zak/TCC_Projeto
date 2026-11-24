@@ -1,4 +1,4 @@
-package com.api.Projeto_3.dtos.interfaceCustomer;
+package com.api.Projeto_3.dtos.DtosModelos;
 
 public class SemanaDtos {
     private  Long id;

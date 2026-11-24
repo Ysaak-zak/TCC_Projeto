@@ -39,8 +39,6 @@ public class TreinamentoModel implements Serializable {
     private java.time.LocalTime horarioInicio;
     private java.time.LocalTime horarioFim;
     private Boolean concluido;
-
-    // Cancelamento feito pelo médico. null ou false = treino ativo (registros antigos continuam ativos).
     private Boolean cancelado;
     private String motivoCancelamento;
     private java.time.LocalDateTime canceladoEm;

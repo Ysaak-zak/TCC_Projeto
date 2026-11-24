@@ -101,4 +101,12 @@ public class RecomendacaoAlimentar {
     public void setDataRevisao(LocalDate dataRevisao) {
         this.dataRevisao = dataRevisao;
     }
+
+    @Override
+    public String toString() {
+        return "RecomendacaoAlimentar [id=" + id + ", atleta=" + atleta + ", medico=" + medico + ", refeicao="
+                + refeicao + ", objetivo=" + objetivo + ", orientacao=" + orientacao + ", dataInicio=" + dataInicio
+                + ", dataRevisao=" + dataRevisao + "]";
+    }
+    
 }

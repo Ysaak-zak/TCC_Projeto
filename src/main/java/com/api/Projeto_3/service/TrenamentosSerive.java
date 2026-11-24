@@ -47,7 +47,6 @@ public class TrenamentosSerive {
     @Transactional
     public java.util.List<TreinamentoModel> listarTreinosDaSemana(Long semanaId, String cpf) {
         if (semanaId == null) return java.util.List.of();
-        // Treino cancelado pelo médico não aparece na lista de treinos que recebem exercícios.
         return buscarSemana(semanaId, cpf).getDias().stream()
                 .flatMap(dia -> dia.getTreinamentos().stream())
                 .filter(treino -> !Boolean.TRUE.equals(treino.getCancelado()) && !treino.isConcluido())

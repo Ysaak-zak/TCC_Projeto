@@ -84,8 +84,17 @@ public class FichaMedicaModel implements Serializable {
         this.exameUrinaAtl = exameUrinaAtl;
     }
 
+
+
+    @Override
+    public String toString() {
+        return "FichaMedicaModel [id=" + id + ", atl=" + atl + ", exameUrinaAtl=" + exameUrinaAtl + "]";
+    }
+
     
     
+    
+
     
 }
 

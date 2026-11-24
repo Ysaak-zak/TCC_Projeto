@@ -86,9 +86,8 @@
                     </div>
 
                     <p th:if="${param.cancelado != null}" role="status" class="mb-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800">Treinamento cancelado com sucesso.</p>
-                    <p th:if="${param.jaCancelado != null}" role="status" class="mb-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-amber-800">Este treinamento já estava cancelado.</p>
-                    <p th:if="${param.motivoInvalido != null}" role="alert" class="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700" th:text="${'Informe o motivo do cancelamento (até ' + motivoMax + ' caracteres).'}">Informe o motivo do cancelamento.</p>
-                    <p th:if="${param.treinoIndisponivel != null}" role="alert" class="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">Treinamento não encontrado ou não pertence a um atleta vinculado a você.</p>
+                    <p th:if="${param.erroCancelamento != null}" role="alert" class="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700"
+                       th:text="|Não foi possível cancelar o treinamento. Confira se ele está ativo e informe um motivo de até ${motivoMax} caracteres.|">Não foi possível cancelar o treinamento.</p>
 
                     <p th:if="${#lists.isEmpty(treinamentos)}" class="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-12 text-center text-sm text-slate-500">Este atleta ainda não tem treinamentos cadastrados.</p>
 
@@ -131,7 +130,7 @@
                                                 <form th:action="@{/medico/atletas/{aId}/treinamentos/{tId}/cancelar(aId=${atleta.id}, tId=${t.id})}" method="post" class="mt-2 space-y-2"
                                                       data-confirmacao="Cancelar este treinamento? Ele ficará marcado como cancelado para o atleta e o treinador.">
                                                     <label class="block text-xs font-semibold text-slate-600">Motivo do cancelamento (obrigatório)</label>
-                                                    <textarea name="motivo" required maxlength="255" rows="3" placeholder="Ex.: atleta em recuperação de lesão"
+                                                    <textarea name="motivo" required th:maxlength="${motivoMax}" rows="3" placeholder="Ex.: atleta em recuperação de lesão"
                                                               class="w-full rounded-lg border border-slate-300 px-3 py-2 text-xs outline-none focus:border-emerald-500"></textarea>
                                                     <button type="submit" class="w-full rounded-lg bg-red-600 px-3 py-2 text-xs font-bold text-white hover:bg-red-700">Confirmar cancelamento</button>
                                                 </form>

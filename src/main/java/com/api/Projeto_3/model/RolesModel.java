@@ -58,9 +58,18 @@ public class RolesModel {
         return "RolesModel [id=" + id + ", authority=" + authority + ", perfils=" + perfils + "]";
     }
 
-    
-    
 
-   
+
+    public List<PerfisModelo> getPerfils() {
+        return perfils;
+    }
+
+
+
+    public void setPerfils(List<PerfisModelo> perfils) {
+        this.perfils = perfils;
+    }
+
+    
     
 }

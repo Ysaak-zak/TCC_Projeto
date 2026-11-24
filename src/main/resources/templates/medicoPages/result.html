@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Relatório do Exame de Urina</title>
+    <title>Relatório de exame de urina | Portal Médico</title>
     <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
     <link rel="icon" th:href="@{/img/iconFun.png}">
     <script th:src="@{/js/tailwind-theme.js}"></script>
     <script defer th:src="@{/js/acoes-medico.js}"></script>
 </head>
 <body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
-    <div class="min-h-screen md:flex">
+    <div class="min-h-screen md:flex print:block print:min-h-0">
         <aside aria-label="Navegação do médico"
         class="print:hidden relative flex shrink-0 flex-col bg-emerald-950 px-4 py-5 text-emerald-100 md:sticky md:top-0 md:h-dvh md:w-64 md:overflow-y-auto md:px-5 md:py-7">
         <a th:href="@{/medico}" class="mb-6 flex items-center gap-3 pr-24 md:pr-0">
@@ -39,7 +39,7 @@
             </a>
             <a th:href="@{/medico/exame-urina}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-emerald-200 bg-emerald-50 font-bold text-emerald-950" aria-current="page">
                 <div class="flex items-center gap-3">
-                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain brightness-0 invert">
+                    <img th:src="@{/img/urinaTeste.png}" alt="" class="h-5 w-5 shrink-0 object-contain">
                     <p>Exame de urina</p>
                 </div>
             </a>
@@ -63,110 +63,165 @@
             </form>
         </div>
     </aside>
-    <main class="medico-content min-w-0 flex-1 px-5 py-6 sm:px-8 lg:px-10 flex flex-col gap-6">
-        <header class="bg-green-700 rounded-xl text-white p-6 flex flex-wrap items-center justify-between gap-4">
-            <div>
-                <h1 class="text-2xl font-bold">Relatório de Exame de Urina</h1>
-                <p class="text-green-100 text-sm mt-2">Análise laboratorial assistida por Inteligência Artificial</p>
+    <main class="medico-content min-w-0 flex-1 px-4 py-5 sm:px-8 sm:py-8 lg:px-10 print:p-0">
+        <div class="mx-auto max-w-6xl space-y-5 sm:space-y-6">
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2 print:hidden">
+                <a th:href="@{/medico/exame-urina}"
+                   class="inline-flex min-h-11 items-center rounded-lg px-2 text-sm font-semibold text-emerald-900 hover:bg-emerald-100/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700">
+                    Voltar ao formulário
+                </a>
+                <button type="button" data-imprimir
+                        class="ml-auto inline-flex min-h-11 items-center rounded-lg border border-emerald-700 bg-emerald-800 px-3 text-sm font-semibold text-white hover:bg-emerald-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-700 sm:px-4">
+                    Imprimir relatório
+                </button>
             </div>
-            <div class="bg-green-800 rounded-lg px-5 py-3">
-                <p class="text-xs text-green-100">Data da coleta</p>
-                <p class="font-semibold" th:text="${exameUrina.dataColeta != null ? #temporals.format(exameUrina.dataColeta, 'dd/MM/yyyy') : 'Não informada'}">Não informada</p>
-            </div>
-        </header>
-        <section>
-            <h2 class="text-xl font-bold mb-4">Dados informados do exame</h2>
-            <div class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] xl:flex-row xl:flex-wrap
-                xl:[&>*]:w-[calc(33.333333%_-_0.666667rem)] [&>*]:min-w-0">
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Temperatura da amostra</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.temperatura != null ? exameUrina.temperatura : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Cor da urina</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.cor != null ? exameUrina.cor : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">pH</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.ph != null ? exameUrina.ph : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Densidade específica</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.densidade != null ? exameUrina.densidade : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Creatinina urinária</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.creatinina != null ? exameUrina.creatinina : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Proteínas</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.proteinas != null ? exameUrina.proteinas : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Glicose</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.glicose != null ? exameUrina.glicose : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Sangue</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.sangue != null ? exameUrina.sangue : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Anabolizantes</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.anabolizantes != null ? exameUrina.anabolizantes : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Estimulantes</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.estimulantes != null ? exameUrina.estimulantes : 'Não informado'}">Não informado</p>
-                </article>
-                <article class="bg-white rounded-xl border border-gray-200 shadow-sm p-5">
-                    <p class="text-sm text-gray-500">Diuréticos</p>
-                    <p class="text-xl font-bold mt-2" th:text="${exameUrina.diureticos != null ? exameUrina.diureticos : 'Não informado'}">Não informado</p>
-                </article>
-            </div>
-        </section>
-        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 class="text-xl font-bold text-green-800 mb-4">Observações informadas</h2>
-            <p class="whitespace-pre-wrap break-words text-gray-600" th:text="${exameUrina.observacoes != null and !#strings.isEmpty(exameUrina.observacoes) ? exameUrina.observacoes : 'Nenhuma observação informada.'}">Nenhuma observação informada.</p>
-        </section>
-        <section class="bg-red-50 border border-red-300 rounded-xl p-6"
-                 th:if="${!#lists.isEmpty(exameUrina.alertasTriagem)}" aria-labelledby="alerta-triagem">
-            <h2 id="alerta-triagem" class="text-xl font-bold text-red-800 mb-4">Triagem que requer avaliação médica</h2>
-            <ul class="space-y-2">
-                <li th:each="alerta : ${exameUrina.alertasTriagem}">
-                    <strong class="text-red-700" th:text="${alerta.classe}"></strong>
-                    <span class="text-red-800" th:text="${' — ' + alerta.status}"></span>
-                </li>
-            </ul>
-            <p class="text-red-800 mt-4">Esses resultados não confirmam uma substância específica ou doping. É necessário esclarecer a triagem com o médico e o laboratório.</p>
-            <p class="font-bold text-red-700 mt-3">Dias sem treinar: prazo não determinado pelo exame.</p>
-            <p class="text-red-800 mt-2">A necessidade de afastamento e a data de retorno ao treinamento dependem de avaliação médica individual.</p>
-        </section>
-        <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6" th:if="${exameUrina.analise != null}">
-            <h2 class="text-xl font-bold text-green-800 mb-4">Análise do chat</h2>
-            <h3 class="font-semibold mb-2">Resumo dos resultados</h3>
-            <p class="whitespace-pre-wrap break-words text-gray-700" th:text="${exameUrina.analise.resumo}"></p>
-            <div class="mt-5" th:if="${!#lists.isEmpty(exameUrina.analise.pontosAtencao)}">
-                <h3 class="font-semibold text-amber-800 mb-2">Pontos de atenção</h3>
-                <ul class="list-disc pl-5 space-y-2">
-                    <li class="whitespace-pre-wrap break-words" th:each="ponto : ${exameUrina.analise.pontosAtencao}" th:text="${ponto}"></li>
+
+            <header class="flex flex-wrap items-center justify-between gap-x-8 gap-y-5 rounded-2xl border border-emerald-900 bg-gradient-to-br from-emerald-950 to-emerald-800 px-5 py-7 text-white sm:px-8 sm:py-9 print:border-slate-300 print:bg-none print:px-5 print:py-4 print:text-slate-950 print:[break-inside:avoid]">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl print:text-2xl">Relatório de exame de urina</h1>
+                    <p class="mt-2 text-emerald-100 print:text-slate-700">Análise laboratorial assistida por inteligência artificial</p>
+                </div>
+                <div class="flex items-center gap-3 rounded-xl border border-white/20 bg-white/10 px-4 py-3 print:border-slate-300">
+                    <img th:src="@{/img/calen.svg}" alt="" class="h-6 w-6 shrink-0 print:hidden">
+                    <dl>
+                        <dt class="text-sm font-medium text-emerald-100 print:text-slate-700">Data da coleta</dt>
+                        <dd class="mt-0.5 font-semibold tabular-nums">
+                            <time th:if="${exameUrina.dataColeta != null}" th:datetime="${exameUrina.dataColeta}"
+                                  th:text="${#temporals.format(exameUrina.dataColeta, 'dd/MM/yyyy')}"></time>
+                            <span th:unless="${exameUrina.dataColeta != null}">Não informada</span>
+                        </dd>
+                    </dl>
+                </div>
+            </header>
+
+            <section th:if="${!#lists.isEmpty(exameUrina.alertasTriagem)}" aria-labelledby="alerta-triagem"
+                     class="rounded-2xl border border-red-200 border-l-4 border-l-red-600 bg-red-50 p-5 text-red-950 sm:p-6 print:bg-white print:[break-inside:avoid]">
+                <h2 id="alerta-triagem" class="text-lg font-bold">Triagem que requer avaliação médica</h2>
+                <ul class="mt-3 flex flex-wrap gap-2">
+                    <li th:each="alerta : ${exameUrina.alertasTriagem}"
+                        class="rounded-md border border-red-200 bg-white px-3 py-1 text-sm">
+                        <strong th:text="${alerta.classe}"></strong>
+                        <span th:text="${' — ' + alerta.status}"></span>
+                    </li>
                 </ul>
+                <p class="mt-4 leading-relaxed">Esses resultados não confirmam uma substância específica ou doping. É necessário esclarecer a triagem com o médico e o laboratório.</p>
+                <p class="mt-3 font-bold">Dias sem treinar: prazo não determinado pelo exame.</p>
+                <p class="mt-1 leading-relaxed">A necessidade de afastamento e a data de retorno ao treinamento dependem de avaliação médica individual.</p>
+            </section>
+
+            <div class="grid items-start gap-5 xl:grid-cols-2 xl:gap-6 print:block print:space-y-4">
+                <section aria-labelledby="dados-exame" class="min-w-0 rounded-2xl border border-slate-200 bg-white shadow-sm print:shadow-none">
+                    <div class="border-b border-slate-200 px-5 py-4 sm:px-6">
+                        <h2 id="dados-exame" class="text-xl font-bold tracking-tight text-slate-950">Dados informados do exame</h2>
+                    </div>
+                    <div class="space-y-5 p-5 sm:p-6">
+                        <section aria-labelledby="parametros-fisicos" class="overflow-hidden rounded-xl border border-emerald-100 print:[break-inside:avoid]">
+                            <h3 id="parametros-fisicos" class="bg-emerald-50 px-4 py-2 font-semibold text-emerald-950 print:border-b print:border-slate-200 print:bg-white">Parâmetros físicos</h3>
+                            <dl class="divide-y divide-slate-100">
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Temperatura da amostra (°C)</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${exameUrina.temperatura != null ? exameUrina.temperatura : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Cor da urina</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.cor) ? exameUrina.cor : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">pH</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${exameUrina.ph != null ? exameUrina.ph : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Densidade específica</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${exameUrina.densidade != null ? exameUrina.densidade : 'Não informado'}">Não informado</dd>
+                                </div>
+                            </dl>
+                        </section>
+                        <section aria-labelledby="analise-bioquimica" class="overflow-hidden rounded-xl border border-emerald-100 print:[break-inside:avoid]">
+                            <h3 id="analise-bioquimica" class="bg-emerald-50 px-4 py-2 font-semibold text-emerald-950 print:border-b print:border-slate-200 print:bg-white">Análise bioquímica</h3>
+                            <dl class="divide-y divide-slate-100">
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Creatinina urinária (mg/dL)</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${exameUrina.creatinina != null ? exameUrina.creatinina : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Proteínas</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.proteinas) ? exameUrina.proteinas : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Glicose</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.glicose) ? exameUrina.glicose : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Sangue na urina</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.sangue) ? exameUrina.sangue : 'Não informado'}">Não informado</dd>
+                                </div>
+                            </dl>
+                        </section>
+                        <section aria-labelledby="triagem-antidoping" class="overflow-hidden rounded-xl border border-emerald-100 print:[break-inside:avoid]">
+                            <h3 id="triagem-antidoping" class="bg-emerald-50 px-4 py-2 font-semibold text-emerald-950 print:border-b print:border-slate-200 print:bg-white">Triagem antidoping</h3>
+                            <dl class="divide-y divide-slate-100">
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Anabolizantes</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.anabolizantes) ? exameUrina.anabolizantes : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Estimulantes</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.estimulantes) ? exameUrina.estimulantes : 'Não informado'}">Não informado</dd>
+                                </div>
+                                <div class="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-3 px-4 py-2.5">
+                                    <dt class="text-sm text-slate-600">Diuréticos</dt>
+                                    <dd class="text-right text-sm font-semibold tabular-nums text-slate-900 [overflow-wrap:anywhere]"
+                                        th:text="${!#strings.isEmpty(exameUrina.diureticos) ? exameUrina.diureticos : 'Não informado'}">Não informado</dd>
+                                </div>
+                            </dl>
+                        </section>
+                    </div>
+                </section>
+
+                <div class="min-w-0 space-y-5 xl:space-y-6">
+                    <section aria-labelledby="analise-exame" class="rounded-2xl border border-slate-200 bg-white shadow-sm print:shadow-none">
+                        <div class="border-b border-slate-200 px-5 py-4 sm:px-6">
+                            <h2 id="analise-exame" class="text-xl font-bold tracking-tight text-slate-950">Análise dos resultados</h2>
+                        </div>
+                        <div th:if="${exameUrina.analise != null}" class="space-y-4 p-5 sm:p-6">
+                            <div class="rounded-xl bg-slate-50 p-4 print:border print:border-slate-200 print:bg-white">
+                                <h3 class="mb-2 font-semibold text-slate-950">Resumo dos resultados</h3>
+                                <p class="whitespace-pre-wrap leading-relaxed [overflow-wrap:anywhere]" th:text="${exameUrina.analise.resumo}"></p>
+                            </div>
+                            <div th:if="${!#lists.isEmpty(exameUrina.analise.pontosAtencao)}" class="rounded-xl border border-amber-200 bg-amber-50/70 p-4 print:bg-white">
+                                <h3 class="mb-2 font-semibold text-amber-950">Pontos de atenção</h3>
+                                <ul class="list-disc space-y-2 pl-5 leading-relaxed marker:text-amber-700">
+                                    <li class="whitespace-pre-wrap [overflow-wrap:anywhere]" th:each="ponto : ${exameUrina.analise.pontosAtencao}" th:text="${ponto}"></li>
+                                </ul>
+                            </div>
+                            <div th:if="${!#lists.isEmpty(exameUrina.analise.recomendacoes)}" class="rounded-xl border border-emerald-200 bg-emerald-50/70 p-4 print:bg-white">
+                                <h3 class="mb-2 font-semibold text-emerald-950">Recomendações</h3>
+                                <ol class="list-decimal space-y-2 pl-5 leading-relaxed marker:font-semibold marker:text-emerald-700">
+                                    <li class="whitespace-pre-wrap [overflow-wrap:anywhere]" th:each="recomendacao : ${exameUrina.analise.recomendacoes}" th:text="${recomendacao}"></li>
+                                </ol>
+                            </div>
+                        </div>
+                        <p th:unless="${exameUrina.analise != null}" class="px-5 py-4 text-slate-600 sm:px-6">Análise não disponível.</p>
+                    </section>
+
+                    <section aria-labelledby="observacoes-exame" class="rounded-2xl border border-slate-200 bg-white px-5 py-4 shadow-sm sm:px-6 print:shadow-none">
+                        <h2 id="observacoes-exame" class="text-xl font-bold tracking-tight text-slate-950">Observações informadas</h2>
+                        <p class="mt-2 whitespace-pre-wrap leading-relaxed text-slate-600 [overflow-wrap:anywhere]"
+                           th:text="${!#strings.isEmpty(exameUrina.observacoes) ? exameUrina.observacoes : 'Nenhuma observação informada.'}">Nenhuma observação informada.</p>
+                    </section>
+                </div>
             </div>
-            <div class="mt-5" th:if="${!#lists.isEmpty(exameUrina.analise.recomendacoes)}">
-                <h3 class="font-semibold text-green-800 mb-2">Recomendações</h3>
-                <ol class="list-decimal pl-5 space-y-2">
-                    <li class="whitespace-pre-wrap break-words" th:each="recomendacao : ${exameUrina.analise.recomendacoes}" th:text="${recomendacao}"></li>
-                </ol>
-            </div>
-        </section>
-        <p th:if="${exameUrina.analise == null}" class="text-gray-600">Análise não disponível.</p>
-        <section class="bg-blue-50 border border-blue-200 rounded-xl p-5">
-            <h2 class="font-semibold text-blue-900">Informações sobre a análise</h2>
-            <p class="text-sm text-blue-800 mt-2 leading-relaxed">Esta análise é assistida por Inteligência Artificial e não substitui a avaliação médica ou a validação laboratorial. Os resultados apresentados não permitem confirmar doping nem determinar se o atleta está apto para treinar ou competir.</p>
-        </section>
-        <footer class="flex flex-wrap justify-end gap-3 pb-6 print:hidden">
-            <a th:href="@{/medico/exame-urina}" class="bg-white border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50">Voltar ao Formulário</a>
-            <button type="button" data-imprimir class="bg-green-700 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-800">Imprimir Relatório</button>
-        </footer>
+        </div>
     </main>
     </div>
 </body>

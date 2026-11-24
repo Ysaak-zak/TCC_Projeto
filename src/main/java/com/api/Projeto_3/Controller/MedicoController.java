@@ -162,7 +162,6 @@ public class MedicoController {
             return "redirect:/login?error";
         }
 
-        // Só abre a tela se o atleta estiver vinculado a este médico.
         AtletaModelo atleta = medicoService.buscarAtletaVinculado(medico.getId(), atletaId);
         if (atleta == null) {
             return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
@@ -191,12 +190,10 @@ public class MedicoController {
         }
 
         String tela = "redirect:/medico/atletas/" + atletaId + "/treinamentos";
-        return switch (medicoService.cancelarTreinamento(medico.getId(), atletaId, treinamentoId, motivo)) {
-            case CANCELADO -> tela + "?cancelado";
-            case JA_CANCELADO -> tela + "?jaCancelado";
-            case MOTIVO_INVALIDO -> tela + "?motivoInvalido";
-            case NAO_ENCONTRADO -> tela + "?treinoIndisponivel";
-        };
+        if (medicoService.cancelarTreinamento(medico.getId(), atletaId, treinamentoId, motivo)) {
+            return tela + "?cancelado";
+        }
+        return tela + "?erroCancelamento";
     }
 
     private void carregarDadosCadastro(Model model) {

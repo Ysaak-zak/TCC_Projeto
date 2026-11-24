@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.api.Projeto_3.dtos.interfaceCustomer.SemanaDtos;
+import com.api.Projeto_3.dtos.DtosModelos.SemanaDtos;
 import com.api.Projeto_3.model.DiaModel;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
@@ -20,9 +20,8 @@ public class SemanaService {
  
         public  void  creiSemana(SemanaDtos se){
         SemanaModel en = new SemanaModel();
-
-        en.setDescricao(se.getDiscricao());
-        en.setAtleta_fk(null);
+          en.setDescricao(se.getDiscricao());
+         en.setAtleta_fk(null);
            
         for(DiasEnum diaNomes : DiasEnum.values()){
             DiaModel dia = new DiaModel();
@@ -30,16 +29,9 @@ public class SemanaService {
             en.adicionarDia(dia);
             
         }
-        logger.info("Semana criada com sucesso",en.toString());
+     
         senJpa.save(en);    
     }
-
-
-
-
-
-
-
 
         SemanaService(SemanaResponitory senJpa) {
         this.senJpa = senJpa;

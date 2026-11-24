@@ -30,7 +30,7 @@ public class AtletaController {
     AtletaService atletaService;
 
 
-        @GetMapping({"/cadastro/atleta", "/cadastro/atleta/{id:\\d+}"})
+        @GetMapping("/cadastro/atleta")
         public String getCadastroAtleta(PerfilsDtos atletaDtos, Model model) {
             carregarDadosCadastro(model);
             model.addAttribute("atletaDtos", atletaDtos);
@@ -38,7 +38,7 @@ public class AtletaController {
         }
         
 
-        @PostMapping({"/cadastro/atleta/save", "/cadastro/atleta/save/{id:\\d+}"})
+        @PostMapping("/cadastro/atleta/save")
         public String postAtletaInsert(@ModelAttribute("atletaDtos") @Valid PerfilsDtos atletaDtos,
         BindingResult result,  Model model
         ) {

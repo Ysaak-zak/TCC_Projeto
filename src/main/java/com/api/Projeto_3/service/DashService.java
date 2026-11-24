@@ -1,11 +1,15 @@
 package com.api.Projeto_3.service;
 
 import java.time.Duration;
+import java.time.LocalTime;
+import java.util.LinkedHashMap;
 import java.util.List;
-import org.springframework.http.HttpStatus;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.api.Projeto_3.dtos.DtosModelos.DashDto;
 import com.api.Projeto_3.dtos.DtosModelos.DashPontoDto;
@@ -29,125 +33,92 @@ public class DashService {
 
     @Transactional(readOnly = true)
     public DashDto buscarDashboard(String cpf, Long semanaId) {
-        AtletaModelo atleta = atletaService.buscarAtletaPorCpf(cpf);
-        if (atleta == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Atleta não encontrado.");
-        }
+        DashDto dashboard = new DashDto();
+        dashboard.setSemanas(dashRepository.buscarSemanasDoAtleta(cpf));
+        dashboard.setNomeAtleta(Optional.ofNullable(atletaService.buscarAtletaPorCpf(cpf))
+                .map(AtletaModelo::getName)
+                .orElse(null));
 
-        DashDto dash = new DashDto();
-        dash.setNomeAtleta(atleta.getName());
-        List<SemanaModel> semanas = dashRepository.buscarSemanasDoAtleta(cpf);
-        dash.setSemanas(semanas);
         for (DiasEnum dia : DiasEnum.values()) {
-            dash.getAtividadeSemanal().add(criarPonto(dia.getAbreviacao(), 0));
+            dashboard.getAtividadeSemanal().add(criarPonto(dia.getAbreviacao()));
         }
 
-        SemanaModel selecionada = buscarSemana(semanas, semanaId);
-        if (selecionada == null) {
-            return dash;
-        }
-
-        dash.setSemanaId(selecionada.getId());
-        dash.setNomeSemana(selecionada.getNome());
-        int somaSatisfacao = 0;
-        int treinosAvaliados = 0;
-        for (DiaModel dia : selecionada.getDias()) {
-            for (TreinamentoModel treino : dia.getTreinamentos()) {
-                DashTreinoDto item = criarTreinoDoHistorico(treino);
-                dash.getTreinos().add(item);
-                // Treino cancelado pelo médico continua visível, mas não conta em tempo, satisfação nem categorias.
-                if (item.isCancelado()) {
-                    continue;
-                }
-                if (item.getSatisfacao() != null) {
-                    somaSatisfacao += item.getSatisfacao();
-                    treinosAvaliados++;
-                }
-
-                if (item.getDuracao() != null) {
-                    dash.setTempoTotal(dash.getTempoTotal() + item.getDuracao());
-                    somarPonto(dash.getAtividadeSemanal(), dia.getNome().getAbreviacao(),
-                            item.getDuracao(), item.isConcluido());
-                }
-                somarPonto(dash.getCategorias(), item.getCategoria(), 1, item.isConcluido());
-            }
-        }
-        // Média considerando os sete dias da semana, inclusive dias sem treino.
-        dash.setMediaDiaria(dash.getTempoTotal() / 7.0);
-        if (treinosAvaliados > 0) {
-            dash.setSatisfacaoMedia((double) somaSatisfacao / treinosAvaliados);
-        }
-        return dash;
+        dashboard.getSemanas().stream()
+                .filter(semana -> semanaId == null || semanaId.equals(semana.getId()))
+                .findFirst()
+                .ifPresent(semana -> preencherDadosDaSemana(dashboard, semana));
+        return dashboard;
     }
 
-    // Sem filtro, mostra a semana mais recente. A lista contém só semanas do atleta.
-    private SemanaModel buscarSemana(List<SemanaModel> semanas, Long semanaId) {
-        if (semanaId == null) {
-            if (semanas.isEmpty()) {
-                return null;
+    private void preencherDadosDaSemana(DashDto dashboard, SemanaModel semana) {
+        dashboard.setSemanaId(semana.getId());
+        dashboard.setNomeSemana(semana.getNome());
+
+        List<DashPontoDto> atividadeSemanal = dashboard.getAtividadeSemanal();
+        Map<String, DashPontoDto> categorias = new LinkedHashMap<>();
+        int tempoTotal = 0;
+        int somaDasNotas = 0;
+        int totalDeNotas = 0;
+
+        for (DiaModel dia : semana.getDias()) {
+            List<DashTreinoDto> treinosDoDia = dia.getTreinamentos().stream().map(this::criarTreinoDoHistorico).toList();
+            dashboard.getTreinos().addAll(treinosDoDia);
+
+            DashPontoDto atividade = atividadeSemanal.get(dia.getNome().ordinal());
+            List<DashTreinoDto> treinosAtivos = treinosDoDia.stream()
+                    .filter(treino -> !treino.isCancelado())
+                    .toList();
+
+            for (DashTreinoDto treino : treinosAtivos) {
+                long duracao = Objects.requireNonNullElse(treino.getDuracao(), 0L);
+                tempoTotal += duracao;
+                somarNoGrafico(atividade, duracao, treino.isConcluido());
+
+                DashPontoDto categoria = categorias.computeIfAbsent(treino.getCategoria(), this::criarPonto);
+                somarNoGrafico(categoria, 1, treino.isConcluido());
+
+                Integer nota = treino.getSatisfacao();
+                if (nota != null) {
+                    somaDasNotas += nota;
+                    totalDeNotas++;
+                }
             }
-            return semanas.get(0);
         }
 
-        for (SemanaModel semana : semanas) {
-            if (semana.getId().equals(semanaId)) {
-                return semana;
-            }
+        dashboard.getCategorias().addAll(categorias.values());
+        dashboard.setTempoTotal(tempoTotal);
+        dashboard.setMediaDiaria((double) tempoTotal / atividadeSemanal.size());
+        if (totalDeNotas > 0) {
+            dashboard.setSatisfacaoMedia((double) somaDasNotas / totalDeNotas);
         }
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Semana não encontrada.");
     }
 
     private DashTreinoDto criarTreinoDoHistorico(TreinamentoModel treino) {
+        LocalTime inicio = treino.getHorarioInicio();
+        LocalTime fim = treino.getHorarioFim();
+        Long duracao = inicio == null || fim == null ? null : Duration.between(inicio, fim).toMinutes();
+
         DashTreinoDto treinoDoHistorico = new DashTreinoDto();
         treinoDoHistorico.setId(treino.getId());
         treinoDoHistorico.setSatisfacao(treino.getSatisfacao());
         treinoDoHistorico.setNome(treino.getNome());
         treinoDoHistorico.setDescricao(treino.getDescricao());
-        treinoDoHistorico.setDuracao(calcularDuracao(treino));
+        treinoDoHistorico.setDuracao(duracao);
         treinoDoHistorico.setCancelado(Boolean.TRUE.equals(treino.getCancelado()));
         treinoDoHistorico.setConcluido(treino.isConcluido());
-
-        if (treino.getCategoria() == null) {
-            treinoDoHistorico.setCategoria("Sem categoria");
-        } else {
-            treinoDoHistorico.setCategoria(treino.getCategoria());
-        }
-
+        treinoDoHistorico.setCategoria(treino.getCategoria());
         return treinoDoHistorico;
     }
 
-    private void somarPonto(List<DashPontoDto> pontos, String nome, long valor, boolean concluido) {
-        for (DashPontoDto ponto : pontos) {
-            if (ponto.getX().equals(nome)) {
-                ponto.setY(ponto.getY() + valor);
-                if (concluido) {
-                    ponto.setYConcluido(ponto.getYConcluido() + valor);
-                }
-                return;
-            }
-        }
-        DashPontoDto ponto = criarPonto(nome, valor);
-        ponto.setYConcluido(concluido ? valor : 0);
-        pontos.add(ponto);
+    private void somarNoGrafico(DashPontoDto ponto, long valor, boolean concluido) {
+        long valorConcluido = concluido ? valor : 0;
+        ponto.setY(ponto.getY() + valor);
+        ponto.setYConcluido(ponto.getYConcluido() + valorConcluido);
     }
 
-    private Long calcularDuracao(TreinamentoModel treino) {
-        if (treino.getHorarioInicio() == null || treino.getHorarioFim() == null) {
-            return null;
-        }
-        long minutos = Duration.between(treino.getHorarioInicio(), treino.getHorarioFim()).toMinutes();
-        if (minutos < 0) {
-            return null;
-        }
-        return minutos;
-    }
-
-    private DashPontoDto criarPonto(String nome, long valor) {
+    private DashPontoDto criarPonto(String nome) {
         DashPontoDto ponto = new DashPontoDto();
-        // O gráfico usa x para o nome e y para o valor.
         ponto.setX(nome);
-        ponto.setY(valor);
         return ponto;
     }
 }

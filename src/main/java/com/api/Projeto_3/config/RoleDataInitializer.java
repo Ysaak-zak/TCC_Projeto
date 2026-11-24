@@ -20,18 +20,14 @@ public class RoleDataInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        // Serializa a consulta e a criação quando várias instâncias iniciam juntas.
         roleRepository.bloquearCriacaoDeRoles();
         for (RoleAuthority authority : RoleAuthority.values()) {
-            criarSeAusente(authority.name());
-        }
-    }
-
-    private void criarSeAusente(String authority) {
-        if (roleRepository.findFirstByAuthorityOrderByIdAsc(authority).isEmpty()) {
-            RolesModel role = new RolesModel();
-            role.setAuthority(authority);
-            roleRepository.save(role);
+            String nomeRole = authority.name();
+            if (!roleRepository.existsByAuthority(nomeRole)) {
+                RolesModel role = new RolesModel();
+                role.setAuthority(nomeRole);
+                roleRepository.save(role);
+            }
         }
     }
 }

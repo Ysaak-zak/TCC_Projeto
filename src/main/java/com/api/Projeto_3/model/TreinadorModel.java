@@ -35,5 +35,25 @@ public TreinadorModel(Long id, String fotoImg, String name, LocalDate dataNascim
 
     @OneToMany(mappedBy = "treinador_fk")
     private List<AtletaModelo> atletas = new ArrayList<>();
+
+    public TreinamentoModel getTreimanento_fk() {
+        return treimanento_fk;
+    }
+    public void setTreimanento_fk(TreinamentoModel treimanento_fk) {
+        this.treimanento_fk = treimanento_fk;
+    }
+    public List<AtletaModelo> getAtletas() {
+        return atletas;
+    }
+    public void setAtletas(List<AtletaModelo> atletas) {
+        this.atletas = atletas;
+    }
+    @Override
+    public String toString() {
+        return "TreinadorModel [treimanento_fk=" + treimanento_fk + ", atletas=" + atletas + "]";
+    }
+
+
+    
     
 }

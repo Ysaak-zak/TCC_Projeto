@@ -1,6 +1,5 @@
 package com.api.Projeto_3.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +36,8 @@ public class SangueTest {
     }
 
     public String realizandoExame(ExameSagueDtos dados) {
-        List<SangueSubsDtos> substancias = selecionarSubstancias(dados.getSubstancias());
-        ExameSangue exame = salvarExame(dados, substancias);
-        String resposta = analisarExame(dados, substancias);
+        ExameSangue exame = salvarExame(dados);
+        String resposta = analisarExame(exame);
 
         exame.setAnaliseIa(resposta);
         sangueRepository.save(exame);
@@ -47,8 +45,8 @@ public class SangueTest {
         return resposta;
     }
 
-    private String analisarExame(ExameSagueDtos dados, List<SangueSubsDtos> substancias) {
-        String descricaoSubstancias = formatarSubstancias(substancias);
+    private String analisarExame(ExameSangue exame) {
+        String descricaoSubstancias = formatarSubstancias(exame.getSubstancias());
         String prompt = """
                 Analise o exame de sangue de um atleta em uma simulação acadêmica antidoping.
 
@@ -68,11 +66,12 @@ public class SangueTest {
                 3. Alguma triagem ausente ou nenhuma substância informada: NAO_REALIZADO.
                 4. Todas as triagens NAO_DETECTADO: NEGATIVO.
 
-                Responda em português, somente em JSON, com:
+                Retorne apenas um objeto JSON em português, sem blocos de código, com os campos:
                 - "resumo": texto com o resultado da triagem.
-                - "pontosAtencao": lista das substâncias detectadas e dos resultados
-                  inconclusivos, ausentes ou de confirmação relevantes; vazia se não houver.
+                - "pontosAtencao": lista de textos sobre substâncias detectadas e resultados
+                  inconclusivos, ausentes ou de confirmação relevantes.
                 - "recomendacoes": lista de textos.
+                Use apenas textos nas duas listas. Quando não houver itens, use [].
 
                 DADOS DO EXAME:
                 Data da coleta: %s
@@ -84,19 +83,19 @@ public class SangueTest {
                 Substâncias pesquisadas:
                 %s
                 Observações: %s
-                """.formatted(dados.getDataColeta(), dados.getTipoAmostra(), dados.getHemoglobina(),
-                dados.getHematocrito(), dados.getHemacias(), dados.getReticulocitos(),
-                descricaoSubstancias, dados.getObservacoes());
+                """.formatted(exame.getDataColeta(), exame.getTipoAmostra(), exame.getHemoglobina(),
+                exame.getHematocrito(), exame.getHemacias(), exame.getReticulocitos(),
+                descricaoSubstancias, exame.getObservacoes());
         return chatModel.chat(prompt);
     }
 
-    private String formatarSubstancias(List<SangueSubsDtos> substancias) {
+    private String formatarSubstancias(List<SangueSubs> substancias) {
         if (substancias.isEmpty()) {
             return "Nenhuma substância informada.";
         }
 
         StringBuilder descricao = new StringBuilder();
-        for (SangueSubsDtos substancia : substancias) {
+        for (SangueSubs substancia : substancias) {
             descricao.append("""
                     Nome: %s
                     Categoria: %s
@@ -113,7 +112,7 @@ public class SangueTest {
         return descricao.toString();
     }
 
-    private ExameSangue salvarExame(ExameSagueDtos dados, List<SangueSubsDtos> substancias) {
+    private ExameSangue salvarExame(ExameSagueDtos dados) {
         AtletaModelo atleta = atletaRepository.findById(dados.getAtletaId()).orElseThrow();
         ExameSangue exame = new ExameSangue();
         exame.setAtletaId(atleta.getId());
@@ -125,10 +124,22 @@ public class SangueTest {
         exame.setReticulocitos(dados.getReticulocitos());
         exame.setObservacoes(dados.getObservacoes());
 
+        List<SangueSubsDtos> substancias = dados.getSubstancias();
+        if (substancias == null) {
+            substancias = List.of();
+        }
         for (SangueSubsDtos dto : substancias) {
+            if (dto == null) {
+                continue;
+            }
+            String nome = dto.getNomeSubstancia();
+            if (nome == null || nome.isBlank()) {
+                continue;
+            }
+
             SangueSubs substancia = new SangueSubs();
             substancia.setExameSangue(exame);
-            substancia.setNomeSubstancia(dto.getNomeSubstancia());
+            substancia.setNomeSubstancia(nome);
             substancia.setCategoriaSubstancia(dto.getCategoriaSubstancia());
             substancia.setResultadoTriagem(dto.getResultadoTriagem());
             substancia.setConcentracao(dto.getConcentracao());
@@ -141,24 +152,5 @@ public class SangueTest {
         dados.setId(exameSalvo.getId());
         dados.setCriadoEm(exameSalvo.getCriadoEm());
         return exameSalvo;
-    }
-
-    private List<SangueSubsDtos> selecionarSubstancias(List<SangueSubsDtos> substancias) {
-        if (substancias == null) {
-            return List.of();
-        }
-
-        List<SangueSubsDtos> preenchidas = new ArrayList<>();
-        for (SangueSubsDtos substancia : substancias) {
-            if (substancia == null) {
-                continue;
-            }
-
-            String nome = substancia.getNomeSubstancia();
-            if (nome != null && !nome.isBlank()) {
-                preenchidas.add(substancia);
-            }
-        }
-        return preenchidas;
     }
 }

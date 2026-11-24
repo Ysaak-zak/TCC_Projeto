@@ -14,6 +14,8 @@ public interface RoleRepository extends JpaRepository<RolesModel, Long> {
 
     Optional<RolesModel> findFirstByAuthorityOrderByIdAsc(String authority);
 
+    boolean existsByAuthority(String authority);
+
     @Modifying
     @Query(value = "LOCK TABLE roles_tb IN SHARE ROW EXCLUSIVE MODE", nativeQuery = true)
     void bloquearCriacaoDeRoles();

@@ -72,5 +72,25 @@ public class AtletaModelo extends PerfisModelo {
           telefoneFixo, telefoneZap, pesoMigrama, alturaCetimentro, uf, sexo, sangue, pais, moradia, role);
 }
 
+  public void setExamesUrina(List<EmaxeUrina> examesUrina) {
+    this.examesUrina = examesUrina;
+  }
+
+  public FichaMedicaModel getAtlFixaMedic() {
+    return atlFixaMedic;
+  }
+
+  public void setAtlFixaMedic(FichaMedicaModel atlFixaMedic) {
+    this.atlFixaMedic = atlFixaMedic;
+  }
+
+  @Override
+  public String toString() {
+    return "AtletaModelo [examesUrina=" + examesUrina + ", semanas=" + semanas + ", treinador_fk=" + treinador_fk
+            + ", medico_fk=" + medico_fk + ", atlFixaMedic=" + atlFixaMedic + "]";
+  }
+
+
+
 
 }

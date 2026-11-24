@@ -24,10 +24,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@ToString
+
 public class PerfilsDtos {
    private Long id;  
 
@@ -149,5 +146,188 @@ public class PerfilsDtos {
             this.sangue = trei.getSangue();
             this.roles = new RoleDtos(trei.getRole());
     }
+
+        public PerfilsDtos(Long id, String name, MultipartFile fotoImg, LocalDate dataNascimento, String cpf, String rg,
+                        String email, String senha, String telefoneFixo, String telefoneZap, String pesoMigrama,
+                        String alturaCetimentro, AfiliacaoDtos pais_fk, MoradiaDto moradia_fk, EnumUf ufDtos,
+                        EnumGenero genero, EnumSague sangue, RoleDtos roles) {
+                this.id = id;
+                this.name = name;
+                this.fotoImg = fotoImg;
+                this.dataNascimento = dataNascimento;
+                this.cpf = cpf;
+                this.rg = rg;
+                this.email = email;
+                this.senha = senha;
+                this.telefoneFixo = telefoneFixo;
+                this.telefoneZap = telefoneZap;
+                this.pesoMigrama = pesoMigrama;
+                this.alturaCetimentro = alturaCetimentro;
+                this.pais_fk = pais_fk;
+                this.moradia_fk = moradia_fk;
+                this.ufDtos = ufDtos;
+                this.genero = genero;
+                this.sangue = sangue;
+                this.roles = roles;
+        }
+
+        public Long getId() {
+                return id;
+        }
+
+        public void setId(Long id) {
+                this.id = id;
+        }
+
+        public String getName() {
+                return name;
+        }
+
+        public void setName(String name) {
+                this.name = name;
+        }
+
+        public MultipartFile getFotoImg() {
+                return fotoImg;
+        }
+
+        public void setFotoImg(MultipartFile fotoImg) {
+                this.fotoImg = fotoImg;
+        }
+
+        public LocalDate getDataNascimento() {
+                return dataNascimento;
+        }
+
+        public void setDataNascimento(LocalDate dataNascimento) {
+                this.dataNascimento = dataNascimento;
+        }
+
+        public String getCpf() {
+                return cpf;
+        }
+
+        public void setCpf(String cpf) {
+                this.cpf = cpf;
+        }
+
+        public String getRg() {
+                return rg;
+        }
+
+        public void setRg(String rg) {
+                this.rg = rg;
+        }
+
+        public String getEmail() {
+                return email;
+        }
+
+        public void setEmail(String email) {
+                this.email = email;
+        }
+
+        public String getSenha() {
+                return senha;
+        }
+
+        public void setSenha(String senha) {
+                this.senha = senha;
+        }
+
+        public String getTelefoneFixo() {
+                return telefoneFixo;
+        }
+
+        public void setTelefoneFixo(String telefoneFixo) {
+                this.telefoneFixo = telefoneFixo;
+        }
+
+        public String getTelefoneZap() {
+                return telefoneZap;
+        }
+
+        public void setTelefoneZap(String telefoneZap) {
+                this.telefoneZap = telefoneZap;
+        }
+
+        public String getPesoMigrama() {
+                return pesoMigrama;
+        }
+
+        public void setPesoMigrama(String pesoMigrama) {
+                this.pesoMigrama = pesoMigrama;
+        }
+
+        public String getAlturaCetimentro() {
+                return alturaCetimentro;
+        }
+
+        public void setAlturaCetimentro(String alturaCetimentro) {
+                this.alturaCetimentro = alturaCetimentro;
+        }
+
+        public AfiliacaoDtos getPais_fk() {
+                return pais_fk;
+        }
+
+        public void setPais_fk(AfiliacaoDtos pais_fk) {
+                this.pais_fk = pais_fk;
+        }
+
+        public MoradiaDto getMoradia_fk() {
+                return moradia_fk;
+        }
+
+        public void setMoradia_fk(MoradiaDto moradia_fk) {
+                this.moradia_fk = moradia_fk;
+        }
+
+        public EnumUf getUfDtos() {
+                return ufDtos;
+        }
+
+        public void setUfDtos(EnumUf ufDtos) {
+                this.ufDtos = ufDtos;
+        }
+
+        public EnumGenero getGenero() {
+                return genero;
+        }
+
+        public void setGenero(EnumGenero genero) {
+                this.genero = genero;
+        }
+
+        public EnumSague getSangue() {
+                return sangue;
+        }
+
+        public void setSangue(EnumSague sangue) {
+                this.sangue = sangue;
+        }
+
+        public RoleDtos getRoles() {
+                return roles;
+        }
+
+        public void setRoles(RoleDtos roles) {
+                this.roles = roles;
+        }
+
+        @Override
+        public String toString() {
+                return "PerfilsDtos [id=" + id + ", name=" + name + ", fotoImg=" + fotoImg + ", dataNascimento="
+                                + dataNascimento + ", cpf=" + cpf + ", rg=" + rg + ", email=" + email + ", senha="
+                                + senha + ", telefoneFixo=" + telefoneFixo + ", telefoneZap=" + telefoneZap
+                                + ", pesoMigrama=" + pesoMigrama + ", alturaCetimentro=" + alturaCetimentro
+                                + ", pais_fk=" + pais_fk + ", moradia_fk=" + moradia_fk + ", ufDtos=" + ufDtos
+                                + ", genero=" + genero + ", sangue=" + sangue + ", roles=" + roles + "]";
+        }
+
+
+        
+        
+    
 
 }

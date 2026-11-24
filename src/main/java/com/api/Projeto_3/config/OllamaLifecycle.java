@@ -36,7 +36,7 @@ public class OllamaLifecycle {
             conexao.disconnect();
 
         } catch (IOException e) {
-            // Ollama não está respondendo.
+           
         }
 
         processo = new ProcessBuilder("ollama", "serve")

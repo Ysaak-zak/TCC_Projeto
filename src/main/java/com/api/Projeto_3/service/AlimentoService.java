@@ -55,19 +55,9 @@ public class AlimentoService {
 
     @Transactional
     public boolean recomendarAlimentacao(Long medicoId, Long atletaId, RecomendacaoAlimentarDto dados) {
-        if (dados.getDataInicio() == null || dataRevisaoInvalida(dados)) {
-            return false;
-        }
-
+    
         MedicoModelo medico = medicoRepository.findById(medicoId).orElse(null);
-        if (medico == null) {
-            return false;
-        }
-
         AtletaModelo atleta = buscarAtletaVinculado(medicoId, atletaId);
-        if (atleta == null) {
-            return false;
-        }
 
         RecomendacaoAlimentar recomendacao = new RecomendacaoAlimentar();
         recomendacao.setMedico(medico);

@@ -1,9 +1,9 @@
-
 name: Deploy TCC
 
 on:
   push:
-    branches: [producao]
+    branches:
+      - producao
   workflow_dispatch:
 
 permissions:
@@ -17,49 +17,66 @@ jobs:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
-      - name: Configurar SSH
+      - name: Configurar o acesso SSH
         env:
-          VPS_KEY: ${{ secrets.VPS_SSH_KEY }}
-          HOST_KEYS: ${{ secrets.VPS_KNOWN_HOSTS }}
+          VPS_SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.VPS_KNOWN_HOSTS }}
         run: |
-          test -n "$VPS_KEY" || { echo "VPS_SSH_KEY ausente"; exit 1; }
-          test -n "$HOST_KEYS" || { echo "VPS_KNOWN_HOSTS ausente"; exit 1; }
+          if [ -z "$VPS_SSH_KEY" ]; then
+            echo "VPS_SSH_KEY ausente"
+            exit 1
+          fi
+
+          if [ -z "$VPS_KNOWN_HOSTS" ]; then
+            echo "VPS_KNOWN_HOSTS ausente"
+            exit 1
+          fi
 
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          printf '%s\n' "$VPS_KEY" > ~/.ssh/id_ed25519
-          printf '%s\n' "$HOST_KEYS" > ~/.ssh/known_hosts
+
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
           chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
 
+          # Verifica se a chave pode ser usada sem senha.
           ssh-keygen -y -P "" -f ~/.ssh/id_ed25519 > /dev/null
 
-      - name: Enviar projeto
+      - name: Copiar arquivos para a VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run: |
-          test -n "$VPS_HOST" || { echo "VPS_HOST ausente"; exit 1; }
-          test -n "$VPS_USER" || { echo "VPS_USER ausente"; exit 1; }
+          if [ -z "$VPS_HOST" ]; then
+            echo "VPS_HOST ausente"
+            exit 1
+          fi
 
-          rsync -az \
+          if [ -z "$VPS_USER" ]; then
+            echo "VPS_USER ausente"
+            exit 1
+          fi
+
+          servidor="$VPS_USER@$VPS_HOST"
+          rsync --archive --compress \
             --exclude='.git/' \
             --exclude='.env' \
             --exclude='target/' \
             --exclude='uploads/' \
-            -e "ssh -o StrictHostKeyChecking=yes" \
-            ./ "$VPS_USER@$VPS_HOST:/opt/projeto-tcc/"
+            --rsh="ssh -o StrictHostKeyChecking=yes" \
+            ./ "$servidor:/opt/projeto-tcc/"
 
-      - name: Iniciar Docker
+      - name: Atualizar os serviços na VPS
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
         run: |
-          ssh -o StrictHostKeyChecking=yes \
-            "$VPS_USER@$VPS_HOST" \
-            'cd /opt/projeto-tcc &&
-             docker compose -f docker-compose.yml config --quiet &&
-             docker compose -f docker-compose.yml up -d --build &&
-             docker compose -f docker-compose.yml ps'
+          servidor="$VPS_USER@$VPS_HOST"
+          ssh -o StrictHostKeyChecking=yes "$servidor" '
+            set -e
+            cd /opt/projeto-tcc
 
-
-             
+            docker compose -f docker-compose.yml config --quiet
+            docker compose -f docker-compose.yml up --detach --build
+            docker compose -f docker-compose.yml ps
+          '

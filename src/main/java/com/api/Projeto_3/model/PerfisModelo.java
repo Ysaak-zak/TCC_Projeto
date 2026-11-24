@@ -1,15 +1,12 @@
 package com.api.Projeto_3.model;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Collection;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.api.Projeto_3.dtos.DtosModelos.RoleDtos;
 import com.api.Projeto_3.model.enums.EnumGenero;
 import com.api.Projeto_3.model.enums.EnumSague;
 import com.api.Projeto_3.model.enums.EnumUf;
@@ -27,16 +24,7 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-
-@Getter
-@Setter
-@AllArgsConstructor
-@ToString
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class PerfisModelo implements UserDetails {
@@ -121,6 +109,223 @@ public class PerfisModelo implements UserDetails {
 		throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
 	}
 
+    
+
+    public PerfisModelo(Long id, String fotoImg, String name, LocalDate dataNascimento, String cpf, String rg,
+            String email, String senha, String telefoneFixo, String telefoneZap, String pesoMigrama,
+            String alturaCetimentro, EnumUf uf, EnumGenero sexo, EnumSague sangue, AfiliacaoModelo pais_fk,
+            MoradiaModel moradia_fk, RolesModel role) {
+        this.id = id;
+        this.fotoImg = fotoImg;
+        this.name = name;
+        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+        this.rg = rg;
+        this.email = email;
+        this.senha = senha;
+        this.telefoneFixo = telefoneFixo;
+        this.telefoneZap = telefoneZap;
+        this.pesoMigrama = pesoMigrama;
+        this.alturaCetimentro = alturaCetimentro;
+        this.uf = uf;
+        this.sexo = sexo;
+        this.sangue = sangue;
+        this.pais_fk = pais_fk;
+        this.moradia_fk = moradia_fk;
+        this.role = role;
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+    public String getFotoImg() {
+        return fotoImg;
+    }
+
+
+    public void setFotoImg(String fotoImg) {
+        this.fotoImg = fotoImg;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
+    public LocalDate getDataNascimento() {
+        return dataNascimento;
+    }
+
+
+    public void setDataNascimento(LocalDate dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+
+    public String getCpf() {
+        return cpf;
+    }
+
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+
+    public String getRg() {
+        return rg;
+    }
+
+
+    public void setRg(String rg) {
+        this.rg = rg;
+    }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+
+    public String getSenha() {
+        return senha;
+    }
+
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+
+    public String getTelefoneFixo() {
+        return telefoneFixo;
+    }
+
+
+    public void setTelefoneFixo(String telefoneFixo) {
+        this.telefoneFixo = telefoneFixo;
+    }
+
+
+    public String getTelefoneZap() {
+        return telefoneZap;
+    }
+
+
+    public void setTelefoneZap(String telefoneZap) {
+        this.telefoneZap = telefoneZap;
+    }
+
+
+    public String getPesoMigrama() {
+        return pesoMigrama;
+    }
+
+
+    public void setPesoMigrama(String pesoMigrama) {
+        this.pesoMigrama = pesoMigrama;
+    }
+
+
+    public String getAlturaCetimentro() {
+        return alturaCetimentro;
+    }
+
+
+    public void setAlturaCetimentro(String alturaCetimentro) {
+        this.alturaCetimentro = alturaCetimentro;
+    }
+
+
+    public EnumUf getUf() {
+        return uf;
+    }
+
+
+    public void setUf(EnumUf uf) {
+        this.uf = uf;
+    }
+
+
+    public EnumGenero getSexo() {
+        return sexo;
+    }
+
+
+    public void setSexo(EnumGenero sexo) {
+        this.sexo = sexo;
+    }
+
+
+    public EnumSague getSangue() {
+        return sangue;
+    }
+
+
+    public void setSangue(EnumSague sangue) {
+        this.sangue = sangue;
+    }
+
+
+    public AfiliacaoModelo getPais_fk() {
+        return pais_fk;
+    }
+
+
+    public void setPais_fk(AfiliacaoModelo pais_fk) {
+        this.pais_fk = pais_fk;
+    }
+
+
+    public MoradiaModel getMoradia_fk() {
+        return moradia_fk;
+    }
+
+
+    public void setMoradia_fk(MoradiaModel moradia_fk) {
+        this.moradia_fk = moradia_fk;
+    }
+
+
+    public RolesModel getRole() {
+        return role;
+    }
+
+
+    public void setRole(RolesModel role) {
+        this.role = role;
+    }
+
+
+    @Override
+    public String toString() {
+        return "PerfisModelo [id=" + id + ", fotoImg=" + fotoImg + ", name=" + name + ", dataNascimento="
+                + dataNascimento + ", cpf=" + cpf + ", rg=" + rg + ", email=" + email + ", senha=" + senha
+                + ", telefoneFixo=" + telefoneFixo + ", telefoneZap=" + telefoneZap + ", pesoMigrama=" + pesoMigrama
+                + ", alturaCetimentro=" + alturaCetimentro + ", uf=" + uf + ", sexo=" + sexo + ", sangue=" + sangue
+                + ", pais_fk=" + pais_fk + ", moradia_fk=" + moradia_fk + ", role=" + role + "]";
+    }
+
+    
 
 	
 

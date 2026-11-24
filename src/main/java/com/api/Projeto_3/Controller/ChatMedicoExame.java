@@ -5,7 +5,6 @@ import com.api.Projeto_3.dtos.DtosModelos.ExameUrinaDtos;
 import com.api.Projeto_3.service.SangueTest;
 import com.api.Projeto_3.service.UrinaExamesService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,19 +26,13 @@ public class ChatMedicoExame {
     @PostMapping({"/exame/urina", "/exame-urina/salvar"})
     public String salvarExameUrina(@ModelAttribute("exameUrina") ExameUrinaDtos exame,
             RedirectAttributes redirectAttributes) {
-        exame.setAnabolizantes(normalizarTriagem(exame.getAnabolizantes()));
-        exame.setEstimulantes(normalizarTriagem(exame.getEstimulantes()));
-        exame.setDiureticos(normalizarTriagem(exame.getDiureticos()));
         ExameUrinaDtos resultado = urinaService.realizarExameParaPagina(exame);
         redirectAttributes.addFlashAttribute("exameUrina", resultado);
         return "redirect:/medico/exame-urina/resultado";
     }
 
     @GetMapping("/exame-urina/resultado")
-    public String resultadoExameUrina(Model model) {
-        if (!model.containsAttribute("exameUrina")) {
-            return "redirect:/medico/exame-urina";
-        }
+    public String resultadoExameUrina() {
         return "medicoPages/result";
     }
 
@@ -52,15 +45,8 @@ public class ChatMedicoExame {
     }
 
     @GetMapping("/exame-sangue/resultado")
-    public String resultadoExameSangue(Model model) {
-        if (!model.containsAttribute("exameSangue")) {
-            return "redirect:/medico/exame-sangue";
-        }
+    public String resultadoExameSangue() {
         return "medicoPages/resultadoSangue";
-    }
-
-    private String normalizarTriagem(String valor) {
-        return valor == null || valor.isBlank() ? "NAO_REALIZADO" : valor.trim();
     }
 
     @ControllerAdvice(assignableTypes = MedicoController.class)

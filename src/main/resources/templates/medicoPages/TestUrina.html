@@ -65,7 +65,6 @@
         </div>
     </aside>
 
-        <!--teste-->
 
         <main class="medico-content min-w-0 flex-1 px-5 py-6 sm:px-8 lg:px-10">
             <header
@@ -85,7 +84,6 @@
                 <form th:action="@{/medico/exame-urina/salvar}" th:object="${exameUrina}" method="post" class="flex flex-col gap-6">
                     <input type="hidden" th:if="${_csrf != null}" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 
-                    <!-- 1 - ATLETA -->
                     <div class="flex flex-col gap-3 py-5">
 
                         <div class="border-b border-gray-800 pb-2">
@@ -125,7 +123,6 @@
                         </section>
                     </div>
 
-                    <!-- 2 - PARÂMETROS FÍSICOS -->
                     <div class="flex flex-col gap-3 py-5">
 
                         <div class="border-b border-gray-800 pb-2">
@@ -183,7 +180,6 @@
                         </section>
                     </div>
 
-                    <!-- 3 - BIOQUÍMICA -->
                     <div class="flex flex-col gap-3 py-5">
 
                         <div class="border-b border-gray-800 pb-2">
@@ -249,7 +245,6 @@
                         </section>
                     </div>
 
-                    <!-- 4 - ANTIDOPING -->
                     <div class="flex flex-col gap-3 py-5">
 
                         <div class="border-b border-gray-800 pb-2">
@@ -320,7 +315,6 @@
                         </section>
                     </div>
 
-                    <!-- OBSERVAÇÕES -->
                     <div class="flex flex-col gap-3 py-5">
 
                         <div class="border-b border-gray-800 pb-2">
@@ -335,7 +329,6 @@
 
                     </div>
 
-                    <!-- SALVAR -->
                     <div class="flex justify-end gap-4 border-t pt-6">
 
                         <button type="reset"
