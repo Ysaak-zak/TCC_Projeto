@@ -1,6 +1,7 @@
 package com.api.Projeto_3.dtos.DtosModelos;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,7 +24,7 @@ public class RecomendacaoAlimentarDto {
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate dataInicio;
+    private LocalDate dataInicio = LocalDate.now(ZoneId.of("America/Sao_Paulo"));
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dataRevisao;

@@ -155,20 +155,6 @@
                                     text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600"></textarea>
                             <span class="text-xs font-medium text-red-700" th:errors="*{orientacao}"></span>
                         </label>
-                        <div class="flex flex-col gap-3 sm:flex-row sm:[&>*]:flex-1">
-                            <label>Início
-                                <input type="date" th:field="*{dataInicio}" required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
-                                    text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
-                                <span class="text-xs font-medium text-red-700" th:errors="*{dataInicio}"></span>
-                            </label>
-                            <label><span>Revisar em <small>(opcional)</small></span>
-                                <input type="date" th:field="*{dataRevisao}" class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
-                                    text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
-                                <span class="text-xs font-medium text-red-700" th:errors="*{dataRevisao}"></span>
-                            </label>
-                        </div>
-                        <p class="text-xs leading-relaxed text-slate-600">Considere o histórico clínico, a rotina de treinos e as necessidades
-                            individuais do atleta.</p>
                         <button class="self-start rounded-xl bg-emerald-700 px-4 py-3 text-sm font-bold text-white hover:bg-emerald-800
                             focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2
                             focus-visible:outline-emerald-700" type="submit">Salvar recomendação</button>
