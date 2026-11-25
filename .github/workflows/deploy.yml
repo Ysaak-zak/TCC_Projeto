@@ -21,8 +21,34 @@ jobs:
       - name: Baixar projeto
         uses: actions/checkout@v4
 
+      - name: Configurar Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
       - name: Compilar o JAR no GitHub Actions
-        run: docker buildx build --progress=plain --target export-jar --output type=local,dest=.deploy .
+        run: |
+          ./mvnw -B -ntp clean package -DskipTests
+          mkdir -p .deploy
+          cp target/*.jar .deploy/app.jar
+
+          cat > .deploy/Dockerfile <<'EOF'
+          FROM eclipse-temurin:21-jre
+          WORKDIR /app
+          COPY app.jar app.jar
+          EXPOSE 8080
+          ENTRYPOINT ["java", "-jar", "app.jar"]
+          EOF
+
+          cat > .deploy/compose.yml <<'EOF'
+          services:
+            springboot:
+              build:
+                context: .deploy
+                dockerfile: Dockerfile
+          EOF
 
       - name: Configurar o acesso SSH
         env:
@@ -87,9 +113,8 @@ jobs:
           ssh -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=3 "$servidor" '
             set -e
             cd /opt/projeto-tcc
-            export SPRINGBOOT_DOCKERFILE=Dockerfile.vps
 
-            docker compose -f docker-compose.yml config --quiet
-            docker compose -f docker-compose.yml up --detach --build
-            docker compose -f docker-compose.yml ps
+            docker compose -f docker-compose.yml -f .deploy/compose.yml config --quiet
+            docker compose -f docker-compose.yml -f .deploy/compose.yml up --detach --build
+            docker compose -f docker-compose.yml -f .deploy/compose.yml ps
           '
