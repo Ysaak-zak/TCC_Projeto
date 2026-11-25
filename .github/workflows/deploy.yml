@@ -43,6 +43,7 @@ jobs:
           ssh-keygen -y -P "" -f ~/.ssh/id_ed25519 > /dev/null
 
       - name: Copiar arquivos para a VPS
+        shell: bash
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           VPS_USER: ${{ secrets.VPS_USER }}
@@ -58,13 +59,17 @@ jobs:
           fi
 
           servidor="$VPS_USER@$VPS_HOST"
-          rsync --archive --compress \
-            --exclude='.git/' \
-            --exclude='.env' \
-            --exclude='target/' \
-            --exclude='uploads/' \
-            --rsh="ssh -o StrictHostKeyChecking=yes" \
-            ./ "$servidor:/opt/projeto-tcc/"
+          opcoes_rsync=(
+            --archive --compress
+            --exclude='.git/'
+            --exclude='.env'
+            --exclude='target/'
+            --exclude='uploads/'
+            --rsh="ssh -o StrictHostKeyChecking=yes"
+          )
+
+          rsync "${opcoes_rsync[@]}" --exclude='/src/' ./ "$servidor:/opt/projeto-tcc/"
+          rsync "${opcoes_rsync[@]}" --delete ./src/ "$servidor:/opt/projeto-tcc/src/"
 
       - name: Atualizar os serviços na VPS
         env:
