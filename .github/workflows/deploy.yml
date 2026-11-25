@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: deploy-tcc-vps
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -16,6 +20,9 @@ jobs:
     steps:
       - name: Baixar projeto
         uses: actions/checkout@v4
+
+      - name: Compilar o JAR no GitHub Actions
+        run: docker buildx build --progress=plain --target export-jar --output type=local,dest=.deploy .
 
       - name: Configurar o acesso SSH
         env:
@@ -65,7 +72,7 @@ jobs:
             --exclude='.env'
             --exclude='target/'
             --exclude='uploads/'
-            --rsh="ssh -o StrictHostKeyChecking=yes"
+            --rsh="ssh -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=3"
           )
 
           rsync "${opcoes_rsync[@]}" --exclude='/src/' ./ "$servidor:/opt/projeto-tcc/"
@@ -77,9 +84,10 @@ jobs:
           VPS_USER: ${{ secrets.VPS_USER }}
         run: |
           servidor="$VPS_USER@$VPS_HOST"
-          ssh -o StrictHostKeyChecking=yes "$servidor" '
+          ssh -o StrictHostKeyChecking=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=3 "$servidor" '
             set -e
             cd /opt/projeto-tcc
+            export SPRINGBOOT_DOCKERFILE=Dockerfile.vps
 
             docker compose -f docker-compose.yml config --quiet
             docker compose -f docker-compose.yml up --detach --build
