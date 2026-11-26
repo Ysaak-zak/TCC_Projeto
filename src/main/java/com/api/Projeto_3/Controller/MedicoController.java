@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.api.Projeto_3.dtos.DtosModelos.ExameUrinaDtos;
 import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
 import com.api.Projeto_3.model.AtletaModelo;
@@ -101,6 +102,7 @@ public class MedicoController {
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
         model.addAttribute("medico", medico);
         model.addAttribute("atletas", medicoService.atletasVinculados(medico.getId()));
+        model.addAttribute("exameUrina", new ExameUrinaDtos());
         return "medicoPages/TestUrina";
     }
 

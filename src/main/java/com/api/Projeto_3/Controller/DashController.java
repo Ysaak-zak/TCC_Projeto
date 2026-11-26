@@ -17,8 +17,7 @@ public class DashController {
     }
 
     @GetMapping("/atleta")
-    public String mostrarDashboard(@AuthenticationPrincipal UserDetails usuario,
-            @RequestParam(name = "semanaId", required = false) Long semanaId, Model model) {
+    public String mostrarDashboard(@AuthenticationPrincipal UserDetails usuario, @RequestParam(name = "semanaId", required = false) Long semanaId, Model model) {
         model.addAttribute("dash", dashService.buscarDashboard(usuario.getUsername(), semanaId));
         return "atletaPages/dashAtleta";
     }

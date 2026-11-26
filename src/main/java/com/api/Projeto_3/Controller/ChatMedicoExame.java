@@ -5,7 +5,6 @@ import com.api.Projeto_3.dtos.DtosModelos.ExameUrinaDtos;
 import com.api.Projeto_3.service.SangueTest;
 import com.api.Projeto_3.service.UrinaExamesService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,13 +44,5 @@ public class ChatMedicoExame {
     @GetMapping("/exame-sangue/resultado")
     public String resultadoExameSangue() {
         return "medicoPages/resultadoSangue";
-    }
-
-    @ControllerAdvice(assignableTypes = MedicoController.class)
-    public static class ExameUrinaModelAdvice {
-        @ModelAttribute("exameUrina")
-        public ExameUrinaDtos exameUrina() {
-            return new ExameUrinaDtos();
-        }
     }
 }

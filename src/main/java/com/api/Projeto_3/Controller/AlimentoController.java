@@ -63,10 +63,7 @@ public class AlimentoController {
     }
 
     @PostMapping("/{atletaId}")
-    public String salvarAlimentacao(@AuthenticationPrincipal UserDetails userLogado,
-                                   @PathVariable Long atletaId,
-                                   @ModelAttribute("recomendacao") @Valid RecomendacaoAlimentarDto recomendacao,
-                                   BindingResult result, Model model) {
+    public String salvarAlimentacao(@AuthenticationPrincipal UserDetails userLogado,   @PathVariable Long atletaId,  @ModelAttribute("recomendacao") @Valid RecomendacaoAlimentarDto recomendacao, BindingResult result, Model model) {
         if (userLogado == null) {
             return "redirect:/login";
         }
