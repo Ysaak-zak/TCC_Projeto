@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <body>
-    <aside th:fragment="menu(pagina, nome)" aria-label="Navegação do atleta"
+    <aside th:fragment="menu(pagina, nome, semanaId)" aria-label="Navegação do atleta"
+           th:with="painelUrl=${semanaId != null} ? @{/atleta(semanaId=${semanaId})} : @{/atleta},
+                    treinosUrl=${semanaId != null} ? @{/atleta/treinos(semanaId=${semanaId})} : @{/atleta/treinos}"
            class="relative flex shrink-0 flex-col bg-purple-600 px-4 py-5 text-white
                   md:sticky md:top-0 md:h-dvh md:w-64 md:overflow-y-auto md:px-5 md:py-7">
         <a class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-20 focus:rounded-lg focus:bg-white focus:px-3 focus:py-2 focus:text-purple-950" href="#conteudo">Ir para o conteúdo</a>
 
-        <a th:href="@{/atleta}" class="mb-6 flex items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-white">
+        <a th:href="${painelUrl}" class="mb-6 flex items-center gap-3 rounded-lg focus-visible:outline-2 focus-visible:outline-white">
             <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-emerald-500">
                 <img th:src="@{/img/user.svg}" class="size-6 brightness-0" alt="">
             </span>
@@ -19,7 +21,7 @@
         <nav aria-label="Menu do atleta"
              class="flex gap-2 overflow-x-auto md:flex-col md:overflow-visible"
              style="scrollbar-color: var(--color-purple-950) transparent">
-            <a th:href="@{/atleta}"
+            <a th:href="${painelUrl}"
                class="flex min-h-11 shrink-0 items-center gap-2 border-b-2 px-2 text-sm hover:underline md:border-b-0 md:border-l-2 md:px-3"
                th:classappend="${pagina == 'painel' ? 'border-blue-200 font-bold' : 'border-transparent'}"
                th:attr="aria-current=${pagina == 'painel' ? 'page' : null}">
@@ -33,7 +35,7 @@
                 <img th:src="@{/img/user.svg}" class="size-5 shrink-0 brightness-0 invert" alt="">
                 Perfil
             </a>
-            <a th:href="@{/atleta/treinos}"
+            <a th:href="${treinosUrl}"
                class="flex min-h-11 shrink-0 items-center gap-2 border-b-2 px-2 text-sm hover:underline md:border-b-0 md:border-l-2 md:px-3"
                th:classappend="${pagina == 'treinos' ? 'border-blue-200 font-bold' : 'border-transparent'}"
                th:attr="aria-current=${pagina == 'treinos' ? 'page' : null}">

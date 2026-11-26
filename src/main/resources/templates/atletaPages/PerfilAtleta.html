@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
 </head>
 <body class="flex min-h-screen flex-col bg-black font-sans text-white scheme-dark md:flex-row">
-    <div th:replace="~{atletaPages/navegacao :: menu('perfil', ${perfil.name})}"></div>
+    <div th:replace="~{atletaPages/navegacao :: menu('perfil', ${perfil.name}, null)}"></div>
     <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-6 flex-col p-4 sm:p-6 lg:p-8">
         <article aria-labelledby="titulo-perfil" class="rounded-2xl border border-t-4 border-gray-800 border-t-purple-500 bg-gray-950">
             <header class="p-5 sm:p-6">

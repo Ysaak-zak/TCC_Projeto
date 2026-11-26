@@ -8,7 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
 </head>
 <body class="flex min-h-screen flex-col bg-black font-sans text-white scheme-dark md:flex-row">
-    <div th:replace="~{atletaPages/navegacao :: menu('treinos', ${agenda.nomeAtleta})}"></div>
+    <div th:replace="~{atletaPages/navegacao :: menu('treinos', ${agenda.nomeAtleta}, ${agenda.semanaId})}"></div>
 
     <main id="conteudo" class="mx-auto flex w-full max-w-5xl min-w-0 flex-1 scroll-mt-6 flex-col gap-5 p-4 sm:p-6 lg:p-8">
         <header class="flex flex-wrap items-center justify-between gap-3">

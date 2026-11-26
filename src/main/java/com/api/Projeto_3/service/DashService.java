@@ -16,6 +16,7 @@ import com.api.Projeto_3.dtos.DtosModelos.DashPontoDto;
 import com.api.Projeto_3.dtos.DtosModelos.DashTreinoDto;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.DiaModel;
+import com.api.Projeto_3.model.ExercicioModel;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.TreinamentoModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
@@ -61,21 +62,20 @@ public class DashService {
         int totalDeNotas = 0;
 
         for (DiaModel dia : semana.getDias()) {
-            List<DashTreinoDto> treinosDoDia = dia.getTreinamentos().stream().map(this::criarTreinoDoHistorico).toList();
-            dashboard.getTreinos().addAll(treinosDoDia);
-
             DashPontoDto atividade = atividadeSemanal.get(dia.getNome().ordinal());
-            List<DashTreinoDto> treinosAtivos = treinosDoDia.stream()
-                    .filter(treino -> !treino.isCancelado())
-                    .toList();
+            for (TreinamentoModel treinamento : dia.getTreinamentos()) {
+                DashTreinoDto treino = criarTreinoDoHistorico(treinamento);
+                dashboard.getTreinos().add(treino);
+                if (treino.isCancelado()) {
+                    continue;
+                }
 
-            for (DashTreinoDto treino : treinosAtivos) {
                 long duracao = Objects.requireNonNullElse(treino.getDuracao(), 0L);
                 tempoTotal += duracao;
-                somarNoGrafico(atividade, duracao, treino.isConcluido());
+                somarNoGrafico(atividade, duracao, calcularMinutosConcluidos(treinamento, duracao));
 
                 DashPontoDto categoria = categorias.computeIfAbsent(treino.getCategoria(), this::criarPonto);
-                somarNoGrafico(categoria, 1, treino.isConcluido());
+                somarNoGrafico(categoria, 1, treino.isConcluido() ? 1 : 0);
 
                 Integer nota = treino.getSatisfacao();
                 if (nota != null) {
@@ -112,8 +112,20 @@ public class DashService {
         return treinoDoHistorico;
     }
 
-    private void somarNoGrafico(DashPontoDto ponto, long valor, boolean concluido) {
-        long valorConcluido = concluido ? valor : 0;
+    private long calcularMinutosConcluidos(TreinamentoModel treino, long duracaoProgramada) {
+        if (treino.isConcluido() || duracaoProgramada == 0) {
+            return duracaoProgramada;
+        }
+
+        double minutosConcluidos = treino.getExercicios().stream()
+                .filter(ExercicioModel::isConcluido)
+                .mapToDouble(ExercicioModel::getDuracacao)
+                .filter(duracao -> Double.isFinite(duracao) && duracao > 0)
+                .sum();
+        return Math.min(duracaoProgramada, Math.round(minutosConcluidos));
+    }
+
+    private void somarNoGrafico(DashPontoDto ponto, long valor, long valorConcluido) {
         ponto.setY(ponto.getY() + valor);
         ponto.setYConcluido(ponto.getYConcluido() + valorConcluido);
     }

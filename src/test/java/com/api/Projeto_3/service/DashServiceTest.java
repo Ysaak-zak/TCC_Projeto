@@ -14,6 +14,7 @@ import com.api.Projeto_3.dtos.DtosModelos.DashPontoDto;
 import com.api.Projeto_3.dtos.DtosModelos.DashTreinoDto;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.DiaModel;
+import com.api.Projeto_3.model.ExercicioModel;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.TreinamentoModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
@@ -29,16 +30,7 @@ class DashServiceTest {
         DiaModel terca = new DiaModel(2L, DiasEnum.TERCA, null, List.of(treinoInvertido, treinoSemHorarioFinal));
         SemanaModel semana = new SemanaModel(3L, "Semana 3", null, null, List.of(segunda, terca));
 
-        MethodInterceptor buscarSemanas = chamada -> List.of(semana);
-        DashRepository repository = (DashRepository) new ProxyFactory(DashRepository.class, buscarSemanas).getProxy();
-        AtletaService atletaService = new AtletaService() {
-            @Override
-            public AtletaModelo buscarAtletaPorCpf(String cpf) {
-                return null;
-            }
-        };
-        DashService service = new DashService(repository, atletaService);
-
+        DashService service = criarServico(semana);
         DashDto painel = service.buscarDashboard("cpf-atleta", 3L);
 
         assertThat(painel.getTempoTotal()).isEqualTo(60);
@@ -56,6 +48,51 @@ class DashServiceTest {
         assertThat(painelAtualizado.getAtividadeSemanal()).extracting(DashPontoDto::getYConcluido)
                 .containsExactly(60L, 0L, 0L, 0L, 0L, 0L, 0L);
         assertThat(painelAtualizado.getCategorias()).extracting(DashPontoDto::getYConcluido).containsExactly(1L, 1L);
+    }
+
+    @Test
+    void barraRefleteExerciciosSalvosAteOLimiteDoTempoProgramado() {
+        TreinamentoModel treino = criarTreino("Musculação", LocalTime.of(8, 0), LocalTime.of(9, 0));
+        ExercicioModel primeiro = criarExercicio(20);
+        ExercicioModel segundo = criarExercicio(50);
+        treino.setExercicios(List.of(primeiro, segundo));
+
+        DiaModel segunda = new DiaModel(1L, DiasEnum.SEGUNDA, null, List.of(treino));
+        SemanaModel semana = new SemanaModel(3L, "Semana 3", null, null, List.of(segunda));
+        DashService service = criarServico(semana);
+
+        primeiro.setConcluido(true);
+        DashDto comProgresso = service.buscarDashboard("cpf-atleta", 3L);
+        assertThat(comProgresso.getAtividadeSemanal().get(0).getY()).isEqualTo(60);
+        assertThat(comProgresso.getAtividadeSemanal().get(0).getYConcluido()).isEqualTo(20);
+        assertThat(comProgresso.getCategorias().get(0).getYConcluido()).isZero();
+
+        segundo.setConcluido(true);
+        DashDto comTodosExercicios = service.buscarDashboard("cpf-atleta", 3L);
+        assertThat(comTodosExercicios.getAtividadeSemanal().get(0).getYConcluido()).isEqualTo(60);
+
+        treino.setCancelado(true);
+        DashDto comCancelamento = service.buscarDashboard("cpf-atleta", 3L);
+        assertThat(comCancelamento.getAtividadeSemanal().get(0).getY()).isZero();
+        assertThat(comCancelamento.getAtividadeSemanal().get(0).getYConcluido()).isZero();
+    }
+
+    private DashService criarServico(SemanaModel semana) {
+        MethodInterceptor buscarSemanas = chamada -> List.of(semana);
+        DashRepository repository = (DashRepository) new ProxyFactory(DashRepository.class, buscarSemanas).getProxy();
+        AtletaService atletaService = new AtletaService() {
+            @Override
+            public AtletaModelo buscarAtletaPorCpf(String cpf) {
+                return null;
+            }
+        };
+        return new DashService(repository, atletaService);
+    }
+
+    private ExercicioModel criarExercicio(double duracao) {
+        ExercicioModel exercicio = new ExercicioModel();
+        exercicio.setDuracacao(duracao);
+        return exercicio;
     }
 
     private TreinamentoModel criarTreino(String categoria, LocalTime inicio, LocalTime fim) {

@@ -24,7 +24,7 @@ public interface AgendaTreinamentoRepository {
             INNER JOIN dia d ON d.id = t.dia_fk
             INNER JOIN semana s ON s.id = d.semana_fk
             INNER JOIN perfis_modelo p ON p.id = s.atleta_fk
-            INNER JOIN exercicio e ON e.treinamento_fk = t.id
+            LEFT JOIN exercicio e ON e.treinamento_fk = t.id
             WHERE s.id = :semanaId AND p.cpf = :cpf
             ORDER BY d.nome, t.horario_inicio NULLS LAST, t.id, e.id
             """, nativeQuery = true)
