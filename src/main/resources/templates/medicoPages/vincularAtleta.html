@@ -75,15 +75,12 @@
                     </div>
                 </div>
 
-
-                <div class="mt-4">
-                    <label class="block" for="search">
-                        <span class="sr-only">Buscar por nome ou CPF...</span>
-                        <input type="search" id="search" placeholder="Buscar por nome ou CPF..."
-                               class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 outline-none focus:border-medico-500">
-                    </label>
+                <div class="mt-8 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="h-5 w-5 text-medico-600"><path stroke-linecap="round" stroke-linejoin="round" d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path stroke-linecap="round" stroke-linejoin="round" d="M19 8v6M22 11h-6"/></svg>
+                    <h1 class="font-display text-xl font-bold text-medico-700 sm:text-2xl">Adicionar Novos Atletas</h1>
                 </div>
 
+                
                 <div class="mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
                     <div class="overflow-x-auto">
                         <table class="w-full min-w-tabela-atletas text-left text-sm">
