@@ -1,5 +1,6 @@
 package com.api.Projeto_3.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -19,26 +20,22 @@ import com.api.Projeto_3.service.AlimentoService;
 import com.api.Projeto_3.service.MedicoService;
 
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 
 @Controller
-@RequiredArgsConstructor
+
 @RequestMapping("/medico/alimentacao")
 public class AlimentoController {
 
-    private final MedicoService medicoService;
-    private final AlimentoService alimentoService;
+    @Autowired 
+    private  MedicoService medicoService;
+    
+    @Autowired 
+    private  AlimentoService alimentoService;
 
     @GetMapping
     public String listarAtletas(@AuthenticationPrincipal UserDetails userLogado, Model model) {
-        if (userLogado == null) {
-            return "redirect:/login";
-        }
 
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
 
         var atletas = medicoService.atletasVinculados(medico.getId());
         if (!atletas.isEmpty()) {
@@ -52,18 +49,9 @@ public class AlimentoController {
     }
 
     @GetMapping("/{atletaId}")
-    public String getAlimentacao(@AuthenticationPrincipal UserDetails userLogado,
-                                @PathVariable Long atletaId,
-                                @RequestParam(defaultValue = "false") boolean salvo, Model model) {
-        if (userLogado == null) {
-            return "redirect:/login";
-        }
+    public String getAlimentacao(@AuthenticationPrincipal UserDetails userLogado,  @PathVariable Long atletaId,@RequestParam(defaultValue = "false") boolean salvo, Model model) {
 
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
 
         AtletaModelo atleta = alimentoService.buscarAtletaVinculado(medico.getId(), atletaId);
         if (atleta == null) {
@@ -92,12 +80,11 @@ public class AlimentoController {
             result.rejectValue("dataRevisao", "dataRevisao.invalida", "A revisão deve ser na data inicial ou depois.");
         }
 
-        AtletaModelo atleta = alimentoService.buscarAtletaVinculado(medico.getId(), atletaId);
-        if (atleta == null) {
-            return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
-        }
-
         if (result.hasErrors()) {
+            AtletaModelo atleta = alimentoService.buscarAtletaVinculado(medico.getId(), atletaId);
+            if (atleta == null) {
+                return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
+            }
             return mostrarFormulario(medico.getId(), atleta, false, model);
         }
 

@@ -7,9 +7,9 @@
     <link rel="icon" th:href="@{/img/iconFun.png}">
     <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
 </head>
-<body class="flex min-h-screen flex-col font-sans xl:flex-row bg-black text-white">
+<body class="flex min-h-screen flex-col bg-black font-sans text-white md:flex-row">
     <div th:replace="~{atletaPages/navegacao :: menu('painel', ${dash.nomeAtleta})}"></div>
-    <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-36 flex-col gap-6 p-4 sm:p-6 lg:p-8 xl:scroll-mt-6">
+    <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-6 flex-col gap-6 p-4 sm:p-6 lg:p-8">
         <header class="flex flex-wrap items-end justify-between gap-4">
             <div>
                 <h1 class="text-2xl font-bold sm:text-3xl">Meus treinos</h1>
@@ -17,61 +17,59 @@
             </div>
             <form class="flex w-full max-w-sm flex-wrap gap-x-2 gap-y-1" th:action="@{/atleta}" method="get">
                 <label for="semanaId" class="w-full text-sm font-semibold">Semana</label>
-                <select class="min-h-11 min-w-0 flex-1 rounded-lg bg-[#9333ea] px-3 text-sm text-white scheme-dark disabled:bg-gray-700
-                    disabled:text-gray-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300" id="semanaId" name="semanaId" th:disabled="${#lists.isEmpty(dash.semanas)}">
+                <select class="min-h-11 min-w-0 flex-1 rounded-lg bg-atleta-acao px-3 text-sm text-white scheme-dark disabled:bg-gray-700 disabled:text-gray-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300" id="semanaId" name="semanaId" th:disabled="${#lists.isEmpty(dash.semanas)}">
                     <option th:if="${#lists.isEmpty(dash.semanas)}" value="">Sem semanas</option>
                     <option th:each="semana : ${dash.semanas}" th:value="${semana.id}"
                             th:text="${semana.nome}" th:selected="${semana.id == dash.semanaId}"></option>
                 </select>
-                <button class="min-h-11 cursor-pointer rounded-lg bg-[#9333ea] px-3 text-sm font-bold text-white hover:bg-[#7e22ce]
-                    disabled:cursor-default disabled:bg-gray-700 disabled:text-gray-300 focus-visible:outline-2
-                    focus-visible:outline-offset-2 focus-visible:outline-purple-300" type="submit" th:disabled="${#lists.isEmpty(dash.semanas)}">Buscar</button>
+                <button class="min-h-11 cursor-pointer rounded-lg bg-atleta-acao px-3 text-sm font-bold text-white hover:bg-atleta-acao-hover disabled:cursor-default disabled:bg-gray-700 disabled:text-gray-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300" type="submit" th:disabled="${#lists.isEmpty(dash.semanas)}">Buscar</button>
             </form>
         </header>
 
-        <dl class="flex flex-wrap gap-4 [&_dt]:text-xs [&_dt]:font-bold [&_dt]:tracking-wide [&_dt]:uppercase [&_dt]:text-gray-300
-            [&_dd]:mt-1.5 [&_dd]:wrap-anywhere [&_dd]:text-lg [&_dd]:leading-tight [&_dd]:font-semibold sm:[&_dd]:text-xl
-            [&_small]:mt-1 [&_small]:block [&_small]:text-sm [&_small]:font-normal [&_small]:text-gray-300" aria-label="Resumo da semana">
-            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
-                <dt>Semana</dt>
-                <dd th:text="${dash.nomeSemana}">Sem semanas</dd>
+        <dl class="grid grid-cols-2 gap-4 lg:grid-cols-4" aria-label="Resumo da semana">
+            <div class="min-w-0 rounded-2xl bg-atleta-painel p-4 sm:p-5">
+                <dt class="text-xs font-bold tracking-wide uppercase text-gray-300">Semana</dt>
+                <dd class="mt-1.5 wrap-anywhere text-lg leading-tight font-semibold sm:text-xl" th:text="${dash.nomeSemana}">Sem semanas</dd>
             </div>
-            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
-                <dt>Tempo programado</dt>
-                <dd th:text="${dash.tempoTotal + ' min'}">0 min</dd>
+            <div class="min-w-0 rounded-2xl bg-atleta-painel p-4 sm:p-5">
+                <dt class="text-xs font-bold tracking-wide uppercase text-gray-300">Tempo programado</dt>
+                <dd class="mt-1.5 wrap-anywhere text-lg leading-tight font-semibold sm:text-xl" th:text="${dash.tempoTotal + ' min'}">0 min</dd>
             </div>
-            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
-                <dt>Tempo médio da semana</dt>
-                <dd>
-                    <strong class="text-[#c084fc]" th:text="${#numbers.formatDecimal(dash.mediaDiaria, 1, 1) + ' min/dia'}">0 min/dia</strong>
-                    <small>Considera os sete dias da semana.</small>
+            <div class="min-w-0 rounded-2xl bg-atleta-painel p-4 sm:p-5">
+                <dt class="text-xs font-bold tracking-wide uppercase text-gray-300">Tempo médio da semana</dt>
+                <dd class="mt-1.5 wrap-anywhere text-lg leading-tight font-semibold sm:text-xl">
+                    <strong class="text-atleta-destaque" th:text="${#numbers.formatDecimal(dash.mediaDiaria, 1, 1) + ' min/dia'}">0 min/dia</strong>
+                    <small class="mt-1 block text-sm font-normal text-gray-300">Considera os sete dias da semana.</small>
                 </dd>
             </div>
-            <div class="w-[calc(50%_-_0.5rem)] min-w-0 rounded-2xl bg-[#374151] p-4 lg:w-[calc(25%_-_0.75rem)] sm:p-5">
-                <dt>Satisfação</dt>
-                <dd class="text-[#fbbf24]"
+            <div class="min-w-0 rounded-2xl bg-atleta-painel p-4 sm:p-5">
+                <dt class="text-xs font-bold tracking-wide uppercase text-gray-300">Satisfação</dt>
+                <dd class="text-atleta-satisfacao mt-1.5 wrap-anywhere text-lg leading-tight font-semibold sm:text-xl"
                     th:text="${dash.satisfacaoMedia != null ? #numbers.formatDecimal(dash.satisfacaoMedia, 1, 1) + ' / 5' : 'Não informado'}">Não informado</dd>
             </div>
         </dl>
 
         <div class="flex flex-col gap-4 md:flex-row">
-            <section class="min-w-0 flex-1 rounded-2xl bg-[#374151]/65 p-4 sm:p-5 [&>h2]:text-lg [&>h2]:font-bold [&>p]:text-sm [&>p]:text-gray-300" aria-labelledby="atividade" th:with="maiorTempo=${dash.maiorTempoProgramado}">
-                <h2 id="atividade">Atividade semanal</h2>
-                <p>Minutos concluídos por dia. A barra inteira mostra o tempo programado.</p>
+            <section class="min-w-0 flex-1 rounded-2xl bg-atleta-painel/65 p-4 sm:p-5" aria-labelledby="atividade" th:with="maiorTempo=${dash.maiorTempoProgramado}">
+                <h2 class="text-lg font-bold" id="atividade">Atividade semanal</h2>
+                <p class="text-sm text-gray-300">Minutos concluídos por dia. A barra inteira mostra o tempo programado.</p>
                 <div class="mt-3 flex min-h-52 flex-col justify-center rounded-lg bg-black p-3">
                     <p class="p-4 text-center text-gray-300" th:if="${maiorTempo == 0}">Nenhum tempo registrado nesta semana.</p>
-                    <ul class="flex list-none gap-[clamp(0.25rem,1vw,0.75rem)]
-                        bg-[repeating-linear-gradient(to_top,#374151_0_1px,transparent_1px_2.125rem)] bg-[length:100%_8.5rem]
-                        bg-[position:center_bottom_1.5rem] bg-no-repeat text-sm" th:if="${maiorTempo > 0}">
+                    <ul class="flex list-none bg-no-repeat text-sm" th:if="${maiorTempo > 0}"
+                        style="gap: clamp(0.25rem, 1vw, 0.75rem); background-image: repeating-linear-gradient(to top, #374151 0 1px, transparent 1px 2.125rem);
+                               background-size: 100% 8.5rem; background-position: center bottom 1.5rem">
                         <li class="relative flex h-40 min-w-0 flex-1 flex-col items-center justify-end" th:each="dia : ${dash.atividadeSemanal}"
                             th:with="proporcao=${1.0 * dia.y / maiorTempo}, parteConcluida=${dia.y > 0 ? 1.0 * dia.yConcluido / dia.y : 0}"
-                            th:style="|--proporcao: ${proporcao}; --parte-concluida: ${parteConcluida}|"
                             th:title="|${dia.yConcluido} de ${dia.y} min concluídos|">
                             <span class="order-1 h-6 text-xs text-gray-300 sm:text-sm" th:text="${dia.x}">Seg</span>
-                            <span class="flex h-[7.2rem] w-full items-end justify-center" aria-hidden="true">
-                                <span class="atleta-bar flex h-[calc(100%_*_var(--proporcao))] w-[min(76%,2.25rem)] items-end overflow-hidden rounded-t-md bg-[#3b0764]"><span class="h-[calc(100%_*_var(--parte-concluida))] w-full bg-[#8b5cf6]"></span></span>
+                            <span class="flex w-full items-end justify-center" style="height: 7.2rem" aria-hidden="true">
+                                <span class="atleta-bar flex items-end overflow-hidden rounded-t-md bg-atleta-barra-fundo"
+                                      th:style="|height: ${100 * proporcao}%; width: min(76%, 2.25rem)|">
+                                    <span class="w-full bg-atleta-barra" th:style="|height: ${100 * parteConcluida}%|"></span>
+                                </span>
                             </span>
-                            <span class="absolute bottom-[calc(1.6rem_+_7.2rem_*_var(--proporcao))] left-1/2 -translate-x-1/2 text-xs font-bold">
+                            <span class="absolute left-1/2 -translate-x-1/2 text-xs font-bold"
+                                  th:style="|bottom: calc(1.6rem + 7.2rem * ${proporcao})|">
                                 <span th:text="${dia.yConcluido}">0</span>
                                 <span class="sr-only" th:text="| de ${dia.y} minutos concluídos|"></span>
                             </span>
@@ -80,14 +78,16 @@
                 </div>
             </section>
 
-            <section class="min-w-0 flex-1 rounded-2xl bg-[#374151]/65 p-4 sm:p-5 [&>h2]:text-lg [&>h2]:font-bold [&>p]:text-sm [&>p]:text-gray-300" aria-labelledby="categorias" th:with="fundo=${dash.fundoCategoriasConcluidas}">
-                <h2 id="categorias">Treinos por categoria</h2>
-                <p>Treinos concluídos do total programado</p>
+            <section class="min-w-0 flex-1 rounded-2xl bg-atleta-painel/65 p-4 sm:p-5" aria-labelledby="categorias" th:with="fundo=${dash.fundoCategoriasConcluidas}">
+                <h2 class="text-lg font-bold" id="categorias">Treinos por categoria</h2>
+                <p class="text-sm text-gray-300">Treinos concluídos do total programado</p>
                 <div class="mt-3 flex min-h-52 gap-3 rounded-lg bg-black p-3" th:classappend="${fundo != null ? 'items-center justify-between' : 'flex-col justify-center'}">
                     <p class="p-4 text-center text-gray-300" th:if="${fundo == null}">Nenhum treino concluído nesta semana.</p>
-                    <div class="atleta-pie aspect-square w-[min(38%,9rem)] shrink-0 rounded-full" th:if="${fundo != null}" th:style="|background: ${fundo}|" aria-hidden="true"></div>
+                    <div class="atleta-pie aspect-square shrink-0 rounded-full" th:if="${fundo != null}"
+                         th:style="|width: min(38%, 9rem); background: ${fundo}|" aria-hidden="true"></div>
                     <ul class="flex min-w-0 flex-1 list-none flex-col gap-2 text-sm" th:unless="${#lists.isEmpty(dash.categorias)}">
-                        <li class="flex items-baseline gap-2 wrap-anywhere before:h-2.5 before:w-2.5 before:shrink-0 before:rounded-full before:bg-[var(--categoria-cor)] before:content-['']" th:each="categoria, estado : ${dash.categorias}" th:style="|--categoria-cor: ${dash.corCategoria(estado.index)}|">
+                        <li class="flex items-baseline gap-2 wrap-anywhere" th:each="categoria, estado : ${dash.categorias}">
+                            <span class="size-2.5 shrink-0 rounded-full" th:style="|background-color: ${dash.corCategoria(estado.index)}|" aria-hidden="true"></span>
                             <span class="min-w-0 flex-1" th:text="${categoria.x}">Categoria</span>
                             <strong class="whitespace-nowrap" th:text="|${categoria.yConcluido} / ${categoria.y}|">0 / 0</strong>
                         </li>
@@ -96,49 +96,46 @@
             </section>
         </div>
 
-        <section id="historico" class="min-w-0 scroll-mt-36 rounded-2xl bg-gray-500/50 xl:scroll-mt-4" aria-labelledby="historico-titulo">
+        <section id="historico" class="min-w-0 scroll-mt-4 rounded-2xl bg-gray-500/50" aria-labelledby="historico-titulo">
             <h2 id="historico-titulo" class="p-4 text-lg font-bold">Histórico</h2>
             <p class="p-4 text-center text-gray-300" th:if="${#lists.isEmpty(dash.treinos)}">Nenhum treino cadastrado nesta semana.</p>
-            <table class="w-full border-collapse text-left text-sm max-md:block md:[&_td]:border-t md:[&_td]:border-gray-500/45
-                md:[&_th]:border-t md:[&_th]:border-gray-500/45 md:[&_td]:px-2.5 md:[&_td]:py-3 md:[&_th]:px-2.5 md:[&_th]:py-3
-                [&_td]:wrap-anywhere [&_td]:align-top [&_th]:text-xs [&_th]:font-bold [&_th]:tracking-wide [&_th]:uppercase
-                [&_th]:text-gray-300" th:unless="${#lists.isEmpty(dash.treinos)}" aria-labelledby="historico-titulo" role="table">
+            <table class="w-full border-collapse text-left text-sm max-md:block" th:unless="${#lists.isEmpty(dash.treinos)}" aria-labelledby="historico-titulo" role="table">
                 <thead class="max-md:sr-only" role="rowgroup">
                     <tr role="row">
-                        <th role="columnheader" scope="col">ID</th>
-                        <th role="columnheader" scope="col">Nome do treinamento</th>
-                        <th role="columnheader" scope="col">Categoria</th>
-                        <th role="columnheader" scope="col">Duração</th>
-                        <th role="columnheader" scope="col">Satisfação</th>
-                        <th role="columnheader" scope="col">Gastos</th>
-                        <th role="columnheader" scope="col">Descrição</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">ID</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">Nome do treinamento</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">Categoria</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">Duração</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">Satisfação</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">Gastos</th>
+                        <th class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 text-xs font-bold tracking-wide uppercase text-gray-300" role="columnheader" scope="col">Descrição</th>
                     </tr>
                 </thead>
                 <tbody class="max-md:block" role="rowgroup">
-                    <tr class="max-md:flex max-md:flex-wrap max-md:gap-3 max-md:border-t max-md:border-gray-500/45 max-md:p-4" th:each="treino : ${dash.treinos}" role="row">
-                        <td class="text-gray-300 max-md:w-full" role="cell">
+                    <tr class="max-md:grid max-md:grid-cols-2 max-md:gap-3 max-md:border-t max-md:border-gray-500/45 max-md:p-4" th:each="treino : ${dash.treinos}" role="row">
+                        <td class="text-gray-300 max-md:col-span-2 md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell">
                             <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">ID</span>
                             <span th:text="${treino.id ?: '—'}">1</span>
                         </td>
-                        <td class="max-md:w-full [&>strong]:italic" role="cell">
-                            <strong th:text="${treino.nome}">Nome do treino</strong>
-                            <span class="mt-1 block w-fit rounded-md bg-[#4c1d27] px-1.5 py-0.5 text-xs font-bold text-red-200" th:if="${treino.cancelado}">Cancelado pelo médico</span>
-                            <span class="mt-1 block w-fit rounded-md bg-[#064e3b] px-1.5 py-0.5 text-xs font-bold text-emerald-200" th:if="${treino.concluido and !treino.cancelado}">Concluído</span>
+                        <td class="max-md:col-span-2 md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell">
+                            <strong class="italic" th:text="${treino.nome}">Nome do treino</strong>
+                            <span class="mt-1 block w-fit rounded-md bg-atleta-cancelado px-1.5 py-0.5 text-xs font-bold text-red-200" th:if="${treino.cancelado}">Cancelado pelo médico</span>
+                            <span class="mt-1 block w-fit rounded-md bg-atleta-concluido px-1.5 py-0.5 text-xs font-bold text-emerald-200" th:if="${treino.concluido and !treino.cancelado}">Concluído</span>
                         </td>
-                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell">
+                        <td class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell">
                             <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Categoria</span>
-                            <span class="text-[#c084fc]" th:text="${treino.categoria ?: 'Sem categoria'}">Sem categoria</span>
+                            <span class="text-atleta-destaque" th:text="${treino.categoria ?: 'Sem categoria'}">Sem categoria</span>
                         </td>
-                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell">
+                        <td class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell">
                             <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Duração</span>
-                            <span class="text-[#6ee7b7]" th:text="${treino.duracao != null ? treino.duracao + ' min' : 'Não informada'}">Não informada</span>
+                            <span class="text-atleta-tempo" th:text="${treino.duracao != null ? treino.duracao + ' min' : 'Não informada'}">Não informada</span>
                         </td>
-                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell">
+                        <td class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell">
                             <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Satisfação</span>
                             <span th:text="${treino.satisfacao != null ? treino.satisfacao + ' / 5' : 'Não informada'}">Não informada</span>
                         </td>
-                        <td class="max-md:w-[calc(50%_-_0.375rem)]" role="cell"><span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Gastos</span>Não informado</td>
-                        <td class="text-gray-300 max-md:w-full" role="cell">
+                        <td class="md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell"><span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Gastos</span>Não informado</td>
+                        <td class="text-gray-300 max-md:col-span-2 md:border-t md:border-gray-500/45 md:px-2.5 md:py-3 wrap-anywhere align-top" role="cell">
                             <span class="block text-xs font-bold text-gray-300 md:hidden" aria-hidden="true">Descrição</span>
                             <span th:text="${#strings.isEmpty(treino.descricao) ? 'Sem descrição' : treino.descricao}">Sem descrição</span>
                         </td>

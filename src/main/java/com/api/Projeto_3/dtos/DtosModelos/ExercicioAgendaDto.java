@@ -1,7 +1,5 @@
 package com.api.Projeto_3.dtos.DtosModelos;
 
-import lombok.Getter;
-import lombok.Setter;
 
 
 public class ExercicioAgendaDto {

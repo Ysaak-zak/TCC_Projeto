@@ -7,7 +7,6 @@ public class DashTreinoDto {
     private String categoria;
     private String descricao;
     private Long duracao;
-    // true quando o médico cancelou o treino; ele aparece na lista, mas não entra nas somas do dashboard.
     private boolean cancelado;
     private boolean concluido;
 

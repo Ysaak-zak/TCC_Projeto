@@ -16,25 +16,44 @@
     
     <div th:replace="~{treinadorPages/navegacao :: menu('treinos', ${treinador})}"></div>
 
-    <div class="min-w-0 flex-1 bg-slate-50 text-slate-800 [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-50">
-        <nav class="flex flex-wrap gap-2 border-b border-slate-200 bg-slate-50 px-3 py-3 sm:gap-3 sm:px-6 sm:py-5 [&>a]:flex [&>a]:min-w-0
-            [&>a]:flex-1 [&>a]:flex-col [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:rounded-xl [&>a]:border
-            [&>a]:border-slate-200 [&>a]:bg-white [&>a]:px-2 [&>a]:py-3 [&>a]:text-center [&>a]:text-xs [&>a]:font-semibold
-            [&>a]:text-slate-600 [&>a:hover]:bg-amber-50 [&>a[aria-current=page]]:border-amber-600
-            [&>a[aria-current=page]]:bg-amber-50 [&>a[aria-current=page]]:text-amber-700 sm:[&>a]:flex-row sm:[&>a]:justify-start
-            sm:[&>a]:gap-3 sm:[&>a]:px-5 sm:[&>a]:py-4 sm:[&>a]:text-left sm:[&>a]:text-sm [&_span]:flex [&_span]:flex-col
-            [&_small]:text-[10px] [&_small]:tracking-widest" aria-label="Etapas do treinamento">
-            <a th:href="@{/treinador/treinos/semanas}"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span><small>PASSO 1</small>Criar semana</span></a>
-            <a th:href="@{/treinador/treinos}"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span><small>PASSO 2</small>Criar treino</span></a>
-            <a th:href="@{/treinador/treinos/exercicios}" aria-current="page"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true"><span><small>PASSO 3</small>Adicionar exercício</span></a>
+    <div class="min-w-0 flex-1 bg-slate-50 text-slate-800">
+        <nav class="flex flex-wrap gap-2 border-b border-slate-200 bg-slate-50 px-3 py-3 sm:gap-3 sm:px-6 sm:py-5" aria-label="Etapas do treinamento">
+            <a th:href="@{/treinador/treinos/semanas}"
+               class="flex min-w-0 flex-1 flex-col items-center justify-center
+                      gap-2 rounded-xl border border-slate-200 bg-white px-2 py-3 text-center text-xs font-semibold text-slate-600 hover:bg-amber-50
+                      sm:flex-row sm:justify-start sm:gap-3 sm:px-5 sm:py-4 sm:text-left sm:text-sm">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/calen.svg}" alt="" aria-hidden="true">
+                <span class="flex flex-col">
+                    <small class="text-xs tracking-widest">PASSO 1</small>
+                    Criar semana
+                </span>
+            </a>
+            <a th:href="@{/treinador/treinos}"
+               class="flex min-w-0 flex-1 flex-col items-center justify-center
+                      gap-2 rounded-xl border border-slate-200 bg-white px-2 py-3 text-center text-xs font-semibold text-slate-600 hover:bg-amber-50
+                      sm:flex-row sm:justify-start sm:gap-3 sm:px-5 sm:py-4 sm:text-left sm:text-sm">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true">
+                <span class="flex flex-col">
+                    <small class="text-xs tracking-widest">PASSO 2</small>
+                    Criar treino
+                </span>
+            </a>
+            <a th:href="@{/treinador/treinos/exercicios}" aria-current="page"
+               class="flex min-w-0 flex-1 flex-col items-center justify-center
+                      gap-2 rounded-xl border px-2 py-3 text-center text-xs font-semibold hover:bg-amber-50
+                      sm:flex-row sm:justify-start sm:gap-3 sm:px-5 sm:py-4 sm:text-left sm:text-sm border-amber-600 bg-amber-50 text-amber-700">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/atleta.svg}" alt="" aria-hidden="true">
+                <span class="flex flex-col">
+                    <small class="text-xs tracking-widest">PASSO 3</small>
+                    Adicionar exercício
+                </span>
+            </a>
         </nav>
         <main class="flex-1 max-w-4xl w-full mx-auto p-6 space-y-6">
-            <header class="pb-3 pt-2 [&>span]:text-xs [&>span]:font-bold [&>span]:tracking-widest [&>span]:text-amber-700 [&>h1]:my-2
-                [&>h1]:text-2xl [&>h1]:font-bold [&>h1]:text-slate-900 sm:[&>h1]:text-3xl [&>p]:max-w-2xl [&>p]:text-sm
-                [&>p]:leading-relaxed [&>p]:text-slate-500">
-                <span>PLANEJAMENTO DO ATLETA · PASSO 3 DE 3</span>
-                <h1>Complete o treino com exercícios</h1>
-                <p>Escolha a semana e o treino. Adicione os exercícios e a duração de cada atividade.</p>
+            <header class="pb-3 pt-2">
+                <span class="text-xs font-bold tracking-widest text-amber-700">PLANEJAMENTO DO ATLETA · PASSO 3 DE 3</span>
+                <h1 class="my-2 text-2xl font-bold text-slate-900 sm:text-3xl">Complete o treino com exercícios</h1>
+                <p class="max-w-2xl text-sm leading-relaxed text-slate-500">Escolha a semana e o treino. Adicione os exercícios e a duração de cada atividade.</p>
             </header>
             <!-- Conteúdo da Página -->
             <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
@@ -55,7 +74,7 @@
                         <option value="">Selecione uma semana</option>
                         <option th:each="s : ${semanas}" th:value="${s.id}" th:selected="${s.id == exercicioForm.semanaId}" th:text="|${s.nome} — ${s.atleta_fk.name}|"></option>
                     </select>
-                    <button type="submit" th:disabled="${#lists.isEmpty(semanas)}" class="rounded-xl border border-medOrange-600 px-4 py-2 text-sm text-medOrange-700 disabled:opacity-50">Selecionar semana</button>
+                    <button type="submit" th:disabled="${#lists.isEmpty(semanas)}" class="rounded-xl border border-medOrange-600 px-4 py-2 text-sm text-medOrange-700 disabled:opacity-50 disabled:cursor-not-allowed">Selecionar semana</button>
                 </form>
                 <p th:if="${exercicioForm.semanaId != null and #lists.isEmpty(treinamentos)}" class="text-sm text-slate-600">Nenhum treinamento disponível nesta semana. <a th:href="@{/treinador/treinos}" class="underline">Cadastre um treinamento</a> antes de adicionar exercícios.</p>
                 <form id="exercicio-form" th:action="@{/treinador/treinos/exercicios}" th:object="${exercicioForm}" method="post" class="space-y-4">
@@ -71,25 +90,25 @@
                             <option th:each="t : ${treinamentos}" th:value="${t.id}" th:text="|${t.dia_fk.nome.rotulo} — ${t.nome} (${t.horarioInicio})|"></option>
                         </select>
                     </div>
-                    <div class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] [&>*]:min-w-0">
-                        <div>
+                    <div class="gap-4 grid md:grid-cols-2">
+                        <div class="min-w-0">
                             <label for="nome" class="block text-xs font-bold uppercase text-slate-500 mb-1">Nome do Exercício</label>
                             <input type="text" th:field="*{nome}" maxlength="255" required placeholder="Ex: Corrida 5km" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <label for="descricao" class="block text-xs font-bold uppercase text-slate-500 mb-1">Descrição</label>
                             <input type="text" th:field="*{descricao}" maxlength="255" placeholder="Ritmo constante" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
                         </div>
                     </div>
-                    <div class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] [&>*]:min-w-0">
-                        <div>
+                    <div class="gap-4 grid md:grid-cols-2">
+                        <div class="min-w-0">
                             <label for="duracao" class="block text-xs font-bold uppercase text-slate-500 mb-1">Duração (minutos)</label>
                             <input type="number" th:field="*{duracao}" min="1" step="1" required placeholder="Ex: 30" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm focus:ring-2 focus:ring-medOrange-500 outline-none">
                         </div>
                       
                     </div>
                     <div class="flex justify-end pt-2">
-                        <button type="submit" class="px-5 py-2.5 bg-medOrange-600 hover:bg-medOrange-700 text-white font-semibold rounded-xl text-sm transition shadow-sm flex items-center gap-2">
+                        <button type="submit" class="px-5 py-2.5 bg-medOrange-600 hover:bg-medOrange-700 text-white font-semibold rounded-xl text-sm transition shadow-sm flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-50">
                             Adicionar Exercício
                         </button>
                     </div>

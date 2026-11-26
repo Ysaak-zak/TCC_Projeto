@@ -42,6 +42,9 @@ public class RecomendacaoAlimentar {
     @Column(name = "data_revisao")
     private LocalDate dataRevisao;
 
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean concluido;
+
     public Long getId() {
         return id;
     }

@@ -9,7 +9,7 @@
         <script th:src="@{/js/tailwind-theme.js}"></script>
     <script defer th:src="@{/js/treinador-dashboard.js}"></script>
 </head>
-<body class="min-h-screen bg-[#f9f8f6] font-sans text-slate-700">
+<body class="min-h-screen bg-treinador-fundo font-sans text-slate-700">
     <div class="min-h-screen flex flex-col sm:flex-row">
 
         <div th:replace="~{treinadorPages/navegacao :: menu('painel', ${treinador})}"></div>
@@ -20,12 +20,12 @@
 
                 <h1 class="font-display text-2xl font-bold text-treinador-700 sm:text-3xl">Painel do Treinador</h1>
 
-                <div class="mt-6 gap-5 flex flex-col sm:flex-row sm:flex-wrap sm:[&>*]:w-[calc(50.000000%_-_0.625000rem)] [&>*]:min-w-0">
-                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+                <div class="mt-6 gap-5 grid sm:grid-cols-2">
+                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm min-w-0">
                         <p class="text-sm text-slate-500">Atletas Vinculados</p>
                         <p class="mt-2 text-3xl font-bold text-treinador-700" th:text="${vinculados_count}"></p>
                     </div>
-                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm min-w-0">
                         <p class="text-sm text-slate-500">Atletas Novos</p>
                         <p class="mt-2 text-3xl font-bold text-treinador-700" th:text="${atleta_sem_Vinculacao}"></p>
                     </div>
@@ -46,7 +46,7 @@
 
                 <div id="lista-atletas" class="scroll-mt-5 mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
                     <div class="overflow-x-auto">
-                        <table class="w-full min-w-[760px] text-left text-sm">
+                        <table class="w-full min-w-tabela-atletas text-left text-sm">
                             <thead class="bg-treinador-50 text-treinador-700">
                                     <tr><th th:each="coluna : ${ {'ID','Nomes','CPF','Sexo','E-mail','Localização','Ação'} }" th:text="${coluna}" class="px-4 py-3 font-bold"></th></tr>
                                 </thead>

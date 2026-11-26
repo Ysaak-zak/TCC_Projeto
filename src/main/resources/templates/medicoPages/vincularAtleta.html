@@ -8,7 +8,7 @@
         <script th:src="@{/js/vendor/tailwindcss-3.4.17.js}"></script>
         <script th:src="@{/js/tailwind-theme.js}"></script>
 </head>
-<body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
+<body class="min-h-screen bg-medico-fundo font-sans text-slate-700">
     <div class="min-h-screen md:flex">
 
         <aside aria-label="Navegação do médico"
@@ -17,7 +17,7 @@
             <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
             <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
         </a>
-        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <p class="mb-3 hidden px-3 text-xs font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
         <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
             <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-emerald-200 bg-emerald-50 font-bold text-emerald-950" aria-current="page">
                 <div class="flex items-center gap-3">
@@ -68,8 +68,8 @@
             <div class="px-5 py-6 sm:px-8 lg:px-10">
             <div class="mx-auto max-w-6xl">
 
-                <div class="gap-5 flex flex-col [&>*]:min-w-0">
-                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm">
+                <div class="gap-5 flex flex-col">
+                    <div class="rounded-xl border border-slate-100 bg-white p-5 shadow-sm min-w-0">
                         <p class="text-sm text-slate-500">Atletas Novos</p>
                         <p class="mt-2 text-3xl font-bold text-medico-700" th:text="${atleta_sem_Vinculacao}"></p>
                     </div>
@@ -90,7 +90,7 @@
 
                 <div class="mt-4 overflow-hidden rounded-xl border border-slate-100 shadow-sm" th:if="${not #lists.isEmpty(listaAtletas)}">
                     <div class="overflow-x-auto">
-                        <table class="w-full min-w-[760px] text-left text-sm">
+                        <table class="w-full min-w-tabela-atletas text-left text-sm">
                             <thead class="bg-medico-50 text-medico-700">
                                     <tr><th th:each="coluna : ${ {'ID','Nomes','CPF','Sexo','E-mail','Localização','Ação'} }" th:text="${coluna}" class="px-4 py-3 font-bold"></th></tr>
                                 </thead>

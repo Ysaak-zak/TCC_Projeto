@@ -10,8 +10,8 @@ public interface DashRepository extends JpaRepository<SemanaModel, Long> {
     @Query(value = """
             SELECT s.*
             FROM semana s
-            JOIN atletas a ON a.id = s.atleta_fk
-            JOIN perfis_modelo p ON p.id = a.id
+            INNER JOIN atletas a ON a.id = s.atleta_fk
+            INNER JOIN perfis_modelo p ON p.id = a.id
             WHERE p.cpf = :cpf
             ORDER BY s.id DESC
             """, nativeQuery = true)

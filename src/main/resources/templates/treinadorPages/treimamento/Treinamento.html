@@ -16,22 +16,33 @@
     
     <div th:replace="~{treinadorPages/navegacao :: menu('treinos', ${treinador})}"></div>
 
-    <div class="min-w-0 flex-1 bg-slate-50 text-slate-800 [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-50">
-        <nav class="flex flex-wrap gap-2 border-b border-slate-200 bg-slate-50 px-3 py-3 sm:gap-3 sm:px-6 sm:py-5 [&>a]:flex [&>a]:min-w-0
-            [&>a]:flex-1 [&>a]:flex-col [&>a]:items-center [&>a]:justify-center [&>a]:gap-2 [&>a]:rounded-xl [&>a]:border
-            [&>a]:border-slate-200 [&>a]:bg-white [&>a]:px-2 [&>a]:py-3 [&>a]:text-center [&>a]:text-xs [&>a]:font-semibold
-            [&>a]:text-slate-600 [&>a:hover]:bg-amber-50 [&>a[aria-current=page]]:border-amber-600
-            [&>a[aria-current=page]]:bg-amber-50 [&>a[aria-current=page]]:text-amber-700 sm:[&>a]:flex-row sm:[&>a]:justify-start
-            sm:[&>a]:gap-3 sm:[&>a]:px-5 sm:[&>a]:py-4 sm:[&>a]:text-left sm:[&>a]:text-sm [&_span]:flex [&_span]:flex-col
-            [&_small]:text-[10px] [&_small]:tracking-widest" aria-label="Etapas do treinamento">
-            <a th:href="@{/treinador/treinos/semanas}"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/calen.svg}" alt="" aria-hidden="true"><span><small>PASSO 1</small>Criar semana</span></a>
-            <a th:href="@{/treinador/treinos}" aria-current="page"><img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true"><span><small>PASSO 2</small>Criar treino e exercícios</span></a>
+    <div class="min-w-0 flex-1 bg-slate-50 text-slate-800">
+        <nav class="flex flex-wrap gap-2 border-b border-slate-200 bg-slate-50 px-3 py-3 sm:gap-3 sm:px-6 sm:py-5" aria-label="Etapas do treinamento">
+            <a th:href="@{/treinador/treinos/semanas}"
+               class="flex min-w-0 flex-1 flex-col items-center justify-center
+                      gap-2 rounded-xl border border-slate-200 bg-white px-2 py-3 text-center text-xs font-semibold text-slate-600 hover:bg-amber-50
+                      sm:flex-row sm:justify-start sm:gap-3 sm:px-5 sm:py-4 sm:text-left sm:text-sm">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/calen.svg}" alt="" aria-hidden="true">
+                <span class="flex flex-col">
+                    <small class="text-xs tracking-widest">PASSO 1</small>
+                    Criar semana
+                </span>
+            </a>
+            <a th:href="@{/treinador/treinos}" aria-current="page"
+               class="flex min-w-0 flex-1 flex-col items-center justify-center
+                      gap-2 rounded-xl border px-2 py-3 text-center text-xs font-semibold hover:bg-amber-50
+                      sm:flex-row sm:justify-start sm:gap-3 sm:px-5 sm:py-4 sm:text-left sm:text-sm border-amber-600 bg-amber-50 text-amber-700">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/treinadorAzul.svg}" alt="" aria-hidden="true">
+                <span class="flex flex-col">
+                    <small class="text-xs tracking-widest">PASSO 2</small>
+                    Criar treino e exercícios
+                </span>
+            </a>
         </nav>
-        <main class="mx-auto w-full max-w-[1120px] p-4 sm:p-6 lg:p-9">
-            <header class="mb-7 flex flex-col items-start justify-between gap-5 md:flex-row md:items-center [&_h1]:my-2 [&_h1]:text-2xl
-                [&_h1]:font-bold [&_h1]:tracking-tight [&_h1]:text-slate-900 sm:[&_h1]:text-3xl [&_p]:text-sm [&_p]:text-slate-500">
-                <div><span class="text-xs font-bold tracking-widest text-amber-800">PLANEJAMENTO DO ATLETA · PASSO 2 DE 2</span><h1>Organize o próximo treino</h1>
-                    <p>Escolha a semana, prepare a sessão e inclua os exercícios antes de salvar.</p></div>
+        <main class="mx-auto w-full max-w-6xl p-4 sm:p-6 lg:p-9">
+            <header class="mb-7 flex flex-col items-start justify-between gap-5 md:flex-row md:items-center">
+                <div><span class="text-xs font-bold tracking-widest text-amber-800">PLANEJAMENTO DO ATLETA · PASSO 2 DE 2</span><h1 class="my-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Organize o próximo treino</h1>
+                    <p class="text-sm text-slate-500">Escolha a semana, prepare a sessão e inclua os exercícios antes de salvar.</p></div>
                 <a class="text-sm font-bold text-amber-800 underline underline-offset-4" th:href="@{/treinador/treinos/semanas}">+ Criar semana</a>
             </header>
             <p th:if="${sucesso}" th:text="${sucesso}" role="status" class="mb-5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-900"></p>
@@ -47,11 +58,13 @@
                 </div>
                 <fieldset class="m-0 flex flex-col disabled:opacity-50 min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6" th:disabled="${#lists.isEmpty(semanas)}">
                     <section class="min-w-0 border-b border-slate-200 py-6 first:pt-0">
-                        <div class="flex items-start gap-3 pb-5 [&>span]:flex [&>span]:h-10 [&>span]:w-10 [&>span]:shrink-0
-                            [&>span]:items-center [&>span]:justify-center [&>span]:rounded-xl [&>span]:border
-                            [&>span]:border-orange-100 [&>span]:bg-orange-50 [&>span]:text-xs [&>span]:font-bold
-                            [&>span]:text-orange-800 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-slate-900 [&_p]:mt-1 [&_p]:text-sm
-                            [&_p]:text-slate-500"><span>01</span><div><h2>Semana e dia</h2><p>Defina onde este treino entra no planejamento.</p></div></div>
+                        <div class="flex items-start gap-3 pb-5">
+                            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-100 bg-orange-50 text-xs font-bold text-orange-800">01</span>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900">Semana e dia</h2>
+                                <p class="mt-1 text-sm text-slate-500">Defina onde este treino entra no planejamento.</p>
+                            </div>
+                        </div>
                         <label for="semanaId" class="mb-2 block text-sm font-semibold text-slate-700">Semana do atleta <span aria-hidden="true">*</span></label>
                         <select th:field="*{semanaId}" required class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
                             <option value="">Selecione a semana e o atleta</option>
@@ -61,79 +74,85 @@
                             <legend class="mb-2 block text-sm font-semibold text-slate-700">Dia da semana <span aria-hidden="true">*</span></legend>
                             <p class="mb-3 text-sm leading-relaxed text-slate-500">Escolha um dia para esta sessão.</p>
                             <div class="flex flex-wrap gap-2">
-                                <label th:each="dia : ${diasSemana}" class="relative mb-0 min-w-[3.25rem] flex-1 cursor-pointer text-center">
+                                <label th:each="dia : ${diasSemana}" class="relative mb-0 min-w-12 flex-1 cursor-pointer text-center">
                                     <input class="peer sr-only" type="radio" th:field="*{dia}" th:value="${dia}" th:aria-label="${dia.rotulo}" required>
                                     <span class="flex min-h-16 flex-col items-center justify-center gap-1 rounded-xl border border-slate-300
                                         bg-slate-50 font-semibold text-slate-700 hover:border-amber-600 peer-checked:border-amber-700
                                         peer-checked:bg-amber-50 peer-checked:text-amber-900 peer-focus-visible:ring-2
-                                        peer-focus-visible:ring-blue-600"><strong th:text="${dia.abreviacao}"></strong><small class="hidden text-[10px] xl:block" th:text="${dia.rotulo}"></small></span>
+                                        peer-focus-visible:ring-blue-600"><strong th:text="${dia.abreviacao}"></strong><small class="hidden text-xs xl:block" th:text="${dia.rotulo}"></small></span>
                                 </label>
                             </div>
                         </fieldset>
                     </section>
                     <section class="min-w-0 border-b border-slate-200 py-6 first:pt-0">
-                        <div class="flex items-start gap-3 pb-5 [&>span]:flex [&>span]:h-10 [&>span]:w-10 [&>span]:shrink-0
-                            [&>span]:items-center [&>span]:justify-center [&>span]:rounded-xl [&>span]:border
-                            [&>span]:border-orange-100 [&>span]:bg-orange-50 [&>span]:text-xs [&>span]:font-bold
-                            [&>span]:text-orange-800 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-slate-900 [&_p]:mt-1 [&_p]:text-sm
-                            [&_p]:text-slate-500"><span>02</span><div><h2>Detalhes da sessão</h2><p>Dê um nome e descreva o objetivo do treino.</p></div></div>
-                        <div class="mb-4 flex flex-col gap-4 md:flex-row md:[&>*]:flex-1 [&>*]:min-w-0">
-                            <div><label for="nome" class="mb-2 block text-sm font-semibold text-slate-700">Nome do treino *</label><input th:field="*{nome}" required maxlength="255" placeholder="Ex.: Preparação física" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
-                            <div><label for="categoria" class="mb-2 block text-sm font-semibold text-slate-700">Categoria *</label><input th:field="*{categoria}" required maxlength="255" placeholder="Ex.: Futebol, força, corrida" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
+                        <div class="flex items-start gap-3 pb-5">
+                            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-100 bg-orange-50 text-xs font-bold text-orange-800">02</span>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900">Detalhes da sessão</h2>
+                                <p class="mt-1 text-sm text-slate-500">Dê um nome e descreva o objetivo do treino.</p>
+                            </div>
+                        </div>
+                        <div class="mb-4 flex flex-col gap-4 md:flex-row">
+                            <div class="md:flex-1 min-w-0"><label for="nome" class="mb-2 block text-sm font-semibold text-slate-700">Nome do treino *</label><input th:field="*{nome}" required maxlength="255" placeholder="Ex.: Preparação física" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
+                            <div class="md:flex-1 min-w-0"><label for="categoria" class="mb-2 block text-sm font-semibold text-slate-700">Categoria *</label><input th:field="*{categoria}" required maxlength="255" placeholder="Ex.: Futebol, força, corrida" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
                         </div>
                         <label for="descricao" class="mb-2 block text-sm font-semibold text-slate-700">Descrição <small>(opcional)</small></label>
                         <textarea th:field="*{descricao}" rows="3" maxlength="255" placeholder="Objetivos, intensidade e orientações para o atleta..." class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></textarea>
                     </section>
                     <section class="min-w-0 border-b border-slate-200 py-6 first:pt-0">
-                        <div class="flex items-start gap-3 pb-5 [&>span]:flex [&>span]:h-10 [&>span]:w-10 [&>span]:shrink-0
-                            [&>span]:items-center [&>span]:justify-center [&>span]:rounded-xl [&>span]:border
-                            [&>span]:border-orange-100 [&>span]:bg-orange-50 [&>span]:text-xs [&>span]:font-bold
-                            [&>span]:text-orange-800 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-slate-900 [&_p]:mt-1 [&_p]:text-sm
-                            [&_p]:text-slate-500"><span>03</span><div><h2>Horário do treino</h2><p>Defina o início e o fim da sessão, entre 06:00 e 22:00.</p></div></div>
-                        <div class="mb-4 flex flex-col gap-4 md:flex-row md:[&>*]:flex-1 [&>*]:min-w-0">
-                            <div><label for="horarioInicio" class="mb-2 block text-sm font-semibold text-slate-700">Horário de início *</label><input type="time" th:field="*{horarioInicio}" min="06:00" max="22:00" required class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
-                            <div><label for="horarioFim" class="mb-2 block text-sm font-semibold text-slate-700">Horário de fim *</label><input type="time" th:field="*{horarioFim}" min="06:00" max="22:00" required class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
+                        <div class="flex items-start gap-3 pb-5">
+                            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-100 bg-orange-50 text-xs font-bold text-orange-800">03</span>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900">Horário do treino</h2>
+                                <p class="mt-1 text-sm text-slate-500">Defina o início e o fim da sessão, entre 06:00 e 22:00.</p>
+                            </div>
+                        </div>
+                        <div class="mb-4 flex flex-col gap-4 md:flex-row">
+                            <div class="md:flex-1 min-w-0"><label for="horarioInicio" class="mb-2 block text-sm font-semibold text-slate-700">Horário de início *</label><input type="time" th:field="*{horarioInicio}" min="06:00" max="22:00" required class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
+                            <div class="md:flex-1 min-w-0"><label for="horarioFim" class="mb-2 block text-sm font-semibold text-slate-700">Horário de fim *</label><input type="time" th:field="*{horarioFim}" min="06:00" max="22:00" required class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600"></div>
                         </div>
                     </section>
                     <section id="exercicios" class="scroll-mt-6 min-w-0 border-b border-slate-200 py-6 first:pt-0">
-                        <div class="flex items-start gap-3 pb-5 [&>span]:flex [&>span]:h-10 [&>span]:w-10 [&>span]:shrink-0
-                            [&>span]:items-center [&>span]:justify-center [&>span]:rounded-xl [&>span]:border
-                            [&>span]:border-orange-100 [&>span]:bg-orange-50 [&>span]:text-xs [&>span]:font-bold
-                            [&>span]:text-orange-800 [&_h2]:text-lg [&_h2]:font-bold [&_h2]:text-slate-900 [&_p]:mt-1 [&_p]:text-sm
-                            [&_p]:text-slate-500"><span>04</span><div><h2>Exercícios do treino</h2><p>Adicione as atividades que farão parte desta sessão.</p></div></div>
+                        <div class="flex items-start gap-3 pb-5">
+                            <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-orange-100 bg-orange-50 text-xs font-bold text-orange-800">04</span>
+                            <div>
+                                <h2 class="text-lg font-bold text-slate-900">Exercícios do treino</h2>
+                                <p class="mt-1 text-sm text-slate-500">Adicione as atividades que farão parte desta sessão.</p>
+                            </div>
+                        </div>
                         <div id="lista-exercicios">
                             <div class="exercicio-item border-b border-dashed border-slate-200 py-4" th:each="item, status : *{exercicios}">
-                                <div class="mb-4 flex flex-col gap-4 md:flex-row md:[&>*]:flex-1 [&>*]:min-w-0">
-                                    <div>
+                                <div class="mb-4 flex flex-col gap-4 md:flex-row">
+                                    <div class="md:flex-1 min-w-0">
                                         <label data-campo="nome" th:for="|exercicios${status.index}.nome|" class="mb-2 block text-sm font-semibold text-slate-700">Nome do exercício *</label>
                                         <input data-campo="nome" th:field="*{exercicios[__${status.index}__].nome}" required maxlength="255" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
                                     </div>
-                                    <div>
+                                    <div class="md:flex-1 min-w-0">
                                         <label data-campo="duracao" th:for="|exercicios${status.index}.duracao|" class="mb-2 block text-sm font-semibold text-slate-700">Duração (minutos) *</label>
                                         <input type="number" data-campo="duracao" th:field="*{exercicios[__${status.index}__].duracao}" min="1" step="1" required class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
                                     </div>
                                 </div>
                                 <label data-campo="descricao" th:for="|exercicios${status.index}.descricao|" class="mb-2 block text-sm font-semibold text-slate-700">Descrição (opcional)</label>
                                 <input data-campo="descricao" th:field="*{exercicios[__${status.index}__].descricao}" maxlength="255" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
-                                <button type="button" data-remover-exercicio class="mt-3 text-sm font-bold text-red-700 underline underline-offset-4">Remover exercício</button>
+                                <button type="button" data-remover-exercicio class="mt-3 text-sm font-bold text-red-700 underline underline-offset-4 disabled:cursor-not-allowed disabled:opacity-50">Remover exercício</button>
                             </div>
                         </div>
                         <p id="sem-exercicios" class="mb-3 text-sm leading-relaxed text-slate-500">Você pode incluir exercícios agora ou salvar somente o treino.</p>
-                        <button id="adicionar-exercicio" type="button" class="text-sm font-bold text-amber-800 underline underline-offset-4">+ Adicionar exercício</button>
+                        <button id="adicionar-exercicio" type="button" class="text-sm font-bold text-amber-800 underline underline-offset-4 disabled:cursor-not-allowed disabled:opacity-50">+ Adicionar exercício</button>
                     </section>
-                    <footer class="flex flex-col items-start justify-between gap-5 pt-6 md:flex-row md:items-center [&>p]:text-sm [&>p]:text-slate-500"><p>O treino e seus exercícios serão salvos juntos na semana selecionada.</p><button type="submit" class="w-full whitespace-nowrap rounded-xl bg-amber-700 px-6 py-3 text-sm font-bold text-white hover:bg-amber-800 md:w-auto">Salvar treino <span aria-hidden="true">→</span></button></footer>
+                    <footer class="flex flex-col items-start justify-between gap-5 pt-6 md:flex-row md:items-center"><p class="text-sm text-slate-500">O treino e seus exercícios serão salvos juntos na semana selecionada.</p><button type="submit" class="w-full whitespace-nowrap rounded-xl bg-amber-700 px-6 py-3 text-sm font-bold text-white hover:bg-amber-800 md:w-auto disabled:cursor-not-allowed disabled:opacity-50">Salvar treino <span aria-hidden="true">→</span></button></footer>
                 </fieldset>
             </form>
-            <section class="mt-9 flex flex-col gap-3 [&_h2]:text-lg [&_h2]:font-bold [&_summary]:cursor-pointer [&_summary]:text-sm [&_summary]:font-semibold" th:unless="${#lists.isEmpty(semanas)}">
+            <section class="mt-9 flex flex-col gap-3" th:unless="${#lists.isEmpty(semanas)}">
                 <div class="flex flex-wrap items-center justify-between gap-3">
-                    <h2>Treinos por semana</h2>
+                    <h2 class="text-lg font-bold">Treinos por semana</h2>
                 </div>
                 <details th:each="s : ${semanas}" class="min-w-0 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
-                    <summary th:text="${s.nome + ' — ' + s.atleta_fk.name}"></summary>
+                    <summary class="cursor-pointer text-sm font-semibold" th:text="${s.nome + ' — ' + s.atleta_fk.name}"></summary>
                     <p class="mb-3 text-sm leading-relaxed text-slate-500" th:if="${#lists.isEmpty(s.dias)}">Nenhum treino cadastrado nesta semana.</p>
                     <div th:each="d : ${s.dias}">
-                        <div th:each="t : ${d.treinamentos}" class="mt-3 flex flex-wrap gap-3 border-t border-slate-200 py-3 text-sm [&_strong]:text-amber-800">
-                            <strong th:text="${d.nome.rotulo}"></strong>
+                        <div th:each="t : ${d.treinamentos}" class="mt-3 flex flex-wrap gap-3 border-t border-slate-200 py-3 text-sm">
+                            <strong class="text-amber-800" th:text="${d.nome.rotulo}"></strong>
                             <span th:text="${t.nome}"></span>
                             <span th:if="${t.horarioInicio != null and t.horarioFim != null}" th:text="${t.horarioInicio + ' – ' + t.horarioFim}"></span>
                             <span th:if="${t.cancelado == true}" class="font-bold text-red-700">Cancelado pelo médico</span>
@@ -146,12 +165,12 @@
 
 <template id="modelo-exercicio">
     <div class="exercicio-item border-b border-dashed border-slate-200 py-4">
-        <div class="mb-4 flex flex-col gap-4 md:flex-row md:[&>*]:flex-1 [&>*]:min-w-0">
-            <div>
+        <div class="mb-4 flex flex-col gap-4 md:flex-row">
+            <div class="md:flex-1 min-w-0">
                 <label data-campo="nome" class="mb-2 block text-sm font-semibold text-slate-700">Nome do exercício *</label>
                 <input data-campo="nome" required maxlength="255" placeholder="Ex.: Corrida leve" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
             </div>
-            <div>
+            <div class="md:flex-1 min-w-0">
                 <label data-campo="duracao" class="mb-2 block text-sm font-semibold text-slate-700">Duração (minutos) *</label>
                 <input data-campo="duracao" type="number" min="1" step="1" required placeholder="Ex.: 20" class="w-full min-w-0 rounded-lg border border-slate-300 bg-slate-50 p-3 text-sm text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-amber-600">
             </div>

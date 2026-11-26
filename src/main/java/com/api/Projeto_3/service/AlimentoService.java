@@ -26,15 +26,7 @@ public class AlimentoService {
     @Transactional(readOnly = true)
     public AtletaModelo buscarAtletaVinculado(Long medicoId, Long atletaId) {
         AtletaModelo atleta = atletaRepository.findById(atletaId).orElse(null);
-        if (atleta == null) {
-            return null;
-        }
-
-        MedicoModelo medicoDoAtleta = atleta.getMedico_fk();
-        if (medicoDoAtleta == null || !medicoId.equals(medicoDoAtleta.getId())) {
-            return null;
-        }
-
+      
         return atleta;
     }
 
@@ -55,9 +47,11 @@ public class AlimentoService {
 
     @Transactional
     public boolean recomendarAlimentacao(Long medicoId, Long atletaId, RecomendacaoAlimentarDto dados) {
-    
         MedicoModelo medico = medicoRepository.findById(medicoId).orElse(null);
         AtletaModelo atleta = buscarAtletaVinculado(medicoId, atletaId);
+        if (medico == null || atleta == null) {
+            return false;
+        }
 
         RecomendacaoAlimentar recomendacao = new RecomendacaoAlimentar();
         recomendacao.setMedico(medico);

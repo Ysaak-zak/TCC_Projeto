@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alimentos | Atleta</title>
+    <link rel="icon" th:href="@{/img/iconFun.png}">
+    <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
+</head>
+<body class="flex min-h-screen flex-col bg-black font-sans text-white scheme-dark md:flex-row">
+    <div th:replace="~{atletaPages/navegacao :: menu('alimentos', ${nomeAtleta})}"></div>
+    <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-6 flex-col gap-6 p-4 sm:p-6 lg:p-8">
+        <h1 class="text-2xl font-bold sm:text-3xl">Alimentos</h1>
+
+        <p th:if="${#lists.isEmpty(alimentos)}" class="text-sm text-gray-300">
+            Nenhuma recomendação alimentar cadastrada.
+        </p>
+
+        <div th:unless="${#lists.isEmpty(alimentos)}" class="overflow-x-auto
+             focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300"
+             style="scrollbar-color: var(--color-gray-500) black"
+             role="region" aria-label="Tabela de recomendações alimentares" tabindex="0">
+            <table class="w-full border-collapse text-left text-sm">
+                <caption class="sr-only">Recomendações alimentares</caption>
+                <thead class="border-y border-gray-700 bg-gray-900 text-gray-200">
+                    <tr>
+                        <th scope="col" class="min-w-28 px-4 py-3">Refeição</th>
+                        <th scope="col" class="min-w-40 px-4 py-3">Objetivo</th>
+                        <th scope="col" class="min-w-48 px-4 py-3">Orientação</th>
+                        <th scope="col" class="min-w-28 px-4 py-3">Médico</th>
+                        <th class="px-4 py-3" scope="col">Início</th>
+                        <th class="px-4 py-3" scope="col">Revisão</th>
+                        <th class="px-4 py-3" scope="col">Situação</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-300">
+                    <tr th:each="alimento : ${alimentos}" class="border-b border-gray-800 align-top">
+                        <th scope="row" class="font-semibold wrap-anywhere text-white px-4 py-3" th:text="${alimento.refeicao}">Refeição</th>
+                        <td class="wrap-anywhere px-4 py-3" th:text="${alimento.objetivo}">Objetivo</td>
+                        <td class="whitespace-pre-wrap wrap-anywhere px-4 py-3" th:text="${alimento.orientacao}">Orientação</td>
+                        <td class="wrap-anywhere px-4 py-3" th:text="${alimento.medicoNome ?: '—'}">Médico</td>
+                        <td class="whitespace-nowrap px-4 py-3" th:text="${#temporals.format(alimento.dataInicio, 'dd/MM/yyyy')}">Início</td>
+                        <td class="whitespace-nowrap px-4 py-3"
+                            th:text="${alimento.dataRevisao == null ? '—' : #temporals.format(alimento.dataRevisao, 'dd/MM/yyyy')}">Revisão</td>
+                        <td class="whitespace-nowrap px-4 py-3">
+                            <span th:if="${alimento.concluido}" class="font-semibold text-emerald-300">Concluído</span>
+                            <form th:unless="${alimento.concluido}" th:action="@{/atleta/alimentos/{id}/concluir(id=${alimento.id})}" method="post">
+                                <button type="submit" class="min-h-11 cursor-pointer rounded-md bg-purple-700 px-3 py-2 font-bold text-white hover:bg-purple-800
+                                    focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-purple-300"
+                                    th:attr="aria-label=|Marcar ${alimento.refeicao} como concluída|">
+                                    Marcar como concluído
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</body>
+</html>

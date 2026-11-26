@@ -65,7 +65,7 @@ int atletaSemVinculados();
                        "       per.sexo AS sexo, per.email AS email, mor.cidade AS cidade " +
                        "FROM perfis_modelo AS per " +
                        "INNER JOIN atletas atl ON per.id = atl.id " +
-                       "LEFT JOIN moradia mor ON per.mord = mor.id " +
+                       "INNER JOIN moradia mor ON per.mord = mor.id " +
                        "WHERE atl.atleta_trenador_fk = :treinadorId " +
                        "ORDER BY per.per_nome", nativeQuery = true)
         List<ListDasAtleta> atletListVinculadosTreinador(@Param("treinadorId") Long treinadorId);

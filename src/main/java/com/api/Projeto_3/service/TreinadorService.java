@@ -32,7 +32,7 @@ public class TreinadorService {
     public TreinadorCustomer buscarTreinadorPorId(String cpf) {
         TreinadorCustomer treinador = jpaTreinador.listTreinador(cpf);
         if (treinador == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Treinador não encontrado");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cadastro do treinador incompleto.");
         }
 
         return treinador;

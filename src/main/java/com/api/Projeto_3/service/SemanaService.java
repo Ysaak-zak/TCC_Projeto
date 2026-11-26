@@ -16,12 +16,11 @@ import com.api.Projeto_3.repository.SemanaResponitory;
 public class SemanaService {
     
        private  final SemanaResponitory senJpa;
-         private static final Logger logger = LoggerFactory.getLogger(SemanaService.class);
  
         public  void  creiSemana(SemanaDtos se){
         SemanaModel en = new SemanaModel();
           en.setDescricao(se.getDiscricao());
-         en.setAtleta_fk(null);
+          en.setAtleta_fk(null);
            
         for(DiasEnum diaNomes : DiasEnum.values()){
             DiaModel dia = new DiaModel();

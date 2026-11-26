@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 </head>
-<body class="min-h-screen bg-[#f9f8f6] font-sans text-slate-700">
+<body class="min-h-screen bg-treinador-fundo font-sans text-slate-700">
     <div class="min-h-screen flex flex-col sm:flex-row">
 
         <div th:replace="~{treinadorPages/navegacao :: menu('atletas', ${treinador})}"></div>
@@ -29,7 +29,7 @@
                             <p class="mt-2 text-sm text-slate-500">Gestão e consulta dos atletas sob acompanhamento do treinador.</p>
                         </div>
                         <div class="rounded-xl border-l-4 border-treinador-500 bg-white px-5 py-2.5 shadow-sm ring-1 ring-slate-200">
-                            <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Total vinculados</p>
+                            <p class="text-xs font-bold uppercase tracking-wide text-slate-400">Total vinculados</p>
                             <p class="text-lg font-bold text-treinador-700"><span id="total" th:text="${#lists.size(atletasVinculados)}">0</span> atletas</p>
                         </div>
                     </div>
@@ -40,13 +40,13 @@
                     <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center">
                         <a th:href="@{/treinador#lista-atletas}" class="rounded-xl border border-treinador-200 bg-treinador-50 px-4 py-3 text-center text-sm font-semibold text-treinador-700 hover:bg-treinador-100">+ Vincular novos atletas</a>
                     </div>
-                    <section id="atletas-vinculados" class="flex flex-wrap gap-5">
-                        <article th:each="atleta : ${atletasVinculados}" th:data-name="${atleta.per_nome}" th:data-cpf="${atleta.cpf}" class="athlete-row group flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm md:w-[calc((100%_-_1.25rem)/2)] xl:w-[calc((100%_-_2.5rem)/3)]">
+                    <section id="atletas-vinculados" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        <article th:each="atleta : ${atletasVinculados}" th:data-name="${atleta.per_nome}" th:data-cpf="${atleta.cpf}" class="athlete-row group flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm min-w-0">
                             <div class="h-1.5 bg-gradient-to-r from-treinador-600 via-treinador-500 to-treinador-300"></div>
                             <div class="flex items-center gap-4 bg-gradient-to-br from-treinador-50/80 to-white p-6">
                                 <span class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-gradient-to-br from-treinador-600 to-treinador-400 text-xl font-bold uppercase text-white shadow-md shadow-treinador-500/20 ring-4 ring-white" data-avatar="atleta" th:text="${#strings.isEmpty(atleta.per_nome) ? 'A' : #strings.substring(atleta.per_nome,0,1)}">A</span>
                                 <div class="min-w-0 flex-1">
-                                    <p class="mb-1 text-[10px] font-bold uppercase tracking-[.16em] text-treinador-600">Atleta vinculado</p>
+                                    <p class="mb-1 text-xs font-bold uppercase tracking-widest text-treinador-600">Atleta vinculado</p>
                                     <h2 class="truncate text-lg font-bold tracking-tight text-slate-800" th:text="${#strings.isEmpty(atleta.per_nome) ? 'Atleta sem nome' : atleta.per_nome}">Nome do atleta</h2>
                                     <p class="mt-1 text-xs text-slate-400" th:text="${'ID: #' + atleta.id}"></p>
                                 </div>

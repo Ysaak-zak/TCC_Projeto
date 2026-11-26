@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <body>
-    <aside th:fragment="menu(pagina, treinador)" class="flex shrink-0 flex-wrap items-center bg-amber-500 text-neutral-900 sm:sticky sm:top-0 sm:h-screen sm:w-[230px] sm:flex-col
-        sm:flex-nowrap sm:items-stretch sm:overflow-y-auto">
+    <aside th:fragment="menu(pagina, treinador)" class="flex shrink-0 flex-wrap items-center bg-amber-500 text-neutral-900 sm:sticky sm:top-0 sm:h-screen sm:w-56 sm:flex-col sm:flex-nowrap sm:items-stretch sm:overflow-y-auto">
         <strong class="min-w-0 flex-1 break-words bg-neutral-800 px-4 py-3 text-sm text-white sm:flex-none sm:py-6"
                 th:text="${treinador != null ? treinador.name : 'Portal do Treinador'}">Portal do Treinador</strong>
 
         <nav aria-label="Menu do treinador"
-             class="order-1 flex w-full flex-wrap sm:order-none sm:flex-col sm:py-4 [&_a]:flex [&_a]:min-h-11 [&_a]:items-center
-                 [&_a]:gap-2 [&_a]:px-3 [&_a]:py-2 [&_a]:text-xs [&_a]:font-bold [&_a:focus-visible]:outline
-                 [&_a:focus-visible]:outline-2 [&_a:focus-visible]:outline-blue-700 [&_a:hover]:bg-amber-600
-                 [&_a[aria-current=page]]:bg-amber-600 sm:[&_a]:px-4 sm:[&_a]:py-3 sm:[&_a]:text-sm [&_img]:h-5 [&_img]:w-5
-                 [&_img]:shrink-0 [&_img]:object-contain">
-            <a th:href="@{/treinador}" th:attr="aria-current=${pagina == 'painel' ? 'page' : null}">
-                <img th:src="@{/img/dash.svg}" alt="">Dashboard
+             class="order-1 flex w-full flex-wrap sm:order-none sm:flex-col sm:py-4">
+            <a th:href="@{/treinador}"
+               class="flex min-h-11 items-center gap-2 px-3 py-2 text-xs font-bold
+                      focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 hover:bg-amber-600 sm:px-4 sm:py-3 sm:text-sm"
+               th:attr="aria-current=${pagina == 'painel' ? 'page' : null}"
+               th:classappend="${pagina == 'painel' ? 'bg-amber-600' : null}">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/dash.svg}" alt="">Dashboard
             </a>
-            <a th:href="@{/treinador/atletas-vinculados}" th:attr="aria-current=${pagina == 'atletas' ? 'page' : null}">
-                <img th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
+            <a th:href="@{/treinador/atletas-vinculados}"
+               class="flex min-h-11 items-center gap-2 px-3 py-2 text-xs font-bold
+                      focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 hover:bg-amber-600 sm:px-4 sm:py-3 sm:text-sm"
+               th:attr="aria-current=${pagina == 'atletas' ? 'page' : null}"
+               th:classappend="${pagina == 'atletas' ? 'bg-amber-600' : null}">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/treinadorBranca.svg}" alt="">Atletas vinculados
             </a>
-            <a th:href="@{/treinador/perfil}" th:attr="aria-current=${pagina == 'perfil' ? 'page' : null}">
-                <img th:src="@{/img/user.svg}" alt="">Perfil
+            <a th:href="@{/treinador/perfil}"
+               class="flex min-h-11 items-center gap-2 px-3 py-2 text-xs font-bold
+                      focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 hover:bg-amber-600 sm:px-4 sm:py-3 sm:text-sm"
+               th:attr="aria-current=${pagina == 'perfil' ? 'page' : null}"
+               th:classappend="${pagina == 'perfil' ? 'bg-amber-600' : null}">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/user.svg}" alt="">Perfil
             </a>
-            <a th:href="@{/treinador/treinos/semanas}" th:attr="aria-current=${pagina == 'treinos' ? 'page' : null}">
-                <img th:src="@{/img/calen.svg}" alt="">Treinos
+            <a th:href="@{/treinador/treinos/semanas}"
+               class="flex min-h-11 items-center gap-2 px-3 py-2 text-xs font-bold
+                      focus-visible:outline focus-visible:outline-2 focus-visible:outline-blue-700 hover:bg-amber-600 sm:px-4 sm:py-3 sm:text-sm"
+               th:attr="aria-current=${pagina == 'treinos' ? 'page' : null}"
+               th:classappend="${pagina == 'treinos' ? 'bg-amber-600' : null}">
+                <img class="h-5 w-5 shrink-0 object-contain" th:src="@{/img/calen.svg}" alt="">Treinos
             </a>
         </nav>
 

@@ -19,12 +19,12 @@ import com.api.Projeto_3.dtos.DtosModelos.SemanaAgendaDto;
 import com.api.Projeto_3.dtos.DtosModelos.TreinoAgendaDto;
 import com.api.Projeto_3.dtos.DtosModelos.TreinoAtletaProgressoDto;
 import com.api.Projeto_3.dtos.DtosModelos.TreinosAtletaDto;
+import com.api.Projeto_3.dtos.interfaceCustomer.LinhaDaAgendaCustomer;
 import com.api.Projeto_3.model.AtletaModelo;
 import com.api.Projeto_3.model.DiaModel;
 import com.api.Projeto_3.model.SemanaModel;
 import com.api.Projeto_3.model.TreinamentoModel;
 import com.api.Projeto_3.model.enums.DiasEnum;
-import com.api.Projeto_3.repository.AgendaTreinamentoRepository.LinhaDaAgenda;
 import com.api.Projeto_3.repository.DashRepository;
 import com.api.Projeto_3.repository.TreinamentoRespository;
 
@@ -97,7 +97,7 @@ public class TreinosAtletaService {
         return semanaDaAgenda;
     }
 
-    private List<DiaAgendaDto> montarDias(List<LinhaDaAgenda> linhas) {
+    private List<DiaAgendaDto> montarDias(List<LinhaDaAgendaCustomer> linhas) {
         Map<DiasEnum, DiaAgendaDto> dias = new EnumMap<>(DiasEnum.class);
         for (DiasEnum nome : DiasEnum.values()) {
             DiaAgendaDto dia = new DiaAgendaDto();
@@ -107,40 +107,40 @@ public class TreinosAtletaService {
         }
 
         Map<Long, TreinoAgendaDto> treinos = new HashMap<>();
-        for (LinhaDaAgenda linha : linhas) {
-            TreinoAgendaDto treino = treinos.computeIfAbsent(linha.treinoId(), id -> {
+        for (LinhaDaAgendaCustomer linha : linhas) {
+            TreinoAgendaDto treino = treinos.computeIfAbsent(linha.getTreinoId(), id -> {
                 TreinoAgendaDto novoTreino = mapearTreino(linha);
-                dias.get(DiasEnum.valueOf(linha.dia())).getTreinos().add(novoTreino);
+                dias.get(DiasEnum.valueOf(linha.getDia())).getTreinos().add(novoTreino);
                 return novoTreino;
             });
-            Optional.ofNullable(linha.exercicioId())
+            Optional.ofNullable(linha.getExercicioId())
                     .ifPresent(id -> treino.getExercicios().add(mapearExercicio(linha)));
         }
 
         return List.copyOf(dias.values());
     }
 
-    private TreinoAgendaDto mapearTreino(LinhaDaAgenda linha) {
+    private TreinoAgendaDto mapearTreino(LinhaDaAgendaCustomer linha) {
         TreinoAgendaDto treino = new TreinoAgendaDto();
-        treino.setId(linha.treinoId());
-        treino.setNome(linha.treinoNome());
-        treino.setCategoria(linha.treinoCategoria());
-        treino.setDescricao(linha.treinoDescricao());
-        treino.setHorarioInicio(linha.horarioInicio());
-        treino.setHorarioFim(linha.horarioFim());
-        treino.setCancelado(linha.treinoCancelado());
-        treino.setConcluido(linha.treinoConcluido());
+        treino.setId(linha.getTreinoId());
+        treino.setNome(linha.getTreinoNome());
+        treino.setCategoria(linha.getTreinoCategoria());
+        treino.setDescricao(linha.getTreinoDescricao());
+        treino.setHorarioInicio(linha.getHorarioInicio());
+        treino.setHorarioFim(linha.getHorarioFim());
+        treino.setCancelado(linha.isTreinoCancelado());
+        treino.setConcluido(linha.isTreinoConcluido());
         treino.setExercicios(new ArrayList<>());
         return treino;
     }
 
-    private ExercicioAgendaDto mapearExercicio(LinhaDaAgenda linha) {
+    private ExercicioAgendaDto mapearExercicio(LinhaDaAgendaCustomer linha) {
         ExercicioAgendaDto exercicio = new ExercicioAgendaDto();
-        exercicio.setId(linha.exercicioId());
-        exercicio.setNome(linha.exercicioNome());
-        exercicio.setDescricao(linha.exercicioDescricao());
-        exercicio.setDuracao(linha.exercicioDuracao());
-        exercicio.setConcluido(linha.exercicioConcluido());
+        exercicio.setId(linha.getExercicioId());
+        exercicio.setNome(linha.getExercicioNome());
+        exercicio.setDescricao(linha.getExercicioDescricao());
+        exercicio.setDuracao(linha.getExercicioDuracao());
+        exercicio.setConcluido(linha.isExercicioConcluido());
         return exercicio;
     }
 }

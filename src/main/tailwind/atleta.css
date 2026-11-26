@@ -1,2 +1,15 @@
 @import "tailwindcss" source(none);
 @source "../resources/templates/atletaPages";
+
+@theme {
+    --color-atleta-painel: #374151;
+    --color-atleta-acao: #9333ea;
+    --color-atleta-acao-hover: #7e22ce;
+    --color-atleta-barra-fundo: #3b0764;
+    --color-atleta-barra: #8b5cf6;
+    --color-atleta-cancelado: #4c1d27;
+    --color-atleta-concluido: #064e3b;
+    --color-atleta-destaque: #c084fc;
+    --color-atleta-tempo: #6ee7b7;
+    --color-atleta-satisfacao: #fbbf24;
+}

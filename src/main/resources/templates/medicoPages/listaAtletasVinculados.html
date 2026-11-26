@@ -20,7 +20,7 @@
             <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
             <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
         </a>
-        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <p class="mb-3 hidden px-3 text-xs font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
         <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
             <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
                 th:classappend="${(modoAlimentacao == true ? 'alimentacao' : 'atletas') == 'vincular' ? 'border-emerald-200 bg-emerald-50 font-bold text-emerald-950' : 'border-transparent text-emerald-100 hover:bg-white/10 hover:text-white'}"
@@ -93,7 +93,7 @@
                             <p class="mt-2 text-sm text-slate-500" th:text="${modoAlimentacao == true ? 'Escolha um atleta para abrir o plano alimentar.' : 'Gestão e consulta dos atletas sob acompanhamento médico.'}">Gestão e consulta dos atletas sob acompanhamento médico.</p>
                         </div>
                         <div class="rounded-xl border-l-4 border-emerald-500 bg-white px-5 py-2.5 shadow-sm ring-1 ring-slate-200">
-                            <p class="text-[10px] font-bold uppercase tracking-wide text-slate-400">Total vinculados</p>
+                            <p class="text-xs font-bold uppercase tracking-wide text-slate-400">Total vinculados</p>
                             <p class="text-lg font-bold text-emerald-700"><span id="total" th:text="${#lists.size(atletas)}">0</span> atletas</p>
                         </div>
                     </div>
@@ -101,13 +101,13 @@
                     <p th:if="${#lists.isEmpty(atletas)}" class="rounded-xl border border-dashed border-slate-300 bg-white px-5 py-12 text-center text-sm text-slate-500">Nenhum atleta vinculado.</p>
                     <p th:if="${param.desvinculado != null}" role="status" class="mb-4 rounded-xl bg-emerald-50 px-4 py-3 text-sm text-emerald-800">Atleta desvinculado com sucesso.</p>
                     <p th:if="${param.atletaIndisponivel != null}" role="alert" class="mb-4 rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700">Atleta não encontrado ou sem vínculo com você.</p>
-                    <section id="atletas-vinculados" class="flex flex-wrap gap-5">
-                        <article th:each="atleta : ${atletas}" class="group flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm md:w-[calc((100%_-_1.25rem)/2)] xl:w-[calc((100%_-_2.5rem)/3)]">
+                    <section id="atletas-vinculados" class="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+                        <article th:each="atleta : ${atletas}" class="group flex w-full flex-col overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm min-w-0">
                             <div class="h-1.5 bg-gradient-to-r from-emerald-600 via-emerald-500 to-green-300"></div>
                             <div class="flex items-center gap-4 bg-gradient-to-br from-emerald-50/80 to-white p-6">
                                 <span class="flex h-14 w-14 flex-none items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-600 to-emerald-400 text-xl font-bold uppercase text-white shadow-md shadow-emerald-500/20 ring-4 ring-white" data-avatar="atleta" th:text="${#strings.isEmpty(atleta.name) ? 'A' : #strings.substring(atleta.name,0,1)}">A</span>
                                 <div class="min-w-0 flex-1">
-                                    <p class="mb-1 text-[10px] font-bold uppercase tracking-[.16em] text-emerald-600">Atleta vinculado</p>
+                                    <p class="mb-1 text-xs font-bold uppercase tracking-widest text-emerald-600">Atleta vinculado</p>
                                     <h2 class="truncate text-lg font-bold tracking-tight text-slate-800" th:text="${#strings.isEmpty(atleta.name) ? 'Atleta sem nome' : atleta.name}">Nome do atleta</h2>
                                     <p class="mt-1 text-xs text-slate-400" th:text="${'ID: #' + atleta.id}"></p>
                                 </div>

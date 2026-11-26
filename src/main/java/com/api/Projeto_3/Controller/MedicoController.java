@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.api.Projeto_3.dtos.DtosModelos.PerfilsDtos;
 import com.api.Projeto_3.dtos.interfaceCustomer.ListDasAtleta;
@@ -62,10 +61,6 @@ public class MedicoController {
     public String getMedico(@AuthenticationPrincipal UserDetails userLogado, Model model) {
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
 
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
-
         List<ListDasAtleta> listaAtletas = medicoService.listTab();
 
         model.addAttribute("medico", medico);
@@ -78,11 +73,6 @@ public class MedicoController {
     @GetMapping("/medico/perfil")
     public String getPerfilMedico(@AuthenticationPrincipal UserDetails userLogado, Model model) {
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
-
         model.addAttribute("perfil", medico);
         return "medicoPages/PerfilMedico";
     }
@@ -90,10 +80,6 @@ public class MedicoController {
     @GetMapping("/medico/atletas-vinculados")
     public String getMedicoAtletasVinculados(@AuthenticationPrincipal UserDetails userLogado, Model model) {
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
         model.addAttribute("medico", medico);
         model.addAttribute("nomeMedico", medicoService.buscarNomes(userLogado.getUsername()));
         model.addAttribute("lisNome", medicoService.mostrandoAtletaNomes(medico.getId()));
@@ -104,10 +90,8 @@ public class MedicoController {
 
     @GetMapping("/medico/exame-urina")
     public String getExameUrina(@AuthenticationPrincipal UserDetails userLogado, Model model) {
-        if (userLogado == null) return "redirect:/login";
-        MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-        if (medico == null) return "redirect:/login?error";
 
+        MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
         model.addAttribute("medico", medico);
         model.addAttribute("atletas", medicoService.atletasVinculados(medico.getId()));
         return "medicoPages/TestUrina";
@@ -115,82 +99,49 @@ public class MedicoController {
 
     @GetMapping("/medico/exame-sangue")
     public String getExameSangue(@AuthenticationPrincipal UserDetails userLogado, Model model) {
-        if (userLogado == null) return "redirect:/login";
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-        if (medico == null) return "redirect:/login?error";
-
         model.addAttribute("medico", medico);
         model.addAttribute("atletas", medicoService.atletasVinculados(medico.getId()));
         return "medicoPages/TesSangue";
     }
 
     @PostMapping("/medico/{medicoId}/vincular-atleta/{atletaId}")
-    public String vincularAtleta(@PathVariable("medicoId") Long medicoId,
-                                @PathVariable("atletaId") Long atletaId) {
+    public String vincularAtleta(@PathVariable("medicoId") Long medicoId,  @PathVariable("atletaId") Long atletaId) {
         atletaService.insertFkAMedico(atletaId, medicoId);
         return "redirect:/medico";
     }
 
     @PostMapping("/medico/atletas/{atletaId}/desvincular")
-    public String desvincularAtleta(@AuthenticationPrincipal UserDetails userLogado,
-                                   @PathVariable Long atletaId) {
-        if (userLogado == null) {
-            return "redirect:/login";
-        }
+    public String desvincularAtleta(@AuthenticationPrincipal UserDetails userLogado, @PathVariable Long atletaId) {
+        
 
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
 
-        if (!medicoService.desvincularAtleta(medico.getId(), atletaId)) {
-            return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
-        }
+       medicoService.desvincularAtleta(medico.getId(), atletaId);
 
         return "redirect:/medico/atletas-vinculados?desvinculado";
     }
 
     @GetMapping("/medico/atletas/{atletaId}/treinamentos")
-    public String getTreinamentosDoAtleta(@AuthenticationPrincipal UserDetails userLogado,
-                                          @PathVariable Long atletaId, Model model) {
-        if (userLogado == null) {
-            return "redirect:/login";
-        }
-
+    public String getTreinamentosDoAtleta(@AuthenticationPrincipal UserDetails userLogado,  @PathVariable Long atletaId, Model model) {
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
-
         AtletaModelo atleta = medicoService.buscarAtletaVinculado(medico.getId(), atletaId);
-        if (atleta == null) {
-            return "redirect:/medico/atletas-vinculados?atletaIndisponivel";
-        }
-
+        
         model.addAttribute("medico", medico);
         model.addAttribute("atleta", atleta);
         model.addAttribute("treinamentos", medicoService.treinamentosDoAtleta(medico.getId(), atletaId));
-        model.addAttribute("motivoMax", MedicoService.MOTIVO_CANCELAMENTO_MAX);
 
         return "medicoPages/treinamentosAtleta";
     }
 
     @PostMapping("/medico/atletas/{atletaId}/treinamentos/{treinamentoId}/cancelar")
     public String cancelarTreinamento(@AuthenticationPrincipal UserDetails userLogado,
-                                      @PathVariable Long atletaId,
-                                      @PathVariable Long treinamentoId,
-                                      @RequestParam(name = "motivo", required = false) String motivo) {
-        if (userLogado == null) {
-            return "redirect:/login";
-        }
+                                      @PathVariable Long atletaId, @PathVariable Long treinamentoId) {
 
         MedicoModelo medico = medicoService.buscarMedicoPorId(userLogado.getUsername());
-        if (medico == null) {
-            return "redirect:/login?error";
-        }
 
         String tela = "redirect:/medico/atletas/" + atletaId + "/treinamentos";
-        if (medicoService.cancelarTreinamento(medico.getId(), atletaId, treinamentoId, motivo)) {
+        if (medicoService.cancelarTreinamento(medico.getId(), atletaId, treinamentoId)) {
             return tela + "?cancelado";
         }
         return tela + "?erroCancelamento";

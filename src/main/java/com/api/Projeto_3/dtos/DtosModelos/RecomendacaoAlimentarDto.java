@@ -82,6 +82,12 @@ public class RecomendacaoAlimentarDto {
         this.dataRevisao = dataRevisao;
     }
 
+    @Override
+    public String toString() {
+        return "RecomendacaoAlimentarDto [refeicao=" + refeicao + ", objetivo=" + objetivo + ", orientacao="
+                + orientacao + ", dataInicio=" + dataInicio + ", dataRevisao=" + dataRevisao + "]";
+    }
+
     
     
 }

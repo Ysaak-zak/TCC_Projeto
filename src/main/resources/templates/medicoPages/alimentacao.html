@@ -14,7 +14,7 @@
     <script defer th:src="@{/js/acoes-medico.js}"></script>
 </head>
 
-<body class="min-h-screen bg-[#f5f8fd] font-sans text-slate-700">
+<body class="min-h-screen bg-alimentacao-fundo font-sans text-slate-700">
     <div class="min-h-screen md:flex">
 
         <aside aria-label="Navegação do médico"
@@ -23,7 +23,7 @@
             <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
             <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
         </a>
-        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <p class="mb-3 hidden px-3 text-xs font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
         <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
             <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
                 <div class="flex items-center gap-3">
@@ -70,64 +70,45 @@
         </div>
     </aside>
 
-        <main class="bg-[#f3f7f4] min-w-0 flex-1">
-            <header class="flex flex-wrap items-center justify-between gap-2 border-b border-emerald-100 bg-white px-5 py-3 text-xs
-                text-slate-600 sm:px-8 [&>a]:font-semibold [&>a]:text-emerald-800 [&>a:hover]:underline">
-                <a th:href="@{/medico/atletas-vinculados}">← Atletas vinculados</a>
-                <span>Portal Médico · Alimentação esportiva</span>
-            </header>
-            <section class="flex min-h-[210px] flex-col justify-between gap-5 bg-[radial-gradient(ellipse_at_top_right,#287d54,transparent_65%)]
-                bg-[#103f30] px-5 py-10 text-white sm:flex-row sm:items-center sm:px-8 [&_h1]:mt-2 [&_h1]:font-display [&_h1]:text-2xl
-                [&_h1]:font-bold sm:[&_h1]:text-3xl [&_h1+p]:mt-2 [&_h1+p]:text-sm [&_h1+p]:text-emerald-100">
+        <main class="bg-alimentacao-painel min-w-0 flex-1">
+            <section class="flex min-h-52 flex-col bg-alimentacao-cabecalho px-5 py-10 text-white sm:flex-row sm:items-center sm:px-8" style="background-image: radial-gradient(ellipse at top right, #287d54, transparent 65%)">
                 <div>
-                    <p class="text-[10px] font-bold tracking-widest">ACOMPANHAMENTO INDIVIDUAL</p>
-                    <h1>Alimentação do atleta</h1>
-                    <p>Planeje os cuidados de hoje. Acompanhe a evolução a cada orientação.</p>
-                </div>
-                <div class="flex min-w-0 max-w-full items-center gap-3 self-start rounded-xl border border-white/25 bg-white/10 p-3
-                    sm:self-auto [&_small]:block [&_small]:text-[10px] [&_small]:tracking-widest [&_strong]:break-words">
-                    <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-lg font-bold text-emerald-900" data-avatar="atleta"
-                        th:text="${#strings.isEmpty(atleta.name) ? 'A' : #strings.substring(atleta.name,0,1)}">A</span>
-                    <div>
-                        <small>ATLETA</small>
-                        <strong th:text="${atleta.name}">Nome do atleta</strong>
-                    </div>
+                    <p class="text-xs font-bold tracking-widest">ACOMPANHAMENTO INDIVIDUAL</p>
+                    <h1 class="mt-2 font-display text-2xl font-bold sm:text-3xl">Alimentação do atleta</h1>
+                    <p class="mt-2 text-sm text-emerald-100">Planeje os cuidados de hoje. Acompanhe a evolução a cada orientação.</p>
                 </div>
             </section>
             <div class="mx-auto flex max-w-7xl flex-col gap-3 px-5 pt-6 sm:px-8 xl:flex-row xl:items-end xl:justify-between">
-            <div class="w-full max-w-[390px] [&_label]:mb-2 [&_label]:block [&_label]:text-sm [&_label]:font-bold [&_label]:text-emerald-950
-                [&_select]:w-full [&_select]:cursor-pointer [&_select]:rounded-xl [&_select]:border [&_select]:border-emerald-200
-                [&_select]:bg-white [&_select]:px-4 [&_select]:py-3 [&_select]:text-sm [&_select:focus-visible]:outline
-                [&_select:focus-visible]:outline-2 [&_select:focus-visible]:outline-emerald-600">
-                <label for="selecionar-atleta" >Escolha o atleta</label>
-                <select id="selecionar-atleta" 
+            <div class="w-full max-w-sm">
+                <label class="mb-2 block text-sm font-bold text-emerald-950" for="selecionar-atleta" >Escolha o atleta</label>
+                <select class="w-full cursor-pointer rounded-xl border border-emerald-200 bg-white px-4 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600" id="selecionar-atleta"
                         data-navegar-selecao>
                     <option th:each="item : ${atletas}" th:value="@{/medico/alimentacao/{id}(id=${item.id})}"
                             th:selected="${item.id == atleta.id}" th:text="${item.name}">Atleta</option>
                 </select>
             </div>
-                <div class="flex flex-wrap items-center gap-2 pb-2 text-xs text-slate-600 [&_strong]:border-l [&_strong]:border-emerald-200 [&_strong]:pl-2 [&_strong]:text-emerald-800">
+                <div class="flex flex-wrap items-center gap-2 pb-2 text-xs text-slate-600">
                     <span class="h-2 w-2 shrink-0 rounded-full bg-emerald-600" aria-hidden="true"></span>
                     <span>Acompanhamento alimentar</span>
-                    <strong th:text="${#lists.size(recomendacoes)} + ' recomendações'">0 recomendações</strong>
+                    <strong class="border-l border-emerald-200 pl-2 text-emerald-800" th:text="${#lists.size(recomendacoes)} + ' recomendações'">0 recomendações</strong>
                 </div>
             </div>
             <div class="mx-auto flex max-w-7xl flex-col gap-5 px-5 py-6 sm:px-8 xl:flex-row">
                 <section class="min-w-0 flex-1 rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm sm:p-6">
-                    <div class="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-emerald-50 pb-4 text-emerald-800 [&_h2]:mt-1 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold">
+                    <div class="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-emerald-50 pb-4 text-emerald-800">
                         <div>
-                            <p class="text-[10px] font-bold tracking-widest">NOVA ORIENTAÇÃO</p>
-                            <h2>Nova recomendação</h2>
+                            <p class="text-xs font-bold tracking-widest">NOVA ORIENTAÇÃO</p>
+                            <h2 class="mt-1 font-display text-xl font-bold">Nova recomendação</h2>
                         </div>
                         <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-lg font-bold" aria-hidden="true">＋</span>
                     </div>
                     <div th:if="${salvo}" class="mb-4 rounded-lg bg-emerald-50 p-3 text-sm font-semibold text-emerald-800" role="status">Recomendação salva e vinculada ao
                         histórico do atleta.</div>
                     <form th:action="@{/medico/alimentacao/{id}(id=${atleta.id})}" th:object="${recomendacao}"
-                        method="post" class="flex flex-col gap-4 [&_label]:flex [&_label]:min-w-0 [&_label]:flex-col [&_label]:gap-2 [&_label]:text-sm [&_label]:font-semibold [&_label]:text-slate-700">
+                        method="post" class="flex flex-col gap-4">
                         <input th:if="${_csrf != null}" type="hidden" th:name="${_csrf.parameterName}"
                             th:value="${_csrf.token}">
-                        <label>Momento da alimentação
+                        <label class="flex min-w-0 flex-col gap-2 text-sm font-semibold text-slate-700">Momento da alimentação
                             <select th:field="*{refeicao}" required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
                                 text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
                                 <option value="">Selecione</option>
@@ -142,13 +123,13 @@
                             </select>
                             <span class="text-xs font-medium text-red-700" th:errors="*{refeicao}"></span>
                         </label>
-                        <label>Objetivo
+                        <label class="flex min-w-0 flex-col gap-2 text-sm font-semibold text-slate-700">Objetivo
                             <input th:field="*{objetivo}" maxlength="120"
                                 placeholder="Ex.: recuperação após treino intenso" required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
                                     text-slate-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-emerald-600">
                             <span class="text-xs font-medium text-red-700" th:errors="*{objetivo}"></span>
                         </label>
-                        <label>Orientação para o atleta
+                        <label class="flex min-w-0 flex-col gap-2 text-sm font-semibold text-slate-700">Orientação para o atleta
                             <textarea th:field="*{orientacao}" maxlength="2000" rows="5"
                                 placeholder="Descreva a recomendação, porções e observações relevantes..."
                                 required class="w-full min-w-0 rounded-lg border border-emerald-200 bg-white px-3 py-2.5 text-sm font-normal
@@ -161,29 +142,27 @@
                     </form>
                 </section>
                 <section class="min-w-0 flex-1 rounded-2xl border border-emerald-100 bg-white p-5 shadow-sm sm:p-6">
-                    <div class="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-emerald-50 pb-4 text-emerald-800 [&_h2]:mt-1 [&_h2]:font-display [&_h2]:text-xl [&_h2]:font-bold">
+                    <div class="mb-5 flex flex-wrap items-center justify-between gap-2 border-b border-emerald-50 pb-4 text-emerald-800">
                         <div>
-                            <p class="text-[10px] font-bold tracking-widest">REGISTROS DO ATLETA</p>
-                            <h2>Histórico de recomendações</h2>
+                            <p class="text-xs font-bold tracking-widest">REGISTROS DO ATLETA</p>
+                            <h2 class="mt-1 font-display text-xl font-bold">Histórico de recomendações</h2>
                         </div>
                         <span class="shrink-0 rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-800" th:text="${#lists.size(recomendacoes)} + ' registros'">0
                             registros</span>
                     </div>
-                    <div th:if="${#lists.isEmpty(recomendacoes)}" class="flex min-h-52 flex-col items-center justify-center gap-2 rounded-xl bg-emerald-50/50 p-5 text-center text-sm text-slate-600 [&_strong]:text-emerald-900">
+                    <div th:if="${#lists.isEmpty(recomendacoes)}" class="flex min-h-52 flex-col items-center justify-center gap-2 rounded-xl bg-emerald-50/50 p-5 text-center text-sm text-slate-600">
                         <span aria-hidden="true">☷</span>
-                        <strong>Nenhuma recomendação registrada</strong>
+                        <strong class="text-emerald-900">Nenhuma recomendação registrada</strong>
                         <p>Adicione a primeira orientação alimentar deste atleta pelo formulário.</p>
                     </div>
                     <ol th:unless="${#lists.isEmpty(recomendacoes)}" class="flex flex-col gap-3">
-                        <li th:each="item : ${recomendacoes}" class="min-w-0 break-words rounded-xl border border-emerald-100 border-l-4 border-l-emerald-400 bg-emerald-50/20
-                            p-4 [&_h3]:mb-1 [&_h3]:font-bold [&_h3]:text-emerald-950 [&_p]:whitespace-pre-line [&_p]:text-sm
-                            [&_p]:text-slate-700 [&_time]:text-xs [&_time]:text-slate-600">
+                        <li th:each="item : ${recomendacoes}" class="min-w-0 break-words rounded-xl border border-emerald-100 border-l-4 border-l-emerald-400 bg-emerald-50/20 p-4">
                             <div class="mb-2 flex flex-wrap items-center justify-between gap-2">
                                 <span class="rounded-full bg-emerald-100 px-2 py-1 text-xs font-bold uppercase text-emerald-800" th:text="${item.refeicao}">Pós-treino</span>
-                                <time th:text="${#temporals.format(item.dataInicio, 'dd/MM/yyyy')}">26/10/2026</time>
+                                <time class="text-xs text-slate-600" th:text="${#temporals.format(item.dataInicio, 'dd/MM/yyyy')}">26/10/2026</time>
                             </div>
-                            <h3 th:text="${item.objetivo}">Objetivo</h3>
-                            <p th:text="${item.orientacao}">Orientação</p>
+                            <h3 class="mb-1 font-bold text-emerald-950" th:text="${item.objetivo}">Objetivo</h3>
+                            <p class="whitespace-pre-line text-sm text-slate-700" th:text="${item.orientacao}">Orientação</p>
                             <small th:if="${item.dataRevisao != null}" class="mt-2 block text-xs font-semibold text-slate-600"
                                 th:text="${'Revisão prevista para ' + #temporals.format(item.dataRevisao, 'dd/MM/yyyy')}">Revisão
                                 prevista</small>

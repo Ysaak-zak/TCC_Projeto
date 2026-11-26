@@ -28,8 +28,8 @@ public interface TreinadorRespository  extends JpaRepository<TreinadorModel,Long
                afl.pai_email AS paiEmail, afl.pai_telefone AS paiTelefone
         FROM perfis_modelo per
         INNER JOIN treinadores tre ON tre.id = per.id
-        LEFT JOIN moradia mor ON per.mord = mor.id
-        LEFT JOIN afliacao afl ON per.fal_fk = afl.id
+        INNER JOIN moradia mor ON per.mord = mor.id
+        INNER JOIN afliacao afl ON per.fal_fk = afl.id
         WHERE per.cpf = :cpf
         """, nativeQuery = true)
     public TreinadorCustomer listTreinador(String cpf);

@@ -10,7 +10,7 @@
     <script th:src="@{/js/tailwind-theme.js}"></script>
 </head>
 
-<body class="min-h-screen bg-[#f7f9f8] font-sans text-slate-700">
+<body class="min-h-screen bg-medico-fundo font-sans text-slate-700">
     <div class="min-h-screen md:flex">
         <aside aria-label="Navegação do médico"
         class="print:hidden relative flex shrink-0 flex-col bg-emerald-950 px-4 py-5 text-emerald-100 md:sticky md:top-0 md:h-dvh md:w-64 md:overflow-y-auto md:px-5 md:py-7">
@@ -18,7 +18,7 @@
             <img th:src="@{/img/MedicoVerd.svg}" alt="" class="h-11 w-11 object-contain">
             <span><strong class="block text-lg text-white">Portal Médico</strong><small class="block text-xs text-emerald-200">Saúde e desempenho</small></span>
         </a>
-        <p class="mb-3 hidden px-3 text-[10px] font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
+        <p class="mb-3 hidden px-3 text-xs font-bold tracking-widest text-emerald-200 md:block">ÁREA MÉDICA</p>
         <nav aria-label="Menu médico" class="flex gap-2 overflow-x-auto md:flex-col">
             <a th:href="@{/medico}" class="shrink-0 rounded-xl border px-3 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300 border-transparent text-emerald-100 hover:bg-white/10 hover:text-white">
                 <div class="flex items-center gap-3">
@@ -92,9 +92,9 @@
                             </h2>
                         </div>
 
-                        <section class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] [&>*]:min-w-0">
+                        <section class="gap-4 grid md:grid-cols-2">
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="atletaId" class="text-gray-700 font-medium">
                                     Atleta
                                 </label>
@@ -111,7 +111,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="dataColeta" class="text-gray-700 font-medium">
                                     Data da Coleta
                                 </label>
@@ -131,10 +131,9 @@
                             </h2>
                         </div>
 
-                        <section class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] xl:flex-row
-                            xl:flex-wrap xl:[&>*]:w-[calc(25.000000%_-_0.750000rem)] [&>*]:min-w-0">
+                        <section class="gap-4 grid md:grid-cols-2 xl:grid-cols-4">
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="temperatura" class="text-gray-700 font-medium">
                                     Temperatura (°C)
                                 </label>
@@ -144,7 +143,7 @@
                                     class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="cor" class="text-gray-700 font-medium">
                                     Cor da Urina
                                 </label>
@@ -159,7 +158,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="ph" class="text-gray-700 font-medium">
                                     pH
                                 </label>
@@ -168,7 +167,7 @@
                                     class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="densidade" class="text-gray-700 font-medium">
                                     Densidade Específica
                                 </label>
@@ -188,10 +187,9 @@
                             </h2>
                         </div>
 
-                        <section class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] xl:flex-row
-                            xl:flex-wrap xl:[&>*]:w-[calc(25.000000%_-_0.750000rem)] [&>*]:min-w-0">
+                        <section class="gap-4 grid md:grid-cols-2 xl:grid-cols-4">
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="creatinina" class="text-gray-700 font-medium">
                                     Creatinina Urinária (mg/dL)
                                 </label>
@@ -201,7 +199,7 @@
                                     class="border-2 border-green-400 w-full px-4 py-2 rounded-xl focus:outline-none focus:border-green-600">
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="proteinas" class="text-gray-700 font-medium">
                                     Proteínas
                                 </label>
@@ -215,7 +213,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="glicose" class="text-gray-700 font-medium">
                                     Glicose
                                 </label>
@@ -228,7 +226,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="sangue" class="text-gray-700 font-medium">
                                     Sangue na Urina
                                 </label>
@@ -258,10 +256,9 @@
                             específicos. Exame comum de urina não detecta doping.
                         </p>
 
-                        <section class="gap-4 flex flex-col md:flex-row md:flex-wrap md:[&>*]:w-[calc(50.000000%_-_0.500000rem)] xl:flex-row
-                            xl:flex-wrap xl:[&>*]:w-[calc(33.333333%_-_0.666667rem)] [&>*]:min-w-0">
+                        <section class="gap-4 grid md:grid-cols-2 xl:grid-cols-3">
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="anabolizantes" class="text-gray-700 font-medium">
                                     Esteroides Anabolizantes
                                 </label>
@@ -278,7 +275,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="estimulantes" class="text-gray-700 font-medium">
                                     Estimulantes
                                 </label>
@@ -295,7 +292,7 @@
                                 </select>
                             </div>
 
-                            <div class="flex flex-col gap-1.5">
+                            <div class="flex flex-col gap-1.5 min-w-0">
                                 <label for="diureticos" class="text-gray-700 font-medium">
                                     Diuréticos e Mascarantes
                                 </label>

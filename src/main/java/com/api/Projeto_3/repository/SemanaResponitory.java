@@ -10,9 +10,9 @@ public interface SemanaResponitory extends JpaRepository<SemanaModel, Long> {
     @Query(value = """
             SELECT s.*
             FROM semana s
-            JOIN atletas a ON a.id = s.atleta_fk
-            JOIN treinadores t ON t.id = a.atleta_trenador_fk
-            JOIN perfis_modelo p ON p.id = t.id
+            INNER JOIN atletas a ON a.id = s.atleta_fk
+            INNER JOIN treinadores t ON t.id = a.atleta_trenador_fk
+            INNER JOIN perfis_modelo p ON p.id = t.id
             WHERE p.cpf = :cpf
             ORDER BY s.id DESC
             """, nativeQuery = true)

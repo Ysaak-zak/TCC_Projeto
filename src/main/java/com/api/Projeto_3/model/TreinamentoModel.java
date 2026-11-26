@@ -40,7 +40,6 @@ public class TreinamentoModel implements Serializable {
     private java.time.LocalTime horarioFim;
     private Boolean concluido;
     private Boolean cancelado;
-    private String motivoCancelamento;
     private java.time.LocalDateTime canceladoEm;
 
     @ManyToOne
@@ -169,14 +168,6 @@ public class TreinamentoModel implements Serializable {
 
     public void setCancelado(Boolean cancelado) {
         this.cancelado = cancelado;
-    }
-
-    public String getMotivoCancelamento() {
-        return motivoCancelamento;
-    }
-
-    public void setMotivoCancelamento(String motivoCancelamento) {
-        this.motivoCancelamento = motivoCancelamento;
     }
 
     public java.time.LocalDateTime getCanceladoEm() {

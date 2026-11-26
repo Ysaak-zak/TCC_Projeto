@@ -152,7 +152,7 @@ public class PerfilService implements UserDetailsService {
 @Override
 public UserDetails loadUserByUsername(String cpf) throws UsernameNotFoundException {
     PerfisModelo usuario = perfilJpa.findByCpf(cpf)
-            .or(() -> perfilJpa.findByCpfSemPontuacao(cpf))
+            .or(() -> perfilJpa.findIdByCpfSemPontuacao(cpf).flatMap(perfilJpa::findById))
             .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado com CPF: " + cpf));
 
     String authority = normalizarAuthority(usuario.getRole().getAuthority());

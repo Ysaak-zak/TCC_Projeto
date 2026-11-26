@@ -46,7 +46,7 @@ public class TrenamentosSerive {
 
     @Transactional
     public java.util.List<TreinamentoModel> listarTreinosDaSemana(Long semanaId, String cpf) {
-        if (semanaId == null) return java.util.List.of();
+        
         return buscarSemana(semanaId, cpf).getDias().stream()
                 .flatMap(dia -> dia.getTreinamentos().stream())
                 .filter(treino -> !Boolean.TRUE.equals(treino.getCancelado()) && !treino.isConcluido())
@@ -55,16 +55,9 @@ public class TrenamentosSerive {
 
     @Transactional
     public void criarExercicio(CriarExercicioDto form, String cpf) {
-        TreinamentoModel treino = treinamentoRepository
-                .buscarDoTreinadorParaAtualizar(form.getTreinamentoId(), form.getSemanaId(), cpf)
-                .orElseThrow(() -> new IllegalArgumentException(
-                        "Selecione um treinamento pertencente à semana escolhida."));
-        if (Boolean.TRUE.equals(treino.getCancelado())) {
-            throw new IllegalArgumentException("Este treinamento foi cancelado pelo médico e não aceita novos exercícios.");
-        }
-        if (treino.isConcluido()) {
-            throw new IllegalArgumentException("Este treinamento já foi concluído e não aceita novos exercícios.");
-        }
+        TreinamentoModel treino = treinamentoRepository.buscarDoTreinadorParaAtualizar(form.getTreinamentoId(), form.getSemanaId(), cpf)
+                .orElseThrow(() -> new IllegalArgumentException( "Selecione um treinamento pertencente à semana escolhida."));
+                
         ExercicioModel exercicio = new ExercicioModel();
         exercicio.setNome(form.getNome().trim());
         exercicio.setDescricao(form.getDescricao());

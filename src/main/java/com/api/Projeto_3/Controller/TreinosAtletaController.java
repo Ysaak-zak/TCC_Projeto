@@ -25,8 +25,7 @@ public class TreinosAtletaController {
     }
 
     @GetMapping
-    public String mostrar(@AuthenticationPrincipal UserDetails usuario,
-                          @RequestParam(required = false) Long semanaId, Model model) {
+    public String mostrar(@AuthenticationPrincipal UserDetails usuario,@RequestParam(required = false) Long semanaId, Model model) {
         model.addAttribute("agenda", service.buscarAgenda(usuario.getUsername(), semanaId));
         return "atletaPages/treinos";
     }

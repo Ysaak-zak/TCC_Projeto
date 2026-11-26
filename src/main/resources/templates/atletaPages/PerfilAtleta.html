@@ -7,48 +7,51 @@
     <link rel="icon" th:href="@{/img/iconFun.png}">
     <link rel="stylesheet" th:href="@{/css/atleta-tailwind.css}">
 </head>
-<body class="flex min-h-screen flex-col font-sans xl:flex-row bg-[#f7f9f8] text-slate-700">
+<body class="flex min-h-screen flex-col bg-black font-sans text-white scheme-dark md:flex-row">
     <div th:replace="~{atletaPages/navegacao :: menu('perfil', ${perfil.name})}"></div>
-    <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-36 flex-col gap-6 p-4 sm:p-6 lg:p-8 xl:scroll-mt-6">
-        <header class="rounded-2xl border border-t-4 border-slate-100 border-t-[#2450bd] bg-white p-5 shadow-sm sm:p-6">
-            <p class="text-xs font-bold tracking-wide uppercase text-[#2450bd]">Perfil atleta</p>
-            <h1 class="mt-2 wrap-anywhere font-serif text-2xl font-bold text-[#1c3d94] sm:text-3xl" th:text="${#strings.isEmpty(perfil.name) ? 'Atleta' : perfil.name}">Nome do atleta</h1>
-        </header>
+    <main id="conteudo" class="flex min-w-0 flex-1 scroll-mt-6 flex-col p-4 sm:p-6 lg:p-8">
+        <article aria-labelledby="titulo-perfil" class="rounded-2xl border border-t-4 border-gray-800 border-t-purple-500 bg-gray-950">
+            <header class="p-5 sm:p-6">
+                <p class="text-xs font-bold tracking-wide uppercase text-purple-300">Perfil atleta</p>
+                <h1 id="titulo-perfil" class="mt-2 wrap-anywhere font-serif text-2xl font-bold sm:text-3xl"
+                    th:text="${#strings.isEmpty(perfil.name) ? 'Atleta' : perfil.name}">Nome do atleta</h1>
+            </header>
 
-        <div class="flex flex-wrap gap-4"
-             th:with="secoes=${ {
-                {'Dados pessoais', {
-                    {'Nome completo', perfil.name}, {'CPF', perfil.cpf}, {'RG', perfil.rg},
-                    {'Data de nascimento', perfil.dataNascimento != null ? #temporals.format(perfil.dataNascimento, 'dd/MM/yyyy') : null},
-                    {'Sexo', perfil.sexo?.nome}, {'Tipo sanguíneo', perfil.sangue?.rotulo},
-                    {'Peso', perfil.pesoMigrama}, {'Altura', perfil.alturaCetimentro}
-                }},
-                {'Contato', {
-                    {'E-mail', perfil.email}, {'Telefone fixo', perfil.telefoneFixo}, {'WhatsApp', perfil.telefoneZap}
-                }},
-                {'Endereço', {
-                    {'CEP', perfil.moradia_fk?.cep}, {'Rua ou avenida', perfil.moradia_fk?.avenida},
-                    {'Número', perfil.moradia_fk?.sn}, {'Bairro', perfil.moradia_fk?.bairro},
-                    {'Cidade', perfil.moradia_fk?.cidade}, {'UF', perfil.uf}
-                }},
-                {'Filiação', {
-                    {'Nome da mãe', perfil.pais_fk?.maeNome}, {'Nome do pai', perfil.pais_fk?.paiName},
-                    {'Telefone da mãe', perfil.pais_fk?.maeTelefone}, {'Telefone do pai', perfil.pais_fk?.paiTelefone},
-                    {'E-mail da mãe', perfil.pais_fk?.maeEmail}, {'E-mail do pai', perfil.pais_fk?.paiEmail}
-                }}
-             } }">
-            <section th:each="secao, estado : ${secoes}" class="w-full min-w-0 rounded-2xl border border-slate-100 bg-white p-5 shadow-sm md:w-[calc(50%_-_0.5rem)] sm:p-6"
-                     th:attr="aria-labelledby=|dados-${estado.index}|">
-                <h2 class="border-b border-slate-100 pb-3 font-serif text-xl font-bold text-[#1c3d94]" th:id="|dados-${estado.index}|" th:text="${secao[0]}">Dados pessoais</h2>
-                <dl class="mt-4 flex flex-wrap gap-4">
-                    <div th:each="campo : ${secao[1]}" class="min-w-0" th:classappend="${campo[0] == 'E-mail' ? 'w-full' : 'w-[calc(50%_-_0.5rem)]'}">
-                        <dt class="text-xs font-bold tracking-wide uppercase text-slate-500" th:text="${campo[0]}">Campo</dt>
-                        <dd th:with="vazio=${#strings.isEmpty(campo[1])}" class="mt-1 wrap-anywhere text-sm" th:classappend="${vazio ? 'text-slate-500' : 'font-semibold text-slate-800'}"
-                            th:text="${vazio ? 'Não informado' : campo[1]}">Não informado</dd>
-                    </div>
-                </dl>
-            </section>
-        </div>
+            <div class="grid md:grid-cols-2"
+                 th:with="secoes=${ {
+                    {'Dados pessoais', {
+                        {'Nome completo', perfil.name}, {'CPF', perfil.cpf}, {'RG', perfil.rg},
+                        {'Data de nascimento', perfil.dataNascimento != null ? #temporals.format(perfil.dataNascimento, 'dd/MM/yyyy') : null},
+                        {'Sexo', perfil.sexo?.nome}, {'Tipo sanguíneo', perfil.sangue?.rotulo},
+                        {'Peso', perfil.pesoMigrama}, {'Altura', perfil.alturaCetimentro}
+                    }},
+                    {'Contato', {
+                        {'E-mail', perfil.email}, {'Telefone fixo', perfil.telefoneFixo}, {'WhatsApp', perfil.telefoneZap}
+                    }},
+                    {'Endereço', {
+                        {'CEP', perfil.moradia_fk?.cep}, {'Rua ou avenida', perfil.moradia_fk?.avenida},
+                        {'Número', perfil.moradia_fk?.sn}, {'Bairro', perfil.moradia_fk?.bairro},
+                        {'Cidade', perfil.moradia_fk?.cidade}, {'UF', perfil.uf}
+                    }},
+                    {'Filiação', {
+                        {'Nome da mãe', perfil.pais_fk?.maeNome}, {'Nome do pai', perfil.pais_fk?.paiName},
+                        {'Telefone da mãe', perfil.pais_fk?.maeTelefone}, {'Telefone do pai', perfil.pais_fk?.paiTelefone},
+                        {'E-mail da mãe', perfil.pais_fk?.maeEmail}, {'E-mail do pai', perfil.pais_fk?.paiEmail}
+                    }}
+                 } }">
+                <section th:each="secao, estado : ${secoes}" class="min-w-0 border-t border-gray-800 p-5 sm:p-6 md:even:border-l"
+                         th:attr="aria-labelledby=|dados-${estado.index}|">
+                    <h2 class="font-serif text-xl font-bold" th:id="|dados-${estado.index}|" th:text="${secao[0]}">Dados pessoais</h2>
+                    <dl class="mt-4 grid grid-cols-2 gap-4">
+                        <div th:each="campo : ${secao[1]}" class="min-w-0" th:classappend="${campo[0] == 'E-mail' ? 'col-span-2' : null}">
+                            <dt class="text-xs font-bold tracking-wide uppercase text-gray-300" th:text="${campo[0]}">Campo</dt>
+                            <dd th:with="vazio=${#strings.isEmpty(campo[1])}" class="mt-1 wrap-anywhere text-sm" th:classappend="${vazio ? 'text-gray-400' : 'font-semibold'}"
+                                th:text="${vazio ? 'Não informado' : campo[1]}">Não informado</dd>
+                        </div>
+                    </dl>
+                </section>
+            </div>
+        </article>
     </main>
 </body>
 </html>

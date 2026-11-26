@@ -2,6 +2,11 @@ tailwind.config = {
     theme: {
         extend: {
             colors: {
+                'medico-fundo': '#f7f9f8',
+                'treinador-fundo': '#f9f8f6',
+                'alimentacao-fundo': '#f5f8fd',
+                'alimentacao-painel': '#f3f7f4',
+                'alimentacao-cabecalho': '#103f30',
                 brand: {
                     50: '#f4f6f5',
                     100: '#e6ebe8',
@@ -40,6 +45,10 @@ tailwind.config = {
                     700: '#1c3d94',
                     800: '#152e70'
                 }
+            },
+            minWidth: {
+                'tabela-atletas': '760px',
+                'tabela-treinos': '860px'
             },
             fontFamily: {
                 sans: ['DM Sans', 'sans-serif'],
