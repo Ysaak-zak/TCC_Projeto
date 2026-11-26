@@ -60,7 +60,7 @@ public class TreinadorController {
 
 
         service.insertTreinador(treinadorDtos);
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
     @GetMapping("/treinador")

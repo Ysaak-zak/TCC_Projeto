@@ -54,7 +54,7 @@ public class MedicoController {
         }
         service.insertMeidco(medicosDtos);
 
-        return "redirect:/login";
+        return "redirect:/home";
     }
 
     @GetMapping("/medico")
