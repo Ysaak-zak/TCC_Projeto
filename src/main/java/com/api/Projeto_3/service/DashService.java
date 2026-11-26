@@ -56,7 +56,7 @@ public class DashService {
 
         List<DashPontoDto> atividadeSemanal = dashboard.getAtividadeSemanal();
         Map<String, DashPontoDto> categorias = new LinkedHashMap<>();
-        int tempoTotal = 0;
+        long tempoTotal = 0;
         int somaDasNotas = 0;
         int totalDeNotas = 0;
 
@@ -96,7 +96,9 @@ public class DashService {
     private DashTreinoDto criarTreinoDoHistorico(TreinamentoModel treino) {
         LocalTime inicio = treino.getHorarioInicio();
         LocalTime fim = treino.getHorarioFim();
-        Long duracao = inicio == null || fim == null ? null : Duration.between(inicio, fim).toMinutes();
+        Long duracao = inicio != null && fim != null && fim.isAfter(inicio)
+                ? Duration.between(inicio, fim).toMinutes()
+                : null;
 
         DashTreinoDto treinoDoHistorico = new DashTreinoDto();
         treinoDoHistorico.setId(treino.getId());

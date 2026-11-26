@@ -31,13 +31,13 @@ public class CriarTreinoDto {
     //@Size(max = 255, message = "A descrição deve ter até 255 caracteres.")
     private String descricao;
     
-    //@NotNull(message = "Informe o horário de início.")
+    @NotNull(message = "Informe o horário de início.")
     private LocalTime horarioInicio;
     
-    //@NotNull(message = "Informe o horário de fim.")
+    @NotNull(message = "Informe o horário de fim.")
     private LocalTime horarioFim;
 
-    //@AssertTrue(message = "O horário final deve ser posterior ao inicial, entre 06:00 e 22:00.")
+    @AssertTrue(message = "O horário final deve ser posterior ao inicial, entre 06:00 e 22:00.")
     public boolean isHorarioValido() {
         return horarioInicio == null || horarioFim == null ||
             (!horarioInicio.isBefore(LocalTime.of(6, 0)) &&
