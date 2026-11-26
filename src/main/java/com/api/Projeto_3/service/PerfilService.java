@@ -2,7 +2,10 @@ package com.api.Projeto_3.service;
 
 import java.util.Collections;
 
+import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.exception.ConstraintViolationException.ConstraintKind;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -93,6 +96,12 @@ public class PerfilService implements UserDetailsService {
         TreinadorModel salveTrei = jpaTreinador.save(trei);
 
         return new PerfilsDtos(salveTrei);
+    }
+
+    public boolean isCpfDuplicado(DataIntegrityViolationException erro, String cpf) {
+        return erro.getCause() instanceof ConstraintViolationException restricao
+                && restricao.getKind() == ConstraintKind.UNIQUE
+                && perfilJpa.existsByCpf(cpf);
     }
 
     private RolesModel buscarRole(RoleAuthority authority) {

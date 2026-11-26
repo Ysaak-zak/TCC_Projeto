@@ -11,6 +11,8 @@ import com.api.Projeto_3.model.PerfisModelo;
 public interface PerfilRepository extends JpaRepository<PerfisModelo, Long> {
     Optional<PerfisModelo> findByCpf(String cpf);
 
+    boolean existsByCpf(String cpf);
+
     @NativeQuery("""
             SELECT id
             FROM perfis_modelo

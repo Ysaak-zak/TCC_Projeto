@@ -1,6 +1,7 @@
 package com.api.Projeto_3.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -40,15 +41,21 @@ public class AtletaController {
 
         @PostMapping("/cadastro/atleta/save")
         public String postAtletaInsert(@ModelAttribute("atletaDtos") @Valid PerfilsDtos atletaDtos,
-        BindingResult result,  Model model
-        ) {
-
-            if (result.hasErrors()) { 
-                carregarDadosCadastro(model);
-                return "publicPlages/cadastroAtleta"; 
+                BindingResult result, Model model) {
+            if (!result.hasErrors()) {
+                try {
+                    service.InsertAtleta(atletaDtos);
+                    return "redirect:/home";
+                } catch (DataIntegrityViolationException erro) {
+                    if (!service.isCpfDuplicado(erro, atletaDtos.getCpf())) {
+                        throw erro;
+                    }
+                    result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado.");
+                }
             }
-            service.InsertAtleta(atletaDtos);
-            return "redirect:/home"; 
+
+            carregarDadosCadastro(model);
+            return "publicPlages/cadastroAtleta";
         }
 
 

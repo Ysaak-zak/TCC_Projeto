@@ -3,6 +3,7 @@ package com.api.Projeto_3.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -47,14 +48,20 @@ public class MedicoController {
 
     @PostMapping({"/cadastro/medico/save", "/cadastro/medico/save/{id:\\d+}"})
     public String postMedicoInsert(@ModelAttribute("medicosDtos") @Valid PerfilsDtos medicosDtos, BindingResult result, Model model) {
-
-        if (result.hasErrors()) {
-            carregarDadosCadastro(model);
-            return "publicPlages/cadastroMedico";
+        if (!result.hasErrors()) {
+            try {
+                service.insertMeidco(medicosDtos);
+                return "redirect:/home";
+            } catch (DataIntegrityViolationException erro) {
+                if (!service.isCpfDuplicado(erro, medicosDtos.getCpf())) {
+                    throw erro;
+                }
+                result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado.");
+            }
         }
-        service.insertMeidco(medicosDtos);
 
-        return "redirect:/home";
+        carregarDadosCadastro(model);
+        return "publicPlages/cadastroMedico";
     }
 
     @GetMapping("/medico")

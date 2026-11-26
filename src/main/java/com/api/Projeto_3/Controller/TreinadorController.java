@@ -5,6 +5,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -52,15 +53,20 @@ public class TreinadorController {
 
     @PostMapping({"/cadastro/treinador/save", "/cadastro/treinador/save/{id:\\d+}"})
     public String postTreinadorInsert(@ModelAttribute("treinadorDtos") @Valid PerfilsDtos treinadorDtos, BindingResult result, Model model) {
-
-        if (result.hasErrors()) {
-            carregarDadosCadastro(model);
-            return "publicPlages/cadastroTreinador";
+        if (!result.hasErrors()) {
+            try {
+                service.insertTreinador(treinadorDtos);
+                return "redirect:/home";
+            } catch (DataIntegrityViolationException erro) {
+                if (!service.isCpfDuplicado(erro, treinadorDtos.getCpf())) {
+                    throw erro;
+                }
+                result.rejectValue("cpf", "cpf.duplicado", "Este CPF já está cadastrado.");
+            }
         }
 
-
-        service.insertTreinador(treinadorDtos);
-        return "redirect:/home";
+        carregarDadosCadastro(model);
+        return "publicPlages/cadastroTreinador";
     }
 
     @GetMapping("/treinador")
