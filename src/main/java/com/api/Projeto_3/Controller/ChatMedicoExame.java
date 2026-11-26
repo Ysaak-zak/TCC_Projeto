@@ -24,8 +24,7 @@ public class ChatMedicoExame {
     }
 
     @PostMapping({"/exame/urina", "/exame-urina/salvar"})
-    public String salvarExameUrina(@ModelAttribute("exameUrina") ExameUrinaDtos exame,
-            RedirectAttributes redirectAttributes) {
+    public String salvarExameUrina(@ModelAttribute("exameUrina") ExameUrinaDtos exame, RedirectAttributes redirectAttributes) {
         ExameUrinaDtos resultado = urinaService.realizarExameParaPagina(exame);
         redirectAttributes.addFlashAttribute("exameUrina", resultado);
         return "redirect:/medico/exame-urina/resultado";
@@ -37,8 +36,7 @@ public class ChatMedicoExame {
     }
 
     @PostMapping("/exame-sangue/salvar")
-    public String salvarExameSangue(@ModelAttribute("exameSangue") ExameSagueDtos exame,
-            RedirectAttributes redirectAttributes) {
+    public String salvarExameSangue(@ModelAttribute("exameSangue") ExameSagueDtos exame, RedirectAttributes redirectAttributes) {
         ExameSagueDtos resultado = sangueService.realizarExameParaPagina(exame);
         redirectAttributes.addFlashAttribute("exameSangue", resultado);
         return "redirect:/medico/exame-sangue/resultado";
