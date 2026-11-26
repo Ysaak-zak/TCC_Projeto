@@ -7,6 +7,8 @@ import java.time.LocalTime;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import com.api.Projeto_3.model.enums.DiasEnum;
+
 import jakarta.validation.Validation;
 
 class CriarTreinoDtoTest {
@@ -23,6 +25,10 @@ class CriarTreinoDtoTest {
     })
     void validaOsHorariosDoCadastro(LocalTime inicio, LocalTime fim, String campoInvalido) {
         CriarTreinoDto treino = new CriarTreinoDto();
+        treino.setSemanaId(1L);
+        treino.setDia(DiasEnum.SEGUNDA);
+        treino.setNome("Preparação física");
+        treino.setCategoria("Força");
         treino.setHorarioInicio(inicio);
         treino.setHorarioFim(fim);
 

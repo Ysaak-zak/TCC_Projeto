@@ -190,6 +190,7 @@
                         <div class="w-full xl:mt-6 mt-3">
                             <p class="font-bold">TELEFONE</p>
                             <input th:field="*{pais_fk.maeTelefone}" type="tel" placeholder="(00) 00000-0000" class="mt-2 bg-white w-full py-2 px-1 border-4 border-treinador-500 xl:rounded-2xl xl:py-3 xl:px-3">
+                            <p th:errors="*{pais_fk.maeTelefone}" class="text-red-600 font-bold mt-1 ml-3 italic text-sm"></p>
                         </div>
                         <div class="w-full xl:mt-6 mt-3">
                             <p class="font-bold">E-MAIL</p>
@@ -212,6 +213,7 @@
                         <div class="w-full xl:mt-6 mt-3">
                             <p class="font-bold">TELEFONE</p>
                             <input th:field="*{pais_fk.paiTelefone}" type="tel" placeholder="(00) 00000-0000" class="mt-2 bg-white w-full py-2 px-1 border-4 border-treinador-500 xl:rounded-2xl xl:py-3 xl:px-3">
+                            <p th:errors="*{pais_fk.paiTelefone}" class="text-red-600 font-bold mt-1 ml-3 italic text-sm"></p>
                         </div>
                         <div class="w-full xl:mt-6 mt-3">
                             <p class="font-bold">E-MAIL</p>

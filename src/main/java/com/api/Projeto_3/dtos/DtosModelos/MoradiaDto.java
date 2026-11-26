@@ -18,19 +18,19 @@ import lombok.ToString;
 public class MoradiaDto {
     private long id; 
 
-    //@NotBlank(message = "cep não pode ser zero")
+    @NotBlank(message = "cep não pode ser zero")
     private String cep;
     
-    //@NotBlank(message = "avenida não pode ser zero")
+    @NotBlank(message = "avenida não pode ser zero")
     private String avenida;
 
-    //@NotBlank(message = "sn não pode ser zero")
+    @NotBlank(message = "sn não pode ser zero")
     private String sn;
 
-    //@NotBlank(message = "Bairro  não pode ser zero")
+    @NotBlank(message = "Bairro  não pode ser zero")
     private String bairro;
 
-    //@NotBlank(message = "Digite o nome da cidade")
+    @NotBlank(message = "Digite o nome da cidade")
     private String cidade;
     private PerfisModelo perfil;
 
